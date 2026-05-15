@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+pydantic
+langchain
+langchain-ollama
+langchain-community
+ddgs
+tavily-python
