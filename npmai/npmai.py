@@ -1,4 +1,3 @@
-from langchain_core.language_models.llms import LLM
 from typing import Optional, List, Union, Iterator, Dict, Any
 import requests
 import json
@@ -6,61 +5,91 @@ import os
 
 PromptType = Union[str, List[str], dict]
 
-class Ollama(LLM):
+class Ollama():
     """
-    A resilient LLM wrapper for NPMAI providing access to 10+ Open Source models.
+A resilient LLM provider for NPMAI providing access to 45+ Open Source models.
 
-    This class features a dual-gateway architecture:
-    1. Primary API: Attempts to process requests via https://npmai-api.onrender.com.
-    2. Failover System: If the primary gateway is down, it silently switches to
-       dedicated Hugging Face endpoints based on the selected model.
+This class features a dual-gateway architecture:
+1. Primary API: Attempts to process requests via https://npmai-api.onrender.com.
+2. Failover System: Automonously switches to a fallback load balancer if the primary gateway fails.
 
-    Key Capabilities:
-    - High Availability: Automatic retry logic ensures minimal downtime.
-    - Model Variety: Supports Llama 3.2, Qwen 2.5, Vicuna, Gemma 2, InternLM2, Mistral, and more.
-    - Structured Output: Accepts a 'validated_schema' to enforce specific JSON formats.
-    - Versatile Input: The 'invoke' method handles strings, lists, or dictionary prompts.
-    """
-    model: str = "llama3.2"
-    temperature: float = 0.3
-    validated_schema: Optional[Dict[str,Any]]=None
-    api: str = "https://npmai-api.onrender.com/llm"
+Key Capabilities:
+- High Availability: Automatic retry logic ensures minimal downtime.
+- Model Variety: Supports Llama 3.2, Qwen 2.5, Vicuna, Gemma 2, InternLM2, Mistral, and more.
+- Versatile Input: The 'invoke' method handles strings, lists, or dictionary prompts.
+
+Parameters:
+-----------
+model : str, default="llama3.2"
+    The specific identifier for your target model. For a complete list of valid model names
+    and precise syntax, visit the official documentation at https://npmai.netlify.app.
+temperature : float, default=0.3
+    Controls the randomness and creativity of the generated response.
+change : bool, default=True
+    Enables automatic model fallback. If the requested model is busy or unresponsive, 
+    the system automatically routes the request to an available model to prevent request failures.
+Models : List[str], optional
+    A custom list of backup model names used if `change=True`. If `change=True` and this list 
+    is omitted, the system will dynamically loop through all 45+ available models to find an active server.
+
+How to Use:
+-----------
+1. Basic String Query:
+    >>> llm = Ollama(model="llama3.2", temperature=0.5)
+    >>> response = llm.invoke("What is open source?")
+
+2. With Failover Customization:
+    >>> # If vicuna:7b is busy, it falls back to llama3.2 or gemma2
+    >>> llm = Ollama(
+    ...     model="vicuna:7b", 
+    ...     change=True, 
+    ...     Models=["llama3.2", "gemma2"]
+    ... )
+    >>> response = llm.invoke("Summarize quantum computing.")
+"""
+
+    def __init__(
+        self, 
+        model: str = "llama3.2", 
+        temperature: float = 0.3, 
+        change:bool = True, 
+        Models:Optional[list]=None, 
+        api: str = "https://npmaiecosystem-load_balancer.hf.space/load_balancer", 
+        fallback_api: str = "https://npmaiecosystem-loadbalancerfallback.hf.space/load_balancer"
+        ):
+      self.model = model
+      self.temperature = temperature
+      self.change = change
+      self.Models = Models
+      self.api = api
+      self.fallback_api = fallback_api
+
 
     @property
     def _llm_type(self) -> str:
         return "npmai"
 
     def _call(self, prompt: str, stop: Optional[List[str]] = None) -> str:
-        Model_links = {
-            "llama3.2": "https://sonuramashish22028704-npmai.hf.space/llm",
-            "qwen2.5-coder:7b":"https://sonuramashish22028704-npmai.hf.space/qwen",
-            "vicuna:7b":"https://sonuramashish22028704-vicuna7b.hf.space/llm",
-            "gemma2:9b":"https://sonuramashish22028704-vicuna7b.hf.space/gemma",
-            "internlm2:7b":"https://sonuramashish22028704-internlm27b.hf.space/llm",
-            "maxkb/baichuan2:13b-chat":"https://sonuramashish22028704-internlm27b.hf.space/baichuan",
-            "falcon:7b-instruct":"https://sonuramashish22028704-falcon7binstruct.hf.space/llm",
-            "codellama:7b-instruct":"https://sonuramashish22028704-falcon7binstruct.hf.space/codellama",
-            "mistral:7b":"https://sonuramashish22028704-mistral7b.hf.space/llm",
-            "phi3:medium":"https://sonuramashish22028704-phi3medium.hf.space/llm",
-        }
-
         payload = {
             "prompt": prompt,
             "model": self.model,
             "temperature": self.temperature,
-            "validated_schema":self.validated_schema,
+            "change":self.change,
+            "Models":self.Models
         }
 
         fallback_payload ={
             "prompt":prompt,
             "temperature":self.temperature,
+            "change":self.change,
+            "model":self.model,
+            "Models":self.Models
         }
         try:
             response = requests.post(self.api, json=payload)
             response.raise_for_status()
         except:
-            api = Model_links[self.model]
-            response = requests.post(api, json=fallback_payload)
+            response = requests.post(self.fallback_api, json=fallback_payload)
             response.raise_for_status()
 
         data=response.json()
@@ -209,14 +238,3 @@ class Rag:
         return {"response":respons.json().get("response")}
       except:
         return respons
-
-# Call Code
-if __name__ == "__main__":
-    llm=Ollama(
-        model="llama3.2",
-        temperature=0.4,
-        )
-    prompts=input("Enter Your Query:")
-    response=llm.invoke(prompts)
-
-    print(response)
