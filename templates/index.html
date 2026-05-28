@@ -1021,19 +1021,53 @@ function closeModalOutside(e) {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
 /* ── MODELS DATA ── */
+/* ── MODELS DATA ── */
 const MODELS = [
   { id: 'llama3.2', name: 'LLaMA 3.2', org: 'Meta', tag: 'general', tc: 'tag-general' },
   { id: 'gemma3:12b', name: 'Gemma 3 12b', org: 'Google', tag: 'new 2026', tc: 'tag-new' },
   { id: 'qwen2.5-coder:7b', name: 'Qwen 2.5 Coder', org: 'Alibaba', tag: 'code', tc: 'tag-code' },
-  { id: 'codellama:7b-instruct', name: 'CodeLLaMA 7b', org: 'Meta', tag: 'code', tc: 'tag-code' },
+  { id: 'codellama:7b-instruct', name: 'CodeLLaMA 7b Instruct', org: 'Meta', tag: 'code', tc: 'tag-code' },
   { id: 'mistral:7b', name: 'Mistral 7b', org: 'Mistral AI', tag: 'general', tc: 'tag-general' },
   { id: 'vicuna:7b', name: 'Vicuna 7b', org: 'LMSYS', tag: 'general', tc: 'tag-general' },
   { id: 'gemma2:9b', name: 'Gemma 2 9b', org: 'Google', tag: 'general', tc: 'tag-general' },
   { id: 'phi3:medium', name: 'Phi-3 Medium', org: 'Microsoft', tag: 'efficient', tc: 'tag-general' },
   { id: 'falcon:7b-instruct', name: 'Falcon 7b', org: 'TII', tag: 'general', tc: 'tag-general' },
   { id: 'internlm2:7b', name: 'InternLM 2 7b', org: 'Shanghai AI Lab', tag: 'multilingual', tc: 'tag-general' },
-  { id: 'maxkb/baichuan2:13b-chat', name: 'Baichuan2 13b', org: 'Baichuan AI', tag: '13b', tc: 'tag-large' },
   { id: 'qwen3.5:9b', name: 'Qwen 3.5 9b', org: 'Alibaba', tag: 'new', tc: 'tag-new' },
+  { id: 'llama3.2:3b', name: 'LLaMA 3.2 3b', org: 'Meta', tag: 'general', tc: 'tag-general' },
+  { id: 'llama3.1:8b', name: 'LLaMA 3.1 8b', org: 'Meta', tag: 'general', tc: 'tag-general' },
+  { id: 'qwen2.5:7b', name: 'Qwen 2.5 7b', org: 'Alibaba', tag: 'general', tc: 'tag-general' },
+  { id: 'llama3.2:1b', name: 'LLaMA 3.2 1b', org: 'Meta', tag: 'efficient', tc: 'tag-general' },
+  { id: 'qwen2-math:7b', name: 'Qwen 2 Math 7b', org: 'Alibaba', tag: 'math', tc: 'tag-code' },
+  { id: 'qwen2.5vl', name: 'Qwen 2.5 VL', org: 'Alibaba', tag: 'vision', tc: 'tag-large' },
+  { id: 'phi3:3.8b', name: 'Phi-3 3.8b', org: 'Microsoft', tag: 'efficient', tc: 'tag-general' },
+  { id: 'llava-phi3', name: 'LLaVA Phi-3', org: 'Microsoft', tag: 'vision', tc: 'tag-large' },
+  { id: 'gemma2:2b', name: 'Gemma 2 2b', org: 'Google', tag: 'efficient', tc: 'tag-general' },
+  { id: 'openhermes', name: 'OpenHermes', org: 'Nous Research', tag: 'general', tc: 'tag-general' },
+  { id: 'deepseek-coder:6.7b', name: 'DeepSeek Coder 6.7b', org: 'DeepSeek', tag: 'code', tc: 'tag-code' },
+  { id: 'yi', name: 'Yi', org: '01.AI', tag: 'general', tc: 'tag-general' },
+  { id: 'granite3.3:2b', name: 'Granite 3.3 2b', org: 'IBM', tag: 'efficient', tc: 'tag-general' },
+  { id: 'smollm:1.7b', name: 'SmolLM 1.7b', org: 'Hugging Face', tag: 'efficient', tc: 'tag-general' },
+  { id: 'stablelm2', name: 'StableLM 2', org: 'Stability AI', tag: 'general', tc: 'tag-general' },
+  { id: 'cniongolo_biomistral', name: 'BioMistral', org: 'BioMistral', tag: 'medical', tc: 'tag-large' },
+  { id: 'meditron', name: 'Meditron', org: 'EPFL', tag: 'medical', tc: 'tag-large' },
+  { id: 'granite4.1:3b', name: 'Granite 4.1 3b', org: 'IBM', tag: 'new', tc: 'tag-new' },
+  { id: 'wizard-math', name: 'WizardMath', org: 'WizardLM', tag: 'math', tc: 'tag-code' },
+  { id: 'llava', name: 'LLaVA', org: 'Community', tag: 'vision', tc: 'tag-large' },
+  { id: 'moondream', name: 'Moondream', org: 'Community', tag: 'vision', tc: 'tag-large' },
+  { id: 'openchat', name: 'OpenChat', org: 'OpenChat', tag: 'general', tc: 'tag-general' },
+  { id: 'deepseek-r1:7b', name: 'DeepSeek R1 7b', org: 'DeepSeek', tag: 'reasoning', tc: 'tag-new' },
+  { id: 'openbmb_minicpm-v2.6', name: 'MiniCPM V2.6', org: 'OpenBMB', tag: 'vision', tc: 'tag-large' },
+  { id: 'llama3:8b', name: 'LLaMA 3 8b', org: 'Meta', tag: 'general', tc: 'tag-general' },
+  { id: 'gemma3:4b', name: 'Gemma 3 4b', org: 'Google', tag: 'new 2026', tc: 'tag-new' },
+  { id: 'olmo2', name: 'OLMo 2', org: 'AI2', tag: 'general', tc: 'tag-general' },
+  { id: 'nemotron-mini', name: 'Nemotron Mini', org: 'NVIDIA', tag: 'efficient', tc: 'tag-general' },
+  { id: 'stable-code', name: 'Stable Code', org: 'Stability AI', tag: 'code', tc: 'tag-code' },
+  { id: 'codellama:7b', name: 'CodeLLaMA 7b', org: 'Meta', tag: 'code', tc: 'tag-code' },
+  { id: 'aya:8b', name: 'Aya 8b', org: 'Cohere', tag: 'multilingual', tc: 'tag-general' },
+  { id: 'phi4:14b', name: 'Phi-4 14b', org: 'Microsoft', tag: 'new', tc: 'tag-new' },
+  { id: 'gemma4:e2b', name: 'Gemma 4 e2b', org: 'Google', tag: 'new', tc: 'tag-new' },
+  { id: 'qwen3.5:2b', name: 'Qwen 3.5 2b', org: 'Alibaba', tag: 'new', tc: 'tag-new' }
 ];
 
 function buildModelsGrid() {
@@ -1803,23 +1837,61 @@ result = rag2.vector_db_use()
         <div class="callout-body"><strong>Model fallback.</strong> With <code class="ic">change=True</code> (default), if your requested model is busy, the system automatically tries other available models from the pool. Set <code class="ic">Models=["llama3.2","mistral:7b"]</code> to control which fallbacks are tried.</div>
       </div>
       <table class="doc-table">
-        <thead><tr><th>Model string</th><th>Name</th><th>Best for</th></tr></thead>
-        <tbody>
-          <tr><td><code class="ic">llama3.2</code></td><td>LLaMA 3.2 (Meta)</td><td>General purpose, fast</td></tr>
-          <tr><td><code class="ic">gemma3:12b</code></td><td>Gemma 3 12b (Google)</td><td>Latest knowledge (2026), reasoning</td></tr>
-          <tr><td><code class="ic">qwen2.5-coder:7b</code></td><td>Qwen 2.5 Coder (Alibaba)</td><td>Code generation, debugging</td></tr>
-          <tr><td><code class="ic">codellama:7b-instruct</code></td><td>CodeLLaMA 7b Instruct (Meta)</td><td>Code, programming tasks</td></tr>
-          <tr><td><code class="ic">mistral:7b</code></td><td>Mistral 7b Instruct</td><td>Instruction following, balanced</td></tr>
-          <tr><td><code class="ic">vicuna:7b</code></td><td>Vicuna 7b (LMSYS)</td><td>Conversation, debate</td></tr>
-          <tr><td><code class="ic">gemma2:9b</code></td><td>Gemma 2 9b (Google)</td><td>General reasoning</td></tr>
-          <tr><td><code class="ic">phi3:medium</code></td><td>Phi-3 Medium 8b (Microsoft)</td><td>Efficient reasoning</td></tr>
-          <tr><td><code class="ic">falcon:7b-instruct</code></td><td>Falcon 7b Instruct (TII)</td><td>Instruction following</td></tr>
-          <tr><td><code class="ic">internlm2:7b</code></td><td>InternLM 2 7b (Shanghai AI Lab)</td><td>Multilingual, code</td></tr>
-          <tr><td><code class="ic">maxkb/baichuan2:13b-chat</code></td><td>Baichuan2 13b Chat</td><td>Chinese language, multilingual</td></tr>
-          <tr><td><code class="ic">qwen3.5:9b</code></td><td>Qwen 3.5 9b (Alibaba)</td><td>Latest Qwen, strong reasoning</td></tr>
-          <tr><td style="color:var(--text3)" colspan="3">+ 33 more community-contributed models accessible through the load balancer</td></tr>
-        </tbody>
-      </table>`,
+  <thead>
+    <tr>
+      <th>Model string</th>
+      <th>Name</th>
+      <th>Best for</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><code class="ic">llama3.2</code></td><td>LLaMA 3.2 (Meta)</td><td>General purpose, fast</td></tr>
+    <tr><td><code class="ic">gemma3:12b</code></td><td>Gemma 3 12b (Google)</td><td>Latest knowledge (2026), reasoning</td></tr>
+    <tr><td><code class="ic">qwen2.5-coder:7b</code></td><td>Qwen 2.5 Coder (Alibaba)</td><td>Code generation, debugging</td></tr>
+    <tr><td><code class="ic">codellama:7b-instruct</code></td><td>CodeLLaMA 7b Instruct (Meta)</td><td>Code, programming tasks</td></tr>
+    <tr><td><code class="ic">mistral:7b</code></td><td>Mistral 7b Instruct</td><td>Instruction following, balanced</td></tr>
+    <tr><td><code class="ic">vicuna:7b</code></td><td>Vicuna 7b (LMSYS)</td><td>Conversation, debate</td></tr>
+    <tr><td><code class="ic">gemma2:9b</code></td><td>Gemma 2 9b (Google)</td><td>General reasoning</td></tr>
+    <tr><td><code class="ic">phi3:medium</code></td><td>Phi-3 Medium 8b (Microsoft)</td><td>Efficient reasoning</td></tr>
+    <tr><td><code class="ic">falcon:7b-instruct</code></td><td>Falcon 7b Instruct (TII)</td><td>Instruction following</td></tr>
+    <tr><td><code class="ic">internlm2:7b</code></td><td>InternLM 2 7b (Shanghai AI Lab)</td><td>Multilingual, code</td></tr>
+    <tr><td><code class="ic">qwen3.5:9b</code></td><td>Qwen 3.5 9b (Alibaba)</td><td>Latest Qwen, strong reasoning</td></tr>
+    <tr><td><code class="ic">llama3.2:3b</code></td><td>LLaMA 3.2 3b (Meta)</td><td>Lightweight general tasks, edge devices</td></tr>
+    <tr><td><code class="ic">llama3.1:8b</code></td><td>LLaMA 3.1 8b (Meta)</td><td>Balanced general reasoning, text creation</td></tr>
+    <tr><td><code class="ic">qwen2.5:7b</code></td><td>Qwen 2.5 7b (Alibaba)</td><td>Strong general capability, structured data</td></tr>
+    <tr><td><code class="ic">llama3.2:1b</code></td><td>LLaMA 3.2 1b (Meta)</td><td>Ultra-fast processing, highly efficient embedded use</td></tr>
+    <tr><td><code class="ic">qwen2-math:7b</code></td><td>Qwen 2 Math 7b (Alibaba)</td><td>Advanced mathematical problem solving</td></tr>
+    <tr><td><code class="ic">qwen2.5vl</code></td><td>Qwen 2.5 VL (Alibaba)</td><td>Visual-language processing and image analysis</td></tr>
+    <tr><td><code class="ic">phi3:3.8b</code></td><td>Phi-3 3.8b (Microsoft)</td><td>Resource-constrained local execution</td></tr>
+    <tr><td><code class="ic">llava-phi3</code></td><td>LLaVA Phi-3 (Microsoft)</td><td>Vision-based tasks with high execution efficiency</td></tr>
+    <tr><td><code class="ic">gemma2:2b</code></td><td>Gemma 2 2b (Google)</td><td>Fast text generation on low-end hardware</td></tr>
+    <tr><td><code class="ic">openhermes</code></td><td>OpenHermes (Nous Research)</td><td>Diverse fine-tune for chat, creative writing</td></tr>
+    <tr><td><code class="ic">deepseek-coder:6.7b</code></td><td>DeepSeek Coder 6.7b (DeepSeek)</td><td>Deep logic tracking, software engineering</td></tr>
+    <tr><td><code class="ic">yi</code></td><td>Yi (01.AI)</td><td>Bilingual chat, long context summary</td></tr>
+    <tr><td><code class="ic">granite3.3:2b</code></td><td>Granite 3.3 2b (IBM)</td><td>Enterprise operations, rapid classification</td></tr>
+    <tr><td><code class="ic">smollm:1.7b</code></td><td>SmolLM 1.7b (Hugging Face)</td><td>On-device computation, local processing micro-tasks</td></tr>
+    <tr><td><code class="ic">stablelm2</code></td><td>StableLM 2 (Stability AI)</td><td>Clear structure output, general chat</td></tr>
+    <tr><td><code class="ic">cniongolo_biomistral</code></td><td>BioMistral (BioMistral)</td><td>Biomedical text understanding, scientific inquiries</td></tr>
+    <tr><td><code class="ic">meditron</code></td><td>Meditron (EPFL)</td><td>Medical knowledge extraction, clinical documentation</td></tr>
+    <tr><td><code class="ic">granite4.1:3b</code></td><td>Granite 4.1 3b (IBM)</td><td>Next-gen enterprise automation, secure operations</td></tr>
+    <tr><td><code class="ic">wizard-math</code></td><td>WizardMath (WizardLM)</td><td>Complex multi-step math reasoning</td></tr>
+    <tr><td><code class="ic">llava</code></td><td>LLaVA (Community)</td><td>Multi-modal chat, image captioning</td></tr>
+    <tr><td><code class="ic">moondream</code></td><td>Moondream (Community)</td><td>Fast, small-footprint image analysis</td></tr>
+    <tr><td><code class="ic">openchat</code></td><td>OpenChat (OpenChat)</td><td>High-quality dialogue framework mimicking human tone</td></tr>
+    <tr><td><code class="ic">deepseek-r1:7b</code></td><td>DeepSeek R1 7b (DeepSeek)</td><td>Chain-of-thought advanced complex reasoning</td></tr>
+    <tr><td><code class="ic">openbmb_minicpm-v2.6</code></td><td>MiniCPM V2.6 (OpenBMB)</td><td>High-resolution image processing, video scanning</td></tr>
+    <tr><td><code class="ic">llama3:8b</code></td><td>LLaMA 3 8b (Meta)</td><td>Standard text tasks, pipeline integrations</td></tr>
+    <tr><td><code class="ic">gemma3:4b</code></td><td>Gemma 3 4b (Google)</td><td>Compact, modern architecture, low latency runtime</td></tr>
+    <tr><td><code class="ic">olmo2</code></td><td>OLMo 2 (AI2)</td><td>Fully open scientific research, text pipeline verification</td></tr>
+    <tr><td><code class="ic">nemotron-mini</code></td><td>Nemotron Mini (NVIDIA)</td><td>Resource optimization, fast task routing</td></tr>
+    <tr><td><code class="ic">stable-code</code></td><td>Stable Code (Stability AI)</td><td>Auto-completion, multi-language syntactical code help</td></tr>
+    <tr><td><code class="ic">codellama:7b</code></td><td>CodeLLaMA 7b (Meta)</td><td>Base code understanding, logical extensions</td></tr>
+    <tr><td><code class="ic">aya:8b</code></td><td>Aya 8b (Cohere)</td><td>High-performance translation, multilingual synthesis</td></tr>
+    <tr><td><code class="ic">phi4:14b</code></td><td>Phi-4 14b (Microsoft)</td><td>Complex technical analysis, algorithmic planning</td></tr>
+    <tr><td><code class="ic">gemma4:e2b</code></td><td>Gemma 4 e2b (Google)</td><td>Next-generation efficient baseline computation</td></tr>
+    <tr><td><code class="ic">qwen3.5:2b</code></td><td>Qwen 3.5 2b (Alibaba)</td><td>Lightweight modern chat routing, prompt refining</td></tr>
+  </tbody>
+</table>`,
     'api': `
       <h1 class="doc-h1">REST API &amp; Load Balancer</h1>
       <p class="doc-lead">The NPMAI load balancer is a standard HTTP API. Use it from any language. All model requests go through the load balancer — direct model endpoint requests are no longer supported.</p>
