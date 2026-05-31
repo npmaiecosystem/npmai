@@ -10,4 +10,4 @@ COPY . .
 
 ENTRYPOINT []
 
-CMD ["python","-m","app.py"]
+CMD ["python","-m","app"]
