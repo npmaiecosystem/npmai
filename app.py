@@ -1,19 +1,47 @@
-from flask import Flask
-from flask import render_template
-import os
+import httpx
+import asyncio
+from fastapi import FastAPI, Response
+from pydantic import BaseModel
+
+app = FastAPI()
+
+@app.post("/")
+def health_responder():
+    return {"response":"Healthy"}
+
+class Input(BaseModel):
+    model: str
+    temperature: float = 0.5
+    prompt: str
+    change: bool = True
+    Models: Optional[list] = None
 
 
-app=Flask(__name__)
+@app.post("/connector")
+async def connector_load_balancer(inputs:Input):
+    load_balancer_uri = "https://npmaiecosystem-loadbalancer.hf.space/load_balancer"
+    load_balancer_fall_uri = "https://npmaiecosystem-loadbalancerfallback.hf.space/load_balancer"
 
-@app.after_request
-def allow_iframe(response):
-    response.headers['Content-Security-Policy'] = "frame-ancestors 'self' https://your-site.com"
-    return response
-  
-@app.route("/")
-def render_index():
-  return render_template("index.html")
-  
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port, debug=False)
+    payload = {
+        "model":inputs.model,
+        "temperature":inputs.temperature,
+        "prompt":inputs.prompt,
+        "change":True,
+        "Models":inputs.Models
+    }
+
+    timeout = httpx.Timeout(connect=100.0, read=560.0, write=300.0, pool=320.0)
+
+    try:
+        async with httpx.AsyncClient(timeout=timeout) as client:
+            response = await client.post(load_balancer_uri, json=payload)
+            response.raise_for_status()
+            f_response = response.json()["response"]
+            return {"response":f_response}
+            
+    except Exception as e:
+        async with httpx.AsyncClient(timeout=timeout) as client:
+            response = await client.post(load_balancer_fall_uri, json=payload)
+            response.raise_for_status()
+            f_response_f = response.json()["response"]
+            return {"response":f_response_f}
