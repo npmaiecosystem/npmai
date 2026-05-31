@@ -3,8 +3,17 @@ import asyncio
 from fastapi import FastAPI, Response
 from pydantic import BaseModel
 from typing import Optional
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows your Netlify URL to connect
+    allow_credentials=False,
+    allow_methods=["*"],  # Resolves the 405 OPTIONS error
+    allow_headers=["*"],
+)
 
 @app.post("/")
 def health_responder():
