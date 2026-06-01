@@ -1,13 +1,15 @@
-FROM python:3.11-slim
+FROM searxng/searxng:latest
 
-WORKDIR /app
+USER root
 
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-RUN pip install uvicorn
+RUN mkdir -p /etc/searxng
 
-COPY . .
+COPY settings.yml /etc/searxng/settings.yml
 
-ENTRYPOINT []
+ENV SEARXNG_SETTINGS_PATH=/etc/searxng/settings.yml
+ENV SEARXNG_PORT=10000
+ENV SEARXNG_BIND_ADDRESS=0.0.0.0
+ENV BASE_URL="/"
+ENV INSTANCE_NAME="NPMAI Search"
 
-CMD ["sh", "-c", "uvicorn app:app --host 0.0.0.0 --port $PORT"]
+EXPOSE 10000
