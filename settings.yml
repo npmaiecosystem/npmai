@@ -6,8 +6,7 @@ server:
   port: 10000
   base_url: "/"
   image_proxy: false
-  limiter: false        # ← add this
-  public_instance: true # ← add this
+  public_instance: false
   formats:
     - html
     - json
@@ -20,9 +19,18 @@ search:
 outgoing:
   request_timeout: 10.0
   max_request_timeout: 20.0
-  useragent_suffix: ""
   pool_connections: 100
   pool_maxsize: 20
+
+enabled_plugins:
+  - 'Hash plugin'
+  - 'Search on category select'
+  - 'Tracker URL remover'
+
+disabled_plugins:
+  - 'Limiter'
+  - 'Basic Calculator'
+  - 'Tor check plugin'
 
 botdetection:
   ip_limit:
