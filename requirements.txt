@@ -2,3 +2,5 @@ fastapi
 npmai
 httpx
 pydantic
+flask 
+requests
