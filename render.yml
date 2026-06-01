@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: npmai-search
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    autoDeploy: true
+    envVars:
+      - key: SEARXNG_PORT
+        value: "10000"
+      - key: SEARXNG_BIND_ADDRESS
+        value: "0.0.0.0"
+      - key: INSTANCE_NAME
+        value: "NPMAI Search"
+    healthCheckPath: /
