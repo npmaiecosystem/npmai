@@ -1,0 +1,50 @@
+use_default_settings: true
+
+server:
+  secret_key: "NPMAI_Search_SuperSecret_Key_2025_RandomString_XYZ!!"
+  bind_address: "0.0.0.0"
+  port: 10000
+  base_url: "/"
+  image_proxy: false
+  formats:
+    - html
+    - json
+
+search:
+  safe_search: 0
+  autocomplete: ""
+  default_lang: "en"
+
+outgoing:
+  request_timeout: 10.0
+  max_request_timeout: 20.0
+  useragent_suffix: ""
+  pool_connections: 100
+  pool_maxsize: 20
+
+botdetection:
+  ip_limit:
+    disable: true
+  ip_via_x_forwarded_for_1:
+    disable: true
+
+engines:
+  - name: google
+    engine: google
+    shortcut: g
+    disabled: false
+
+  - name: bing
+    engine: bing
+    shortcut: b
+    disabled: false
+
+  - name: duckduckgo
+    engine: duckduckgo
+    shortcut: ddg
+    disabled: false
+
+  - name: wikipedia
+    engine: wikipedia
+    shortcut: wp
+    disabled: false
