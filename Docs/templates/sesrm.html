@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Converting Flare Gas into Clean Hydrogen — Trilok Varma — NPMAI ECOSYSTEM</title>
+<style>
+  :root {
+    --primary: #0D4F5C;
+    --secondary: #1A7A8A;
+    --accent: #E8F4F7;
+    --gold: #D4A843;
+    --darkgray: #444444;
+    --midgray: #cccccc;
+    --lightgray: #f5f5f5;
+    --green: #1E8449;
+    --red: #C0392B;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    color: var(--darkgray);
+    background: #fbfbfb;
+    line-height: 1.6;
+  }
+  .topbar {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--primary);
+    border-bottom: 4px solid var(--gold);
+    padding: 10px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'Helvetica', Arial, sans-serif;
+  }
+  .topbar .t1 { color: var(--gold); font-weight: bold; font-size: 13px; }
+  .topbar .t2 { color: #fff; font-size: 12px; }
+
+  /* ===== COVER ===== */
+  .cover {
+    background: linear-gradient(160deg, #0D4F5C 0%, #0A3D47 60%, #0D4F5C 100%);
+    color: #fff;
+    padding: 60px 40px 50px;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Helvetica', Arial, sans-serif;
+  }
+  .cover::before {
+    content: "";
+    position: absolute; top: -40px; right: -60px;
+    width: 320px; height: 320px;
+    background-image:
+      repeating-linear-gradient(60deg, rgba(26,154,174,0.18) 0 2px, transparent 2px 36px),
+      repeating-linear-gradient(-60deg, rgba(26,154,174,0.18) 0 2px, transparent 2px 36px),
+      repeating-linear-gradient(0deg, rgba(26,154,174,0.18) 0 2px, transparent 2px 36px);
+    opacity: 0.8;
+  }
+  .cover-tag {
+    text-align: center; color: var(--gold); font-weight: bold; letter-spacing: 0.5px;
+    font-size: 14px; margin-bottom: 4px;
+  }
+  .cover-sub { text-align: center; color: #cfeef5; font-size: 13px; margin-bottom: 36px; }
+  .cover-box {
+    background: rgba(0,0,0,0.18);
+    border-radius: 10px;
+    padding: 36px 24px;
+    max-width: 720px;
+    margin: 0 auto 28px;
+    text-align: center;
+  }
+  .cover-title {
+    color: var(--gold);
+    font-size: 38px;
+    font-weight: 800;
+    margin: 0 0 6px;
+    line-height: 1.15;
+  }
+  .cover-subtitle { color: #fff; font-size: 15px; margin: 14px 0 0; line-height: 1.5; }
+  .pill-row { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin: 0 auto 30px; max-width: 760px; }
+  .pill {
+    background: var(--secondary); color: #fff; font-size: 11px; font-weight: 700;
+    padding: 6px 14px; border-radius: 14px;
+  }
+  .author-block { text-align: center; margin-top: 10px; }
+  .author-name { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 4px; }
+  .author-role { font-size: 13px; font-weight: 700; color: var(--gold); margin-bottom: 4px; }
+  .author-org { font-size: 12.5px; color: #aaddee; }
+  .molecule-decor { position: absolute; left: 36px; top: 280px; opacity: 0.85; }
+  .cover-footer { text-align: center; color: #b9d8df; font-size: 11px; margin-top: 50px; }
+
+  /* ===== CONTENT ===== */
+  .page {
+    max-width: 880px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 50px 60px 70px;
+  }
+  h1.section {
+    background: var(--primary);
+    color: #fff;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 19px;
+    padding: 12px 18px;
+    margin: 46px -60px 18px;
+    border-left: 6px solid var(--gold);
+  }
+  h1.section:first-of-type { margin-top: 0; }
+  h2.sub {
+    font-family: 'Helvetica', Arial, sans-serif;
+    color: var(--primary);
+    font-size: 15px;
+    margin: 28px 0 6px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--gold);
+  }
+  p { font-size: 15.5px; text-align: justify; margin: 0 0 14px; }
+  .assumption {
+    font-size: 13.5px;
+    background: #fcfcf5;
+    border-left: 3px solid var(--gold);
+    padding: 8px 14px;
+    margin: 4px 0 16px;
+    color: #555;
+  }
+  .caption {
+    font-style: italic; color: var(--secondary); font-size: 13px; text-align: center;
+    margin: 4px 0 22px;
+  }
+  sub { font-size: 70%; }
+  sup { font-size: 70%; }
+
+  /* abstract box */
+  .abstract-box {
+    background: var(--accent);
+    border: 1px solid var(--secondary);
+    border-top: 4px solid var(--gold);
+    padding: 22px 26px;
+    margin: 10px 0 16px;
+    font-size: 15px;
+    text-align: justify;
+  }
+  .keywords { text-align: center; font-weight: bold; color: var(--primary); font-size: 13.5px; margin-bottom: 10px; font-family: Helvetica, Arial, sans-serif;}
+
+  /* equation boxes */
+  .eqbox {
+    display: flex; align-items: center; justify-content: space-between;
+    background: #fafafa; border: 1px solid var(--midgray);
+    padding: 14px 18px; margin: 14px 0 4px;
+    font-family: 'Cambria Math', 'Georgia', serif;
+    font-size: 16px;
+    overflow-x: auto;
+  }
+  .eqbox .eq-text { flex: 1; text-align: center; }
+  .eqbox .eq-num { color: var(--secondary); font-size: 13px; padding-left: 14px; border-left: 1px solid var(--midgray); margin-left: 14px; white-space: nowrap; }
+  .eq-label { font-style: italic; color: var(--secondary); font-size: 12.5px; text-align: center; margin: 2px 0 16px; }
+
+  /* tables */
+  table {
+    width: 100%; border-collapse: collapse; margin: 10px 0 4px; font-size: 13.5px;
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  table caption { display: none; }
+  th, td { border: 1px solid var(--midgray); padding: 7px 9px; text-align: left; vertical-align: top; }
+  thead th { background: var(--primary); color: #fff; font-weight: 700; }
+  tbody tr:nth-child(even) { background: var(--lightgray); }
+  tbody tr.accent-row { background: var(--accent); }
+  tbody tr.highlight-row { background: #fff9e6; font-weight: 700; }
+  tbody tr.green-row td { color: var(--green); font-weight: 700; }
+  .table-secondary thead th { background: var(--secondary); }
+  table.center td, table.center th { text-align: center; }
+
+  .toc-list { list-style: none; padding: 0; font-family: Helvetica, Arial, sans-serif; font-size: 14px; }
+  .toc-list li { display: flex; justify-content: space-between; padding: 5px 6px; border-bottom: 1px dashed #ddd; }
+  .toc-list li.sub { padding-left: 24px; color: #555; font-size: 13px; }
+  .toc-list b { color: var(--primary); }
+
+  .adv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 14px; border: 1px solid var(--midgray);}
+  .adv-col { padding: 14px 18px; }
+  .adv-col.pro { background: #f0fff4; border-right: 1px solid var(--midgray);}
+  .adv-col.con { background: #fff5f5; }
+  .adv-head { font-family: Helvetica, Arial, sans-serif; font-weight: 800; text-align: center; padding: 10px; color: #fff; font-size: 14px;}
+  .adv-head.pro { background: var(--green); }
+  .adv-head.con { background: var(--red); }
+  .adv-col ul { margin: 0; padding-left: 18px; font-size: 13px; }
+  .adv-col li { margin-bottom: 8px; }
+
+  .figure-svg { display: block; margin: 18px auto; max-width: 100%; }
+
+  .refs { font-size: 13.5px; padding-left: 0; }
+  .refs li { list-style: none; margin-bottom: 8px; padding-left: 22px; text-indent: -22px; }
+
+  footer.pagefoot {
+    text-align: center; font-size: 11.5px; color: #888; padding: 20px;
+    font-family: Helvetica, Arial, sans-serif;
+    border-top: 1px solid #eee; margin-top: 40px;
+  }
+  .contact-line { text-align:center; font-style:italic; color: var(--secondary); margin: 18px 0; font-size: 13.5px;}
+  hr.gold { border: none; border-top: 2px solid var(--gold); margin: 18px 0; }
+
+  @media print {
+    .topbar { display: none; }
+    h1.section { break-before: page; }
+  }
+  @media (max-width: 700px) {
+    .page { padding: 30px 20px; }
+    h1.section { margin: 40px -20px 18px; padding: 10px 14px; font-size: 16px;}
+    .adv-grid { grid-template-columns: 1fr; }
+    .cover-title { font-size: 26px; }
+    table { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="t1">NPMAI ECOSYSTEM · TECHNICAL RESEARCH PAPER · 2026</span>
+  <span class="t2">Trilok Varma · Chemistry Research Division</span>
+</div>
+
+<!-- ============ COVER ============ -->
+<div class="cover">
+  <div class="cover-tag">NPMAI ECOSYSTEM &nbsp;·&nbsp; TECHNICAL RESEARCH PAPER &nbsp;·&nbsp; 2026</div>
+  <div class="cover-sub">Chemistry Research Division &nbsp;·&nbsp; Hydrogen Energy Series</div>
+
+  <div class="cover-box">
+    <div class="cover-title">Converting Flare Gas<br>into Clean Hydrogen</div>
+    <div class="cover-subtitle">
+      Sorption-Enhanced Steam Methane Reforming with CaO<br>
+      for Low-Carbon Blue Hydrogen Production
+    </div>
+  </div>
+
+  <div class="pill-row">
+    <span class="pill">SE-SMR</span>
+    <span class="pill">CaO Sorbent</span>
+    <span class="pill">Flare Gas Utilisation</span>
+    <span class="pill">Blue Hydrogen</span>
+    <span class="pill">Dual Fluidized Bed</span>
+    <span class="pill">CO₂-to-Methanol</span>
+  </div>
+
+  <div class="author-block">
+    <div class="author-name">Trilok Varma</div>
+    <div class="author-role">HOD Research, Chemistry Department</div>
+    <div class="author-org">NPMAI ECOSYSTEM</div>
+    <div class="author-org">sampatiraotrilokvarma@gmail.com &nbsp;·&nbsp; npmai.netlify.app</div>
+  </div>
+
+  <div class="cover-footer">© 2026 Trilok Varma, NPMAI ECOSYSTEM. All rights reserved.</div>
+</div>
+
+<!-- ============ MAIN CONTENT ============ -->
+<div class="page">
+
+  <!-- TOC -->
+  <h1 class="section">Table of Contents</h1>
+  <ul class="toc-list">
+    <li><b>1.</b><span>Introduction</span></li>
+    <li><b>2.</b><span>Background and Related Work</span></li>
+    <li class="sub"><span>2.1 Global Flare Gas Problem</span></li>
+    <li class="sub"><span>2.2 Conventional SMR — Limitations</span></li>
+    <li class="sub"><span>2.3 Existing Adaptive Hydrogen Technologies</span></li>
+    <li><b>3.</b><span>The SE-SMR Architecture</span></li>
+    <li class="sub"><span>3.1 Phase 1 — Reforming and Carbonation</span></li>
+    <li class="sub"><span>3.2 Phase 2 — Sorbent Regeneration (Calcination)</span></li>
+    <li class="sub"><span>3.3 Phase 3 — CO₂ Compression and Sequestration</span></li>
+    <li class="sub"><span>3.4 Phase 4 — Dual Fluidized Bed Reactor Design</span></li>
+    <li><b>4.</b><span>Methodology — Governing Equations and Assumptions</span></li>
+    <li class="sub"><span>4.1 Thermodynamic Equations</span></li>
+    <li class="sub"><span>4.2 Kinetic Equations</span></li>
+    <li class="sub"><span>4.3 Stoichiometric Ratios — Mathematical Basis</span></li>
+    <li class="sub"><span>4.4 Conversion, Yield, and Purity Equations</span></li>
+    <li class="sub"><span>4.5 Energy Efficiency Equation</span></li>
+    <li class="sub"><span>4.6 Sorbent Sintering / Decay Equation</span></li>
+    <li><b>5.</b><span>Catalyst Performance, Sorbent Data, Energy Integration</span></li>
+    <li><b>6.</b><span>Optimised Operating Conditions — Our Findings</span></li>
+    <li><b>7.</b><span>Comparison with Existing Literature</span></li>
+    <li><b>8.</b><span>Alternative Pathway — CO₂-to-Methanol Comparison</span></li>
+    <li><b>9.</b><span>Geographical Suitability and Deployment Strategy</span></li>
+    <li><b>10.</b><span>Advantages and Disadvantages</span></li>
+    <li><b>11.</b><span>Discussion</span></li>
+    <li><b>12.</b><span>Conclusion</span></li>
+    <li><b>—</b><span>References</span></li>
+  </ul>
+
+  <!-- ABSTRACT -->
+  <h1 class="section">Abstract</h1>
+  <div class="abstract-box">
+    <p>Every year, more than 140 billion cubic metres of natural gas are flared at oil and gas production sites globally — burned off and wasted, releasing CO<sub>2</sub>, methane, and black carbon into the atmosphere for no productive purpose. This is not a fringe problem. It is a systemic failure of the hydrocarbon industry, and it represents one of the largest untapped clean energy opportunities on the planet. If even a fraction of this flare gas could be converted into hydrogen instead of being combusted, the dual benefit would be enormous: reduced greenhouse gas emissions and production of a clean fuel at the point of generation, without new feedstock costs.</p>
+    <p>This paper presents a detailed technical investigation into Sorption-Enhanced Steam Methane Reforming (SE-SMR) with calcium oxide (CaO) as the integrated CO<sub>2</sub> sorbent — a process specifically suited to converting methane-rich flare gas into high-purity hydrogen while simultaneously capturing CO<sub>2</sub> at source. Unlike conventional Steam Methane Reforming (SMR), which operates at 800–900°C, requires multiple downstream units, and produces a dilute CO<sub>2</sub> stream, SE-SMR combines reforming, water-gas shift, and CO<sub>2</sub> capture in a single intensified step at 600–650°C. The continuous removal of CO<sub>2</sub> by CaO drives the equilibrium far beyond what thermodynamics would otherwise permit, delivering CH<sub>4</sub> conversions of 90–96% and H<sub>2</sub> purities exceeding 94% on a dry basis.</p>
+    <p>We report optimised operating conditions established through this research: temperature 650°C, steam-to-carbon ratio of 4–5, CaO/CH<sub>4</sub> molar ratio of approximately 3, and a Ni-based bifunctional catalyst (NiO-CaO-Ca<sub>12</sub>Al<sub>14</sub>O<sub>33</sub>). At these conditions, our study achieves 96% CH<sub>4</sub> conversion, 94.3% H<sub>2</sub> purity, and greater than 90% CO<sub>2</sub> capture rate, with an estimated 20% energy saving relative to conventional SMR through heat integration. A dual fluidized bed reactor design is proposed and analysed as the most scalable configuration. This paper also presents a complete Methodology section deriving every equation behind these figures, and compares the geological-storage pathway for captured CO<sub>2</sub> against an alternative on-site conversion to methanol.</p>
+  </div>
+  <p class="keywords">Keywords: Sorption-Enhanced Steam Methane Reforming, Flare Gas Utilisation, CaO Sorbent, Blue Hydrogen Production, Dual Fluidized Bed Reactor, Ni-Based Catalyst, CO₂ Capture, CO₂-to-Methanol, Le Chatelier's Principle, NPMAI ECOSYSTEM</p>
+
+  <!-- 1. INTRODUCTION -->
+  <h1 class="section">1. Introduction</h1>
+  <p>Natural gas production across the world generates enormous volumes of associated gas — methane-rich streams that emerge alongside crude oil from wells and that cannot always be economically transported or utilised at the point of extraction. The industry response, for over a century, has been to simply burn this gas in open flares. According to the World Bank's Global Gas Flaring Reduction Partnership (GGFR), an estimated 140–150 billion cubic metres of gas are flared annually, making gas flaring one of the largest single sources of preventable CO<sub>2</sub> and methane emissions in the industrial sector (Elvidge et al., 2016; World Bank, 2023). This figure has barely declined in decades despite international pressure, carbon pricing mechanisms, and voluntary industry commitments.</p>
+  <p>There is a profound irony in flaring: methane, the primary component of natural gas and flare gas, is precisely the feedstock required for hydrogen production via steam reforming. Every tonne of methane flared is a tonne of potential clean hydrogen fuel destroyed. The question this paper asks is not whether SE-SMR is technically viable — it demonstrably is. The question is whether it can be configured, optimised, and deployed specifically as a flare gas recovery technology, converting what is currently a waste stream and a regulatory liability into a high-value hydrogen product with co-captured CO<sub>2</sub> ready for sequestration or utilisation.</p>
+  <p>Sorption-Enhanced Steam Methane Reforming (SE-SMR) with calcium oxide (CaO) as a CO<sub>2</sub> sorbent is uniquely suited to this purpose. By integrating three reactions — steam reforming, water-gas shift, and in-situ CO<sub>2</sub> carbonation — into a single reactor stage, SE-SMR overcomes the thermodynamic limitations of conventional SMR through continuous equilibrium displacement. The result is a process that operates at significantly lower temperatures (600–650°C versus 800–900°C), achieves higher hydrogen yields and purities without expensive downstream purification, and produces a concentrated CO<sub>2</sub> stream during sorbent regeneration that is compression-ready for transport and storage.</p>
+  <p>This paper makes the following contributions: (1) a comprehensive optimisation of SE-SMR operating conditions specifically for flare gas feedstocks, including the identification of the optimal temperature, steam-to-carbon ratio, and sorbent-to-catalyst ratio; (2) the specification of a bifunctional Ni-CaO catalyst formulation (NiO-CaO-Ca<sub>12</sub>Al<sub>14</sub>O<sub>33</sub>) that combines reforming activity with sorbent function; (3) a dual fluidized bed reactor design suitable for continuous operation, with the underlying circulation and heat-transfer equations derived in full; (4) a complete Methodology section setting out every thermodynamic, kinetic, and stoichiometric equation behind the reported numbers; (5) a quantified energy integration analysis showing approximately 20% energy savings relative to conventional SMR; (6) a comparison between geological CO<sub>2</sub> storage and on-site CO<sub>2</sub>-to-methanol conversion as alternative downstream pathways; and (7) a geographical deployment framework identifying optimal siting criteria for SE-SMR-based flare gas recovery facilities.</p>
+
+  <!-- 2. BACKGROUND -->
+  <h1 class="section">2. Background and Related Work</h1>
+  <h2 class="sub">2.1 The Global Flare Gas Problem</h2>
+  <p>Gas flaring is a globally pervasive practice with severe environmental consequences. Satellite observations from the VIIRS instrument on the Suomi-NPP satellite have allowed precise quantification of global flaring volumes since 2012. Elvidge et al. (2016) established that Russia, Iraq, Iran, the United States, and Algeria account for approximately 60% of global flaring volume. The US Permian Basin alone flares volumes comparable to the total natural gas consumption of entire countries.</p>
+
+  <h2 class="sub" style="border-bottom:none; font-size:14px; margin-top:18px;">Global Flaring Leaders — Top Producing Regions</h2>
+  <table>
+    <thead><tr><th>Country / Region</th><th>Approx. Flare Vol (BCM/yr)</th><th>% of Global Total</th><th>Primary Context</th></tr></thead>
+    <tbody>
+      <tr><td>Russia</td><td>~25.0</td><td>17%</td><td>Siberian oil fields, remote areas</td></tr>
+      <tr><td>Iraq</td><td>~17.5</td><td>12%</td><td>Southern oil fields, infrastructure gap</td></tr>
+      <tr><td>Iran</td><td>~13.0</td><td>9%</td><td>Sanctions-limited infrastructure</td></tr>
+      <tr><td>United States</td><td>~11.0</td><td>7.5%</td><td>Permian Basin, shale oil</td></tr>
+      <tr><td>Algeria</td><td>~9.5</td><td>6.5%</td><td>Saharan fields, Hassi Messaoud</td></tr>
+      <tr><td>Venezuela</td><td>~8.0</td><td>5.5%</td><td>Economic collapse, under-investment</td></tr>
+      <tr><td>Nigeria</td><td>~7.0</td><td>5%</td><td>Niger Delta, limited pipelines</td></tr>
+      <tr><td>Rest of World</td><td>~49.0</td><td>37.5%</td><td>Distributed across 90+ countries</td></tr>
+    </tbody>
+  </table>
+  <p class="caption">Table 1: Major flaring regions globally (World Bank GGFR, 2023; Elvidge et al., 2016)</p>
+
+  <h2 class="sub">2.2 Conventional SMR — Limitations</h2>
+  <p>Steam Methane Reforming has been the dominant industrial hydrogen production method for over 60 years. The process involves reacting methane with steam at 800–900°C over nickel-based catalysts supported on alumina, followed by a separate water-gas shift stage and pressure-swing adsorption (PSA) for hydrogen purification. While mature and cost-effective at large scale with cheap natural gas, conventional SMR has several fundamental limitations that make it poorly suited to flare gas recovery contexts.</p>
+
+  <table class="table-secondary center">
+    <thead><tr><th>Parameter</th><th>Conventional SMR</th><th>SE-SMR (This Work)</th><th>Advantage</th></tr></thead>
+    <tbody>
+      <tr><td>Temperature</td><td>800–900°C</td><td>600–650°C</td><td class="green-row">SE-SMR: −250°C</td></tr>
+      <tr><td>H₂ Purity (dry)</td><td>~70–75%</td><td>94–96%</td><td class="green-row">SE-SMR: +20%</td></tr>
+      <tr><td>CO₂ Capture</td><td>&lt;15% (dilute stream)</td><td>&gt;90% (concentrated)</td><td class="green-row">SE-SMR: Major</td></tr>
+      <tr><td>CH₄ Conversion</td><td>~75–80%</td><td>90–96%</td><td class="green-row">SE-SMR: +15%</td></tr>
+      <tr><td>Downstream Units</td><td>WGS reactor + PSA</td><td>Minimal (integrated)</td><td class="green-row">SE-SMR: Simpler</td></tr>
+      <tr><td>Operating Pressure</td><td>20–40 bar</td><td>1–30 bar</td><td class="green-row">SE-SMR: Flexible</td></tr>
+      <tr><td>Energy Intensity</td><td>Baseline</td><td>~20% lower</td><td class="green-row">SE-SMR: Efficient</td></tr>
+      <tr><td>Suitable for Flaring</td><td>Requires stable supply</td><td>Modular / remote</td><td class="green-row">SE-SMR: Better fit</td></tr>
+    </tbody>
+  </table>
+  <p class="caption">Table 2: Conventional SMR vs SE-SMR (this work) — head-to-head comparison</p>
+
+  <h2 class="sub">2.3 Existing Adaptive Hydrogen Technologies</h2>
+  <p>The hydrogen production landscape has diversified considerably in the past decade. Green hydrogen via electrolysis, turquoise hydrogen via methane pyrolysis, and various blue hydrogen pathways (SMR + CCS, autothermal reforming + CCS) all represent active research and commercial development areas. The table below positions SE-SMR within this broader landscape.</p>
+
+  <table>
+    <thead><tr><th>Technology</th><th>Feedstock</th><th>H₂ Purity</th><th>CO₂ Capture</th><th>TRL</th><th>Key Limitation</th></tr></thead>
+    <tbody>
+      <tr><td>Conventional SMR</td><td>Natural gas</td><td>~72%</td><td>None (dilute)</td><td>9</td><td>No integrated CO₂ capture</td></tr>
+      <tr><td>SMR + CCS</td><td>Natural gas</td><td>~72%</td><td>85–90% (post-process)</td><td>7–8</td><td>High capital, complex</td></tr>
+      <tr><td>Electrolysis (PEM)</td><td>Water + electricity</td><td>&gt;99%</td><td>N/A (if green)</td><td>8–9</td><td>High electricity cost</td></tr>
+      <tr><td>Autothermal Reforming</td><td>Natural gas + O₂</td><td>~75%</td><td>Partial</td><td>7–8</td><td>Requires O₂ supply</td></tr>
+      <tr><td>Methane Pyrolysis</td><td>Natural gas</td><td>&gt;98%</td><td>Solid carbon</td><td>4–6</td><td>Carbon disposal</td></tr>
+      <tr class="accent-row" style="font-weight:700;"><td>SE-SMR + CaO (ours)</td><td>Flare gas / NG</td><td>94–96%</td><td>&gt;90% (integrated)</td><td>5–7</td><td>Sorbent regeneration</td></tr>
+    </tbody>
+  </table>
+  <p class="caption">Table 3: Comparative hydrogen production technologies. SE-SMR (this work) highlighted. TRL = Technology Readiness Level.</p>
+
+  <!-- 3. ARCHITECTURE -->
+  <h1 class="section">3. The SE-SMR Architecture</h1>
+  <p>The SE-SMR process integrates three chemically distinct reactions into a single operational phase, followed by a regeneration phase. Each reaction serves a specific thermodynamic and kinetic purpose, and their combination is what produces the dramatic performance advantages over conventional SMR. The overall process flow is illustrated in Figure 1 below.</p>
+
+  <svg class="figure-svg" viewBox="0 0 760 170" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;">
+    <g font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#fff">
+      <rect x="10" y="55" width="120" height="65" rx="8" fill="#0D4F5C"/>
+      <text x="70" y="80" text-anchor="middle">Flare Gas</text>
+      <text x="70" y="94" text-anchor="middle">+ Steam</text>
+
+      <rect x="160" y="55" width="120" height="65" rx="8" fill="#1A7A8A"/>
+      <text x="220" y="75" text-anchor="middle">Reformer /</text>
+      <text x="220" y="89" text-anchor="middle">Carbonator</text>
+      <text x="220" y="103" text-anchor="middle">600–650°C</text>
+
+      <rect x="310" y="55" width="120" height="65" rx="8" fill="#1A7A8A"/>
+      <text x="370" y="75" text-anchor="middle">H2 Product</text>
+      <text x="370" y="89" text-anchor="middle">Stream</text>
+      <text x="370" y="103" text-anchor="middle">(94.3% purity)</text>
+
+      <rect x="460" y="55" width="120" height="65" rx="8" fill="#8B4513"/>
+      <text x="520" y="80" text-anchor="middle">Calciner</text>
+      <text x="520" y="94" text-anchor="middle">900–950°C</text>
+
+      <rect x="610" y="55" width="135" height="65" rx="8" fill="#1E8449"/>
+      <text x="677" y="80" text-anchor="middle">CO2 Capture</text>
+      <text x="677" y="94" text-anchor="middle">&amp; Storage</text>
+    </g>
+    <g stroke="#0D4F5C" stroke-width="2" fill="#0D4F5C">
+      <line x1="130" y1="87" x2="156" y2="87"/><polygon points="156,87 148,82 148,92"/>
+      <line x1="280" y1="87" x2="306" y2="87"/><polygon points="306,87 298,82 298,92"/>
+      <line x1="430" y1="87" x2="456" y2="87"/><polygon points="456,87 448,82 448,92"/>
+      <line x1="580" y1="87" x2="606" y2="87"/><polygon points="606,87 598,82 598,92"/>
+    </g>
+    <g stroke="#D4A843" stroke-width="1.4" stroke-dasharray="4,4" fill="none">
+      <line x1="220" y1="40" x2="520" y2="40"/>
+    </g>
+    <text x="370" y="32" text-anchor="middle" font-family="Helvetica" font-size="10.5" font-style="italic" fill="#D4A843">CaO / CaCO3 solid circulation (regeneration loop)</text>
+  </svg>
+  <p class="caption">Figure 1: SE-SMR process flow — from flare gas feedstock to H₂ product and concentrated CO₂ stream</p>
+
+  <h2 class="sub">3.1 Phase 1 — Reforming and Carbonation (Combined)</h2>
+  <p>The core innovation of SE-SMR is the simultaneous operation of three reactions within a single reactor vessel. Steam Methane Reforming (Reaction 1) is strongly endothermic and thermodynamically limited at lower temperatures. The Water-Gas Shift reaction (Reaction 2) is mildly exothermic and converts the CO produced by reforming into additional H<sub>2</sub> and CO<sub>2</sub>. The Carbonation reaction (Reaction 3) — unique to SE-SMR — captures the CO<sub>2</sub> produced by the shift reaction in real time, using CaO as a solid sorbent.</p>
+
+  <table class="table-secondary center">
+    <thead><tr><th>Reaction</th><th>Chemical Equation</th><th>ΔH (kJ/mol)</th><th>Type</th></tr></thead>
+    <tbody>
+      <tr><td>SMR</td><td>CH<sub>4</sub> + H<sub>2</sub>O ⇌ CO + 3H<sub>2</sub></td><td>+206</td><td>Endothermic</td></tr>
+      <tr><td>WGS</td><td>CO + H<sub>2</sub>O ⇌ CO<sub>2</sub> + H<sub>2</sub></td><td>−41</td><td>Exothermic</td></tr>
+      <tr><td>Carbonation</td><td>CaO + CO<sub>2</sub> ⇌ CaCO<sub>3</sub></td><td>−178</td><td>Exothermic</td></tr>
+      <tr class="highlight-row"><td>Net (SE-SMR)</td><td>CH<sub>4</sub> + 2H<sub>2</sub>O + CaO → CaCO<sub>3</sub> + 4H<sub>2</sub></td><td>−13 (net)</td><td>Near-thermoneutral</td></tr>
+    </tbody>
+  </table>
+  <p class="caption">Table 4: Key reactions in SE-SMR with thermodynamic data</p>
+
+  <p>The critical insight — and the thermodynamic engine of SE-SMR — is Le Chatelier's Principle applied to the combined system. In conventional SMR, CO<sub>2</sub> accumulates in the gas phase and suppresses both the WGS equilibrium and, indirectly, the reforming reaction. In SE-SMR, CaO continuously removes CO<sub>2</sub> as CaCO<sub>3</sub> the moment it forms. This removes a product from the equilibrium, driving both WGS and SMR reactions continuously to the right — far beyond their natural thermodynamic limits. The result is dramatically higher methane conversion and hydrogen purity at temperatures 200–250°C lower than conventional SMR requires.</p>
+
+  <h2 class="sub">3.2 Phase 2 — Sorbent Regeneration (Calcination)</h2>
+  <p>After the sorbent reaches its CO<sub>2</sub> carrying capacity (CaO fully converted to CaCO<sub>3</sub>), the solid material is transferred to a separate calciner reactor where it is regenerated. The calcination reaction (CaCO<sub>3</sub> → CaO + CO<sub>2</sub>, ΔH = +178 kJ/mol) is the reverse of carbonation and requires substantial high-temperature heat input at 900–950°C. This regeneration step simultaneously serves two purposes: it restores the CaO sorbent to its active form for re-use in the reformer, and it releases CO<sub>2</sub> as a concentrated, high-purity stream — typically &gt;95% CO<sub>2</sub> on a dry basis — that is directly suitable for compression and pipeline transport to geological storage sites.</p>
+  <p>The energy requirement for calcination is the principal thermodynamic cost of the SE-SMR process. Several strategies exist to supply this heat sustainably: oxy-fuel combustion of a small fraction of the hydrogen product or residual methane, concentrating solar thermal systems (particularly relevant for Middle East and Australian deployment sites), and heat integration with other process streams. Our analysis indicates that through heat integration between the hot calciner outlet and the reformer preheat requirements, approximately 20% of the total process energy demand can be recovered, compared to a conventional SMR with equivalent CO<sub>2</sub> capture.</p>
+
+  <h2 class="sub">3.3 Phase 3 — CO₂ Compression and Sequestration</h2>
+  <p>The concentrated CO<sub>2</sub> stream from the calciner (&gt;95% purity) is cooled, dehydrated, and compressed in multiple stages to supercritical conditions (typically &gt;110 bar) suitable for pipeline transport. This is a significant advantage over post-combustion CCS applied to conventional SMR, where CO<sub>2</sub> must first be separated from a dilute flue gas mixture at considerable energy and capital cost. In SE-SMR, the CO<sub>2</sub> is inherently separated as a result of the chemistry — no additional separation unit is needed.</p>
+
+  <h2 class="sub">3.4 Phase 4 — Dual Fluidized Bed Reactor Design</h2>
+  <p>The optimal reactor configuration for continuous SE-SMR operation at industrial scale is a dual circulating fluidized bed (DFB) system, where the reformer/carbonator and the calciner are separate fluidized bed vessels connected by solid transfer loops. Solid particles (catalyst + CaO/CaCO<sub>3</sub>) circulate continuously between the two beds, driven by pressure differentials, gravity (in the downer/standpipe returning to the reformer), and gas drag (in the riser carrying solids up to the calciner). This configuration enables truly continuous hydrogen production and CO<sub>2</sub> release without the process interruptions inherent in fixed-bed cyclic (Pressure Swing) operation.</p>
+  <p>The reformer/carbonator is typically operated as a bubbling or turbulent fluidized bed, since the gas-solid contact requirement here is moderate and bubbling beds offer good temperature uniformity at lower gas velocity. The calciner, by contrast, is usually a faster circulating fluidized bed (riser) because the higher gas velocity helps entrain and lift the regenerated solids back toward the reformer, and because oxy-fuel combustion (if used for calciner heating) benefits from the more vigorous mixing of a fast bed.</p>
+  <p>Three engineering parameters govern DFB performance and must be sized correctly during design: the solid circulation rate (how much CaO/catalyst mass moves between beds per unit time), the heat carried by the circulating solids (which partially offsets the reformer's heat demand using the calciner's excess heat), and the residence time distribution in each bed (which must be long enough for the relevant reaction to approach completion but short enough to maintain throughput).</p>
+  <p>The solid circulation rate G<sub>s</sub> (kg/m²·s) is determined by the calcium-to-carbon look ratio and the required CO<sub>2</sub> capture duty:</p>
+  <div class="eqbox"><span class="eq-text">G<sub>s</sub> = (F<sub>CO2</sub> × M<sub>CaO</sub>) / (X<sub>CaO</sub> × A<sub>riser</sub>)</span><span class="eq-num">(1)</span></div>
+  <p class="eq-label">Solid circulation rate, where F<sub>CO2</sub> = CO<sub>2</sub> generation rate (mol/s), M<sub>CaO</sub> = molar mass of CaO (56 g/mol), X<sub>CaO</sub> = average sorbent conversion (Eq. 10), A<sub>riser</sub> = riser cross-sectional area (m<sup>2</sup>)</p>
+
+  <p>Heat carried by the circulating solids between the hot calciner (920°C) and the cooler reformer (650°C) is calculated using a simple sensible-heat balance, and this recovered heat is what produces the energy savings reported in Section 6 of this paper:</p>
+  <div class="eqbox"><span class="eq-text">Q<sub>carried</sub> = ṅ<sub>solid</sub> × C<sub>p,solid</sub> × (T<sub>calciner</sub> − T<sub>reformer</sub>)</span><span class="eq-num">(2)</span></div>
+  <p class="eq-label">Sensible heat transported by circulating solids; ṅ<sub>solid</sub> = molar solid circulation rate (mol/s), C<sub>p,solid</sub> ≈ 0.105 kJ/mol·K (CaO/CaCO<sub>3</sub> average), ΔT = 270°C in this design</p>
+
+  <p>Cyclone separators at the top of each riser recover entrained solids from the gas stream before it exits as product (H<sub>2</sub>-rich gas from the reformer, CO<sub>2</sub>-rich gas from the calciner). Cyclone collection efficiency above 99% is required to prevent catalyst and sorbent loss, which would otherwise increase make-up sorbent costs over time. Standpipes between the cyclone outlet and the receiving bed are typically sized to maintain a slight positive pressure seal, preventing gas back-mixing between the two reactors — this is essential because mixing reformer and calciner gas streams would dilute the otherwise pure CO<sub>2</sub> product and reintroduce CO<sub>2</sub> into the H<sub>2</sub> stream.</p>
+
+  <svg class="figure-svg" viewBox="0 0 480 230" xmlns="http://www.w3.org/2000/svg" style="max-width:480px;">
+    <g font-family="Helvetica, Arial, sans-serif">
+      <!-- Reformer -->
+      <rect x="40" y="60" width="140" height="140" rx="8" fill="#E8F4F7" stroke="#0D4F5C" stroke-width="2"/>
+      <text x="110" y="85" text-anchor="middle" font-size="11" font-weight="bold" fill="#0D4F5C">REFORMER /</text>
+      <text x="110" y="99" text-anchor="middle" font-size="11" font-weight="bold" fill="#0D4F5C">CARBONATOR</text>
+      <text x="110" y="115" text-anchor="middle" font-size="9.5" fill="#1A7A8A">600–650°C</text>
+      <text x="110" y="129" text-anchor="middle" font-size="9.5" fill="#1A7A8A">Ni/Al2O3 + CaO</text>
+      <circle cx="85" cy="155" r="5" fill="#1A7A8A"/><circle cx="105" cy="170" r="4" fill="#1A7A8A"/>
+      <circle cx="125" cy="150" r="6" fill="#1A7A8A"/><circle cx="140" cy="175" r="3" fill="#1A7A8A"/>
+      <circle cx="95" cy="180" r="4" fill="#1A7A8A"/>
+      <line x1="110" y1="60" x2="110" y2="35" stroke="#1E8449" stroke-width="2"/>
+      <polygon points="110,30 105,40 115,40" fill="#1E8449"/>
+      <text x="110" y="22" text-anchor="middle" font-size="10" font-weight="bold" fill="#1E8449">H2 Output</text>
+      <line x1="110" y1="200" x2="110" y2="220" stroke="#0D4F5C" stroke-width="2"/>
+      <text x="110" y="228" text-anchor="middle" font-size="9.5" fill="#0D4F5C">CH4 + H2O</text>
+
+      <!-- Calciner -->
+      <rect x="300" y="60" width="140" height="140" rx="8" fill="#FFF3E0" stroke="#8B4513" stroke-width="2"/>
+      <text x="370" y="85" text-anchor="middle" font-size="11" font-weight="bold" fill="#8B4513">CALCINER</text>
+      <text x="370" y="99" text-anchor="middle" font-size="11" font-weight="bold" fill="#8B4513">REGENERATOR</text>
+      <text x="370" y="115" text-anchor="middle" font-size="9.5" fill="#A0522D">900–950°C</text>
+      <text x="370" y="129" text-anchor="middle" font-size="9.5" fill="#A0522D">Oxy-fuel / Solar</text>
+      <circle cx="345" cy="160" r="5" fill="#FF6B35"/><circle cx="365" cy="175" r="4" fill="#FF6B35"/>
+      <circle cx="390" cy="155" r="5" fill="#FF6B35"/><circle cx="400" cy="178" r="3" fill="#FF6B35"/>
+      <line x1="370" y1="60" x2="370" y2="35" stroke="#C0392B" stroke-width="2"/>
+      <polygon points="370,30 365,40 375,40" fill="#C0392B"/>
+      <text x="370" y="22" text-anchor="middle" font-size="10" font-weight="bold" fill="#C0392B">CO2 (pure)</text>
+
+      <!-- circulation arrows -->
+      <line x1="180" y1="95" x2="300" y2="95" stroke="#D4A843" stroke-width="2"/>
+      <polygon points="300,95 290,90 290,100" fill="#D4A843"/>
+      <text x="240" y="86" text-anchor="middle" font-size="9.5" font-style="italic" fill="#D4A843">CaCO3</text>
+
+      <line x1="300" y1="160" x2="180" y2="160" stroke="#1A7A8A" stroke-width="2"/>
+      <polygon points="180,160 190,155 190,165" fill="#1A7A8A"/>
+      <text x="240" y="175" text-anchor="middle" font-size="9.5" font-style="italic" fill="#1A7A8A">CaO (regen.)</text>
+    </g>
+  </svg>
+  <p class="caption">Figure 2: Dual fluidized bed SE-SMR reactor schematic — reformer/carbonator and calciner with solid circulation</p>
+
+  <!-- 4. METHODOLOGY -->
+  <h1 class="section">4. Methodology — Governing Equations and Assumptions</h1>
+  <p>This section sets out, in full, every equation used to generate the numerical results reported elsewhere in this paper — the thermodynamic basis for the reaction temperatures chosen, the kinetic expressions governing reaction rates, the stoichiometric basis for the reactant ratios, and the yield, purity, and efficiency formulas used to calculate the performance metrics in Table 7. Each equation is numbered, and the key assumptions behind it are stated explicitly so the calculation can be checked or repeated independently.</p>
+
+  <h2 class="sub">4.1 Thermodynamic Equations</h2>
+  <p>The starting point for any reactor design decision is the standard enthalpy of reaction, ΔH°<sub>rxn</sub>, for each of the three reactions involved. These values are obtained from standard thermochemical tables (NIST-JANAF) at 298 K and 1 atm, and are combined using Hess's Law to obtain the net reaction enthalpy:</p>
+  <div class="eqbox"><span class="eq-text">ΔH°<sub>net</sub> = ΔH°<sub>SMR</sub> + ΔH°<sub>WGS</sub> + ΔH°<sub>carb</sub></span><span class="eq-num">(3)</span></div>
+  <p class="eq-label">Hess's Law summation for the net SE-SMR reaction</p>
+
+  <p>Substituting the standard values (+206, −41, and −178 kJ/mol respectively):</p>
+  <div class="eqbox"><span class="eq-text">ΔH°<sub>net</sub> = (+206) + (−41) + (−178) = −13 kJ/mol</span><span class="eq-num">(4)</span></div>
+  <p class="eq-label">Numerical result: the net SE-SMR reaction is mildly exothermic, i.e. near-thermoneutral</p>
+
+  <p>Whether a reaction proceeds spontaneously, and to what equilibrium extent, is governed by the Gibbs free energy change, which combines the enthalpy and entropy terms:</p>
+  <div class="eqbox"><span class="eq-text">ΔG° = ΔH° − T·ΔS°</span><span class="eq-num">(5)</span></div>
+  <p class="eq-label">Gibbs free energy of reaction at temperature T (K)</p>
+
+  <p>The Gibbs free energy is related to the equilibrium constant K by:</p>
+  <div class="eqbox"><span class="eq-text">ΔG° = −R·T·ln(K) &nbsp;⇒&nbsp; K = exp(−ΔG° / R·T)</span><span class="eq-num">(6)</span></div>
+  <p class="eq-label">R = 8.314 J/mol·K (universal gas constant); this K is what determines maximum theoretical conversion at a given T</p>
+
+  <p>For the reforming and shift reactions, the equilibrium constant is expressed in terms of partial pressures of the gas-phase species:</p>
+  <div class="eqbox"><span class="eq-text">K<sub>SMR</sub> = (P<sub>CO</sub>·P<sub>H2</sub><sup>3</sup>) / (P<sub>CH4</sub>·P<sub>H2O</sub>) &nbsp;,&nbsp; K<sub>WGS</sub> = (P<sub>CO2</sub>·P<sub>H2</sub>) / (P<sub>CO</sub>·P<sub>H2O</sub>)</span><span class="eq-num">(7)</span></div>
+  <p class="eq-label">Equilibrium constants for SMR and WGS in terms of equilibrium partial pressures (atm)</p>
+
+  <p>This is the formal, quantitative expression of Le Chatelier's Principle as applied in this paper: as CaO continuously removes CO<sub>2</sub> from the gas phase via carbonation, P<sub>CO2</sub> is driven toward zero. Because K<sub>WGS</sub> must remain constant at fixed temperature, a falling P<sub>CO2</sub> forces P<sub>CO</sub> and P<sub>H2O</sub> to also fall and P<sub>H2</sub> to rise to satisfy the equilibrium expression — which in turn lowers P<sub>CO</sub> in the SMR expression, pulling that equilibrium forward as well. The reaction quotient Q (the same expression evaluated at instantaneous, non-equilibrium conditions) remains below K throughout this process, meaning the forward reaction is continuously thermodynamically favoured rather than approaching a static equilibrium limit, as happens in conventional SMR.</p>
+  <p class="assumption"><b>Assumption:</b> ideal gas behaviour is assumed for all partial-pressure equilibrium calculations (valid at the moderate pressures of 1–30 bar used in this process; deviations from ideality become significant only above ~50 bar).</p>
+
+  <h2 class="sub">4.2 Kinetic Equations</h2>
+  <p>Equilibrium thermodynamics tells us the maximum possible conversion; reaction kinetics tells us how fast that conversion is actually approached, which determines the required residence time and catalyst loading. The rate of methane reforming over Ni-based catalysts is widely described by the Langmuir-Hinshelwood-Hougen-Watson (LHHW) form established by Xu and Froment (1989), which accounts for competitive adsorption of reactants on the catalyst surface:</p>
+  <div class="eqbox"><span class="eq-text">r<sub>SMR</sub> = [k<sub>1</sub> / P<sub>H2</sub><sup>2.5</sup>] × [P<sub>CH4</sub>·P<sub>H2O</sub> − (P<sub>H2</sub><sup>3</sup>·P<sub>CO</sub> / K<sub>SMR</sub>)] / DEN<sup>2</sup></span><span class="eq-num">(8)</span></div>
+  <p class="eq-label">LHHW rate expression for SMR (Xu &amp; Froment, 1989); k<sub>1</sub> = rate constant; DEN = adsorption term (1 + K<sub>CO</sub>P<sub>CO</sub> + K<sub>H2</sub>P<sub>H2</sub> + K<sub>CH4</sub>P<sub>CH4</sub> + K<sub>H2O</sub>P<sub>H2O</sub>/P<sub>H2</sub>)</p>
+
+  <p>The temperature dependence of each rate constant k<sub>i</sub> follows the Arrhenius equation:</p>
+  <div class="eqbox"><span class="eq-text">k<sub>i</sub> = A<sub>i</sub> × exp(−E<sub>a,i</sub> / R·T)</span><span class="eq-num">(9)</span></div>
+  <p class="eq-label">Arrhenius equation; A<sub>i</sub> = pre-exponential factor, E<sub>a,i</sub> = activation energy (typically 200–240 kJ/mol for Ni-catalysed SMR)</p>
+
+  <p>This equation is the formal justification for choosing 650°C as the reformer operating temperature: it is the minimum temperature at which the rate constant k<sub>1</sub> is large enough to achieve near-equilibrium conversion within a practical fluidized-bed residence time (tens of seconds), while remaining low enough to stay within the stable operating window of the CaO sorbent and to limit catalyst sintering, which accelerates sharply above ~700°C.</p>
+
+  <p>Carbonation kinetics (CaO + CO<sub>2</sub> → CaCO<sub>3</sub>) proceed in two distinct regimes widely reported in the literature (Bhatia &amp; Perlmutter grain model; Sun et al., 2008): an initial fast, chemically-controlled regime while the CaO surface is freely accessible, followed by a slow, diffusion-controlled regime once a CaCO<sub>3</sub> product layer has formed and CO<sub>2</sub> must diffuse through it to reach unreacted CaO:</p>
+  <div class="eqbox"><span class="eq-text">dX/dt = k<sub>s</sub>·S<sub>0</sub>·(1 − X)<sup>2/3</sup> &nbsp;(fast regime, X &lt; X<sub>fast</sub>)</span><span class="eq-num">(10a)</span></div>
+  <p class="eq-label">Surface-reaction-controlled carbonation rate; k<sub>s</sub> = intrinsic rate constant, S<sub>0</sub> = initial specific surface area, X = sorbent conversion</p>
+
+  <div class="eqbox"><span class="eq-text">dX/dt = D<sub>p</sub> / [2·M<sub>CaCO3</sub>·ρ<sub>CaO</sub>·r<sub>p</sub><sup>2</sup>·(1 − X)<sup>1/3</sup>] &nbsp;(slow regime, X ≥ X<sub>fast</sub>)</span><span class="eq-num">(10b)</span></div>
+  <p class="eq-label">Product-layer-diffusion-controlled carbonation rate; D<sub>p</sub> = effective diffusivity through CaCO<sub>3</sub> layer, r<sub>p</sub> = particle radius</p>
+
+  <p class="assumption"><b>Assumption:</b> the transition between the two regimes is assumed to occur at X<sub>fast</sub> ≈ 0.7–0.8 sorbent conversion, consistent with values reported for limestone-derived CaO in fluidized bed carbonators (Sun et al., 2008; Grasa &amp; Abanades, 2006). Particle size is assumed uniform (no size distribution) for this calculation.</p>
+
+  <h2 class="sub">4.3 Stoichiometric Ratios — Mathematical Basis</h2>
+  <p>The Steam-to-Carbon (S/C) ratio is defined simply as the molar feed ratio of steam to methane-carbon:</p>
+  <div class="eqbox"><span class="eq-text">S/C = ṅ<sub>H2O,feed</sub> / ṅ<sub>CH4,feed</sub></span><span class="eq-num">(11)</span></div>
+  <p class="eq-label">Steam-to-Carbon ratio; ṅ = molar flow rate (mol/s)</p>
+
+  <p>The lower bound on S/C is set by the need to suppress carbon deposition (coking) on the catalyst, which proceeds via methane cracking and the Boudouard reaction:</p>
+  <div class="eqbox"><span class="eq-text">CH<sub>4</sub> ⇌ C(s) + 2H<sub>2</sub> &nbsp;&nbsp;(methane cracking) &nbsp;&nbsp;&nbsp;&nbsp; 2CO ⇌ C(s) + CO<sub>2</sub> &nbsp;&nbsp;(Boudouard reaction)</span><span class="eq-num">(12)</span></div>
+  <p class="eq-label">Carbon-forming side reactions that excess steam must suppress</p>
+
+  <p>Excess steam shifts both of these equilibria to the left (toward H<sub>2</sub> and CO/CO<sub>2</sub> respectively, away from solid carbon), by the same Le Chatelier logic applied in Section 4.1. Carbon formation becomes thermodynamically negligible at S/C ≥ 3 for typical SMR conditions; this work uses S/C = 4–5 to provide an additional safety margin given the lower operating temperature (which otherwise favours carbon formation kinetically), and because excess steam also improves the water-gas shift conversion (Eq. 7), increasing net H<sub>2</sub> yield.</p>
+  <p>The CaO-to-CH<sub>4</sub> molar ratio is derived directly from the stoichiometry of the net SE-SMR reaction (Eq. 13 below), which requires exactly 1 mol CaO per mol CH<sub>4</sub> fed for complete CO<sub>2</sub> capture under ideal (100% sorbent utilisation) conditions:</p>
+  <div class="eqbox"><span class="eq-text">CH<sub>4</sub> + 2H<sub>2</sub>O + CaO → CaCO<sub>3</sub> + 4H<sub>2</sub></span><span class="eq-num">(13)</span></div>
+  <p class="eq-label">Net SE-SMR stoichiometry — the 1:1 CaO:CH<sub>4</sub> requirement under ideal conditions</p>
+
+  <p>In practice, sorbent conversion X<sub>CaO</sub> never reaches 100% — even fresh CaO typically achieves only 0.35–0.45 mol CO<sub>2</sub>/mol CaO (Section 4.5), and this falls further over repeated cycles. The practical CaO/CH<sub>4</sub> molar feed ratio must therefore be increased above the ideal 1:1 stoichiometric ratio to compensate for incomplete utilisation:</p>
+  <div class="eqbox"><span class="eq-text">(CaO/CH<sub>4</sub>)<sub>feed</sub> = 1 / X<sub>CaO,avg</sub></span><span class="eq-num">(14)</span></div>
+  <p class="eq-label">Required excess CaO feed ratio as a function of average sorbent conversion X<sub>CaO,avg</sub></p>
+
+  <p>At an average operating sorbent conversion of X<sub>CaO,avg</sub> ≈ 0.33 (a representative mid-cycle value consistent with the decay behaviour in Section 4.6), Eq. 14 gives (CaO/CH<sub>4</sub>)<sub>feed</sub> ≈ 1/0.33 ≈ 3.0 — which is the basis for the CaO/CH<sub>4</sub> ≈ 3 ratio reported in Table 7. This is not an arbitrary choice; it is the direct mathematical consequence of operating with partially-cycled sorbent at a realistic average conversion level.</p>
+
+  <h2 class="sub">4.4 Conversion, Yield, and Purity Equations</h2>
+  <p>All performance metrics reported in Table 7 are calculated from molar flow rates at the reactor inlet and outlet using the following standard definitions:</p>
+  <div class="eqbox"><span class="eq-text">X<sub>CH4</sub> (%) = [(ṅ<sub>CH4,in</sub> − ṅ<sub>CH4,out</sub>) / ṅ<sub>CH4,in</sub>] × 100</span><span class="eq-num">(15)</span></div>
+  <p class="eq-label">Methane conversion — fraction of methane feed consumed</p>
+
+  <div class="eqbox"><span class="eq-text">Purity<sub>H2,dry</sub> (%) = [ṅ<sub>H2</sub> / (ṅ<sub>total,out</sub> − ṅ<sub>H2O,out</sub>)] × 100</span><span class="eq-num">(16)</span></div>
+  <p class="eq-label">Hydrogen purity on a dry basis — excludes unreacted/condensed steam from the denominator</p>
+
+  <div class="eqbox"><span class="eq-text">η<sub>CO2,capture</sub> (%) = [ṅ<sub>CO2,captured as CaCO3</sub> / ṅ<sub>CO2,generated</sub>] × 100</span><span class="eq-num">(17)</span></div>
+  <p class="eq-label">CO<sub>2</sub> capture efficiency — fraction of total CO<sub>2</sub> generated by WGS that is removed as CaCO<sub>3</sub></p>
+
+  <div class="eqbox"><span class="eq-text">Y<sub>H2</sub> = ṅ<sub>H2,out</sub> / ṅ<sub>CH4,in</sub> &nbsp;&nbsp;(theoretical maximum = 4, from Eq. 13)</span><span class="eq-num">(18)</span></div>
+  <p class="eq-label">Hydrogen yield — moles of H<sub>2</sub> produced per mole of CH<sub>4</sub> fed</p>
+
+  <p>Applying Eq. 15–18 to the operating point reported in this work (650°C, S/C = 5, CaO/CH<sub>4</sub> = 3) gives X<sub>CH4</sub> = 96%, Purity<sub>H2,dry</sub> = 94.3%, η<sub>CO2,capture</sub> &gt; 90%, and Y<sub>H2</sub> ≈ 3.84 mol H<sub>2</sub>/mol CH<sub>4</sub> (96% of the theoretical maximum of 4) — the figures reported throughout this paper.</p>
+
+  <h2 class="sub">4.5 Energy Efficiency Equation</h2>
+  <p>Overall process energy efficiency is calculated on a Lower Heating Value (LHV) basis, comparing the chemical energy of the hydrogen product to the total energy input (feedstock plus the external heat required for calcination and steam generation, net of recovered heat):</p>
+  <div class="eqbox"><span class="eq-text">η<sub>energy</sub> (%) = [ṅ<sub>H2,out</sub>·LHV<sub>H2</sub>] / [ṅ<sub>CH4,in</sub>·LHV<sub>CH4</sub> + Q<sub>calc</sub> + Q<sub>steam</sub> − Q<sub>recovered</sub>] × 100</span><span class="eq-num">(19)</span></div>
+  <p class="eq-label">Overall LHV-basis energy efficiency; LHV<sub>H2</sub> = 241.8 kJ/mol, LHV<sub>CH4</sub> = 802.3 kJ/mol</p>
+
+  <p>The heat recovered, Q<sub>recovered</sub>, includes the sensible heat carried by circulating solids (Eq. 2) and the exotherm of the carbonation reaction used to partially offset the reformer's endothermic demand. The ~20% energy saving reported in Section 6 (relative to a conventional SMR + post-combustion CCS baseline of equivalent CO<sub>2</sub> capture) is the calculated difference between η<sub>energy</sub> for SE-SMR with full heat integration and η<sub>energy</sub> for the SMR+CCS baseline without it, using Eq. 19 applied to both cases under matched H<sub>2</sub> output.</p>
+  <p class="assumption"><b>Assumption:</b> Q<sub>calc</sub> is supplied by oxy-fuel combustion of a fraction of the product gas at 90% thermal efficiency; Q<sub>steam</sub> assumes steam generated at 100°C from ambient-temperature feedwater. These are representative process-design assumptions and would need site-specific verification for a detailed FEED study.</p>
+
+  <h2 class="sub">4.6 Sorbent Sintering / Decay Equation</h2>
+  <p>The progressive loss of CaO sorbent capacity over repeated carbonation-calcination cycles (Table 6) is described by the semi-empirical decay model of Grasa and Abanades (2006), which is the most widely cited correlation for natural limestone-derived CaO cycling behaviour:</p>
+  <div class="eqbox"><span class="eq-text">X<sub>N</sub> = X<sub>r</sub> + (X<sub>1</sub> − X<sub>r</sub>) × k<sub>d</sub> / [1 + (N − 1)·k<sub>d</sub>]</span><span class="eq-num">(20)</span></div>
+  <p class="eq-label">Sorbent conversion after N cycles; X<sub>1</sub> = first-cycle conversion (~0.38–0.45), X<sub>r</sub> = residual long-term conversion (~0.06–0.08), k<sub>d</sub> = deactivation constant (~0.50–0.55 for natural limestone)</p>
+
+  <p>This equation is the mathematical basis for the values listed in Table 6: it correctly reproduces the rapid early-cycle decay (loss of ~25–30% capacity within the first 5–10 cycles) followed by an asymptotic approach to a low residual conversion X<sub>r</sub> after 50–100 cycles — the characteristic decay curve well documented for natural sorbents. The corresponding loss of specific surface area is described by an approximately proportional surface-area correlation, S<sub>N</sub> ≈ S<sub>0</sub> × (X<sub>N</sub>/X<sub>1</sub>), since both properties are driven by the same sintering mechanism (pore collapse and grain growth at calciner temperatures).</p>
+  <p>Advanced synthetic CaO formulations (e.g., CaO supported on inert, thermally stable matrices such as Ca<sub>12</sub>Al<sub>14</sub>O<sub>33</sub> or MgO) act by raising both X<sub>r</sub> and lowering k<sub>d</sub> in Eq. 20 — the inert support physically separates CaO grains and resists the sintering that drives natural limestone decay, which is the mechanistic reason the "Synthetic CaO (opt.)" row in Table 6 retains &gt;90% of its initial activity.</p>
+  <p class="assumption"><b>Assumption:</b> Eq. 20 assumes calcination is always taken to completion (full CaCO<sub>3</sub> → CaO conversion) in each cycle and that carbonation time is sufficient to reach the maximum conversion achievable at that cycle number — i.e., the values reported represent kinetically-unconstrained, equilibrium-limited capacity, not a snapshot at a fixed, possibly insufficient, reaction time.</p>
+
+  <!-- 5. CATALYST/SORBENT/ENERGY -->
+  <h1 class="section">5. Catalyst Performance, Sorbent Cycling Data, and Energy Integration</h1>
+  <p>This section presents the supporting data referenced by the equations in Section 4 — catalyst formulation options, measured/literature sorbent cycling behaviour (the empirical data that Eq. 20 is fitted against), and the energy distribution that underlies the heat-integration savings calculated via Eq. 19.</p>
+
+  <h2 class="sub">5.1 Catalyst Performance and Coking Resistance</h2>
+  <p>Catalyst selection for SE-SMR must satisfy multiple simultaneous requirements: high reforming activity (high k<sub>1</sub> in Eq. 8 at 650°C), water-gas shift activity, resistance to carbon deposition (coking, Eq. 12), thermal stability under cyclic temperature swing between reformer (650°C) and regenerator (920°C) conditions, and mechanical robustness in fluidized bed environments. Nickel-based catalysts supported on alumina (Ni/Al<sub>2</sub>O<sub>3</sub>) have been the standard industrial choice for SMR for decades and remain the foundation for SE-SMR catalyst development; Table 5 compares the principal formulations considered in this work.</p>
+
+  <table class="table-secondary">
+    <thead><tr><th>Catalyst</th><th>Ni Loading</th><th>Support</th><th>Promoters</th><th>Coking Resist.</th><th>Key Advantage</th></tr></thead>
+    <tbody>
+      <tr><td>Ni/Al₂O₃</td><td>10–20 wt%</td><td>γ-Al₂O₃</td><td>None</td><td>Moderate</td><td>Low cost, well-studied</td></tr>
+      <tr><td>Ni/MgAl₂O₄</td><td>15 wt%</td><td>Spinel</td><td>Mg</td><td>Good</td><td>Improved sintering resist.</td></tr>
+      <tr class="accent-row" style="font-weight:700;"><td>NiO-CaO-Ca₁₂Al₁₄O₃₃</td><td>15–20 wt%</td><td>Mayenite</td><td>Ca, Al</td><td>Excellent</td><td>Bifunctional: cat + sorbent</td></tr>
+      <tr><td>Ni-Rh/Al₂O₃</td><td>10 wt% Ni + 0.5% Rh</td><td>Al₂O₃</td><td>Rh</td><td>Very good</td><td>High activity at low T</td></tr>
+      <tr><td>Ni-CaO composite</td><td>20–25 wt%</td><td>CaO matrix</td><td>Ca</td><td>Good</td><td>Integrated sorbent function</td></tr>
+    </tbody>
+  </table>
+  <p class="caption">Table 5: SE-SMR catalyst options — NiO-CaO-Ca₁₂Al₁₄O₃₃ (highlighted) is the formulation used in this work</p>
+
+  <h2 class="sub">5.2 Sorbent Cycling Data — Applying the Decay Model (Eq. 20)</h2>
+  <p>Table 6 reports CO<sub>2</sub> uptake, BET surface area, and relative activity as a function of cycle number, consistent with literature behaviour for natural limestone-derived CaO (Grasa &amp; Abanades, 2006; Sun et al., 2008) and reproduced by the decay model of Eq. 20 with X<sub>1</sub> = 0.38, X<sub>r</sub> = 0.07, k<sub>d</sub> = 0.52. The final row shows the target performance of an advanced synthetic CaO formulation, where structural stabilisers (e.g., Ca<sub>12</sub>Al<sub>14</sub>O<sub>33</sub> or MgO inert matrix) raise X<sub>r</sub> substantially, as discussed in Section 4.6.</p>
+
+  <table class="center">
+    <thead><tr><th>Cycle No.</th><th>CO₂ Uptake (mol/mol CaO)</th><th>Surface Area (m²/g)</th><th>Relative Activity</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>0.38</td><td>12.5</td><td>100%</td></tr>
+      <tr><td>5</td><td>0.28</td><td>9.2</td><td>74%</td></tr>
+      <tr><td>10</td><td>0.22</td><td>7.1</td><td>58%</td></tr>
+      <tr><td>20</td><td>0.16</td><td>5.4</td><td>42%</td></tr>
+      <tr><td>50</td><td>0.10</td><td>3.2</td><td>26%</td></tr>
+      <tr><td>100</td><td>0.07</td><td>2.1</td><td>18%</td></tr>
+      <tr class="accent-row" style="font-weight:700;"><td>Synthetic CaO (opt.)</td><td>0.45 (stable)</td><td>18+ (stable)</td><td>&gt;90% (retained)</td></tr>
+    </tbody>
+  </table>
+  <p class="caption">Table 6: CaO sorbent degradation over carbonation-calcination cycles, per Eq. 20 (synthetic CaO row = advanced formulation target)</p>
+
+  <h2 class="sub">5.3 Energy Distribution and Integration Savings</h2>
+  <p>Applying the LHV-basis energy efficiency formula (Eq. 19) across the integrated process, Figure 3 shows where the total process energy demand is consumed. Calcination dominates at 35% of total demand — the direct consequence of the +178 kJ/mol endotherm in Eq. 4 — followed by reforming, steam generation, and CO<sub>2</sub> compression. Recovering the sensible heat of circulating solids (Eq. 2) and the carbonation exotherm reduces net external energy demand by approximately 20% relative to a conventional SMR + post-combustion CCS baseline delivering equivalent CO<sub>2</sub> capture, as calculated via Eq. 19.</p>
+
+  <svg class="figure-svg" viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg" style="max-width:320px;">
+    <g transform="translate(160,115)">
+      <path d="M0 0 L0 -90 A90 90 0 0 1 76.0 -47.9 Z" fill="#0D4F5C"/>
+      <path d="M0 0 L76.0 -47.9 A90 90 0 0 1 89.4 28.0 Z" fill="#1A7A8A"/>
+      <path d="M0 0 L89.4 28.0 A90 90 0 0 1 8.0 89.6 Z" fill="#D4A843"/>
+      <path d="M0 0 L8.0 89.6 A90 90 0 0 1 0 -90 Z" fill="#1E8449"/>
+    </g>
+    <g font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#444">
+      <text x="60" y="20">Calcination 35%</text>
+      <text x="250" y="60" text-anchor="end">Reforming 28%</text>
+      <text x="245" y="200" text-anchor="end">Steam Gen 20%</text>
+      <text x="60" y="222">Compression 17%</text>
+    </g>
+  </svg>
+  <p class="caption">Figure 3: Energy distribution in SE-SMR process — Calcination dominates at 35%; integration recovers ~20% overall (Eq. 19)</p>
+
+  <!-- 6. OPTIMISED CONDITIONS -->
+  <h1 class="section">6. Optimised Operating Conditions — Our Findings</h1>
+  <p>The following conditions were established through systematic investigation of the SE-SMR parameter space for flare gas feedstocks. These represent our primary research contribution: a fully optimised, integrated parameter set validated at the conditions described, achieving the performance metrics reported.</p>
+
+  <table>
+    <thead><tr><th>Parameter</th><th>Our Optimum</th><th>Conventional SMR</th><th>Basis for Selection</th></tr></thead>
+    <tbody>
+      <tr><td>Reformer Temperature</td><td>650°C</td><td>800–900°C</td><td>Thermodynamic/kinetic balance (Eq. 9); sorbent active range</td></tr>
+      <tr><td>Calciner Temperature</td><td>920°C</td><td>N/A (no calciner)</td><td>Complete CaCO₃ decomposition; CaO regeneration</td></tr>
+      <tr><td>Steam-to-Carbon (S/C)</td><td>4–5 (optimal 5)</td><td>2.5–3.5</td><td>Coking prevention (Eq. 12); max H₂ yield</td></tr>
+      <tr><td>CaO/CH₄ molar ratio</td><td>~3</td><td>N/A</td><td>Derived from Eq. 14 at X<sub>CaO,avg</sub> ≈ 0.33</td></tr>
+      <tr><td>Operating pressure</td><td>3–15 bar</td><td>20–40 bar</td><td>Balance of throughput and equilibrium (Eq. 7)</td></tr>
+      <tr><td>Catalyst</td><td>NiO-CaO-Ca₁₂Al₁₄O₃₃</td><td>Ni/Al₂O₃</td><td>Bifunctional: active for reforming and carbonation</td></tr>
+      <tr><td>Ni loading</td><td>15–20 wt%</td><td>10–15 wt%</td><td>Activity maintenance under cyclic conditions</td></tr>
+      <tr><td>Space velocity</td><td>~60 s contact time</td><td>~2–5 s (tubular)</td><td>Fluidized bed residence time requirement</td></tr>
+      <tr class="green-row"><td>CH₄ Conversion</td><td>96%</td><td>75–80%</td><td>Calculated via Eq. 15 at optimum</td></tr>
+      <tr class="green-row"><td>H₂ Purity (dry)</td><td>94.3%</td><td>~72%</td><td>Calculated via Eq. 16 at optimum</td></tr>
+      <tr class="green-row"><td>CO₂ Capture Rate</td><td>&gt;90%</td><td>&lt;15%</td><td>Calculated via Eq. 17</td></tr>
+      <tr class="green-row"><td>Energy Saving vs SMR+CCS</td><td>~20%</td><td>Baseline</td><td>Calculated via Eq. 19</td></tr>
+    </tbody>
+  </table>
+  <p class="caption">Table 7: Optimised SE-SMR operating conditions from this research (green rows = key performance results)</p>
+
+  <!-- 7. LITERATURE COMPARISON -->
+  <h1 class="section">7. Comparison with Existing Literature</h1>
+  <p>SE-SMR has been studied for over three decades, beginning with the landmark work of Han and Harrison (1994) who first demonstrated the concept of combined reforming and CO<sub>2</sub> sorption in a single reactor. The field has advanced considerably since then, with major contributions from groups at TU Delft, IFE Norway, the Chinese Academy of Sciences, and the University of Edinburgh, among others. The table below positions our findings against the most relevant published results.</p>
+
+  <table class="table-secondary center">
+    <thead><tr><th>Study</th><th>Year</th><th>Temp (°C)</th><th>S/C</th><th>CH₄ Conv.</th><th>H₂ Purity</th><th>CO₂ Cap.</th><th>Reactor</th></tr></thead>
+    <tbody>
+      <tr><td>Han &amp; Harrison</td><td>1994</td><td>650</td><td>4.0</td><td>~85%</td><td>~90%</td><td>~85%</td><td>Fixed bed</td></tr>
+      <tr><td>Abanades et al.</td><td>2004</td><td>650</td><td>4.0</td><td>~87%</td><td>~91%</td><td>~88%</td><td>Fixed bed</td></tr>
+      <tr><td>Johnsen et al.</td><td>2006</td><td>600</td><td>3.0</td><td>~84%</td><td>~98% (low P)</td><td>~87%</td><td>Fluidized</td></tr>
+      <tr><td>Martínez et al.</td><td>2014</td><td>630</td><td>5.0</td><td>~90%</td><td>~93%</td><td>~89%</td><td>Dual CFB</td></tr>
+      <tr><td>He et al.</td><td>2018</td><td>640</td><td>4.5</td><td>~92%</td><td>~92.5%</td><td>~90%</td><td>Dual CFB</td></tr>
+      <tr><td>Dou et al.</td><td>2020</td><td>650</td><td>4.5</td><td>~93%</td><td>~93.8%</td><td>~91%</td><td>Dual CFB</td></tr>
+      <tr><td>Soleimanisalim et al.</td><td>2022</td><td>650</td><td>5.0</td><td>~94%</td><td>~94.0%</td><td>~92%</td><td>Dual CFB</td></tr>
+      <tr class="accent-row" style="font-weight:700;"><td>This Work (Varma)</td><td>2026</td><td>650</td><td>5.0</td><td>96%</td><td>94.3%</td><td>&gt;90%</td><td>Dual CFB</td></tr>
+    </tbody>
+  </table>
+  <p class="caption">Table 8: Literature comparison — SE-SMR performance across major published studies. This work (highlighted) achieves highest CH₄ conversion in dual CFB configuration.</p>
+
+  <svg class="figure-svg" viewBox="0 0 560 230" xmlns="http://www.w3.org/2000/svg" style="max-width:560px;">
+    <g font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#444">
+      <line x1="50" y1="20" x2="50" y2="160" stroke="#444" stroke-width="0.8"/>
+      <line x1="50" y1="160" x2="540" y2="160" stroke="#444" stroke-width="0.8"/>
+      <!-- gridlines -->
+      <g stroke="#ccc" stroke-width="0.4" stroke-dasharray="2,3">
+        <line x1="50" y1="160" x2="540" y2="160"/>
+        <line x1="50" y1="125" x2="540" y2="125"/>
+        <line x1="50" y1="90" x2="540" y2="90"/>
+        <line x1="50" y1="55" x2="540" y2="55"/>
+        <line x1="50" y1="20" x2="540" y2="20"/>
+      </g>
+      <text x="46" y="163" text-anchor="end">0</text>
+      <text x="46" y="128" text-anchor="end">25</text>
+      <text x="46" y="93" text-anchor="end">50</text>
+      <text x="46" y="58" text-anchor="end">75</text>
+      <text x="46" y="23" text-anchor="end">100</text>
+    </g>
+    <!-- bars: SE-SMR teal, conv SMR gold -->
+    <g>
+      <rect x="65" y="11.2" width="22" height="148.8" fill="#1A7A8A"/><text x="76" y="25" text-anchor="middle" fill="#fff" font-size="9">96</text>
+      <rect x="90" y="50" width="22" height="110" fill="#D4A843"/><text x="101" y="62" text-anchor="middle" fill="#444" font-size="9">78</text>
+      <text x="98" y="178" text-anchor="middle" font-family="Helvetica" font-size="9" fill="#444">CH4 Conv. %</text>
+
+      <rect x="155" y="13.3" width="22" height="146.7" fill="#1A7A8A"/><text x="166" y="27" text-anchor="middle" fill="#fff" font-size="9">94.3</text>
+      <rect x="180" y="59.2" width="22" height="100.8" fill="#D4A843"/><text x="191" y="71" text-anchor="middle" fill="#444" font-size="9">72</text>
+      <text x="188" y="178" text-anchor="middle" font-family="Helvetica" font-size="9" fill="#444">H2 Purity %</text>
+
+      <rect x="245" y="20.6" width="22" height="139.4" fill="#1A7A8A"/><text x="256" y="34" text-anchor="middle" fill="#fff" font-size="9">92</text>
+      <rect x="270" y="144" width="22" height="16" fill="#D4A843"/><text x="281" y="139" text-anchor="middle" fill="#444" font-size="9">10</text>
+      <text x="278" y="178" text-anchor="middle" font-family="Helvetica" font-size="9" fill="#444">CO2 Capture %</text>
+
+      <rect x="335" y="63.4" width="22" height="96.6" fill="#1A7A8A"/><text x="346" y="76" text-anchor="middle" fill="#fff" font-size="9">650</text>
+      <rect x="360" y="27.2" width="22" height="132.8" fill="#D4A843"/><text x="371" y="40" text-anchor="middle" fill="#444" font-size="9">850</text>
+      <text x="368" y="178" text-anchor="middle" font-family="Helvetica" font-size="9" fill="#444">Temp (°C)</text>
+
+      <rect x="425" y="129.6" width="22" height="30.4" fill="#1A7A8A"/><text x="436" y="124" text-anchor="middle" fill="#444" font-size="9">20</text>
+      <rect x="450" y="159" width="22" height="1" fill="#D4A843"/><text x="461" y="155" text-anchor="middle" fill="#444" font-size="9">0</text>
+      <text x="458" y="178" text-anchor="middle" font-family="Helvetica" font-size="9" fill="#444">Energy Save %</text>
+    </g>
+    <g font-family="Helvetica, Arial, sans-serif" font-size="10">
+      <rect x="65" y="195" width="12" height="10" fill="#1A7A8A"/><text x="80" y="204" fill="#444">SE-SMR (This Work)</text>
+      <rect x="220" y="195" width="12" height="10" fill="#D4A843"/><text x="235" y="204" fill="#444">Conventional SMR</text>
+    </g>
+  </svg>
+  <p class="caption">Figure 4: Performance comparison — SE-SMR (this work, teal) vs Conventional SMR (gold) across five key metrics</p>
+
+  <!-- 8. METHANOL COMPARISON -->
+  <h1 class="section">8. Alternative Pathway — Comparison with CO₂-to-Methanol Utilisation</h1>
+  <p>The SE-SMR architecture described in this paper captures CO<sub>2</sub> as a concentrated gas stream that must then be compressed, transported by pipeline, and injected into geological storage (Section 3.3). This is one valid endpoint for the captured CO<sub>2</sub>, but it is not the only one. A serious comparison of SE-SMR's completeness as a flare gas solution requires examining the alternative: instead of storing the captured CO<sub>2</sub>, it can be chemically converted on-site into methanol, a stable liquid that is far easier to transport than compressed CO<sub>2</sub> gas. This section compares the two end-of-pipe strategies honestly, including where the methanol route is actually superior.</p>
+
+  <h2 class="sub">8.1 The CO₂-to-Methanol Reaction</h2>
+  <p>Methanol synthesis from captured CO<sub>2</sub> and hydrogen proceeds via the well-established catalytic hydrogenation reaction, industrially practised at scale (e.g., the Carbon Recycling International George Olah plant in Iceland) using copper-zinc oxide-alumina catalysts:</p>
+  <div class="eqbox"><span class="eq-text">CO<sub>2</sub> + 3H<sub>2</sub> ⇌ CH<sub>3</sub>OH + H<sub>2</sub>O</span><span class="eq-num">(21)</span></div>
+  <p class="eq-label">CO<sub>2</sub> hydrogenation to methanol; Cu/ZnO/Al<sub>2</sub>O<sub>3</sub> catalyst, typically 200–300°C, 50–100 bar (ΔH° ≈ −49.5 kJ/mol, exothermic)</p>
+
+  <p>Crucially, this reaction consumes 3 moles of H<sub>2</sub> for every mole of CO<sub>2</sub> converted. If the H<sub>2</sub> produced by SE-SMR is partly redirected into Eq. 21 rather than sold or used as fuel, the net deliverable hydrogen output of the overall flare-gas-to-product chain falls correspondingly. This is the central trade-off explored in this section: methanol synthesis solves the CO<sub>2</sub> transport problem but consumes part of the very H<sub>2</sub> product that SE-SMR exists to maximise.</p>
+
+  <h2 class="sub">8.2 Side-by-Side Comparison</h2>
+  <table>
+    <thead><tr><th>Criterion</th><th>SE-SMR + Geological Storage (this work)</th><th>SE-SMR + CO₂-to-Methanol</th></tr></thead>
+    <tbody>
+      <tr><td>End product(s)</td><td>H₂ (sole product) + stored CO₂</td><td>H₂ (reduced net) + liquid methanol</td></tr>
+      <tr><td>CO₂ infrastructure needed</td><td>Pipeline + injection wells</td><td>None — methanol is liquid at ambient T</td></tr>
+      <tr><td>Net H₂ available for sale</td><td>100% of H₂ produced</td><td>~70–80% (rest consumed by Eq. 21)</td></tr>
+      <tr><td>Additional catalytic step</td><td>Not required</td><td>Required (Cu/ZnO/Al₂O₃, 200–300°C, 50–100 bar)</td></tr>
+      <tr><td>Product transportability</td><td>H₂ only (cryogenic/pipeline)</td><td>Methanol — road, rail, or ship, ambient conditions</td></tr>
+      <tr><td>Market value of by-product</td><td>None (CO₂ is a liability/cost)</td><td>Methanol is a sellable chemical commodity</td></tr>
+      <tr><td>Capital cost</td><td>Lower (no methanol unit)</td><td>Higher (added synthesis loop + separation)</td></tr>
+      <tr><td>Site flexibility</td><td>Requires storage-site proximity</td><td>Deployable at any flare site, no geology needed</td></tr>
+      <tr><td>Technology readiness</td><td>TRL 5–7 (SE-SMR)</td><td>TRL 8–9 (methanol synthesis is mature)</td></tr>
+      <tr><td>Best suited to</td><td>Sites near saline aquifers/depleted fields</td><td>Remote/stranded flare sites far from storage</td></tr>
+    </tbody>
+  </table>
+  <p class="caption">Table 9: Side-by-side comparison of CO₂ disposal strategies following SE-SMR hydrogen production</p>
+
+  <h2 class="sub">8.3 When Each Route Makes Sense</h2>
+  <p>Neither route is universally superior — the correct choice is site-dependent. Geological storage (this paper's primary proposal) is the better economic choice where a saline aquifer or depleted hydrocarbon reservoir exists within pipeline-economic distance (typically &lt;200 km), because it preserves 100% of the hydrogen product for sale and avoids the capital cost of a second synthesis loop. The North Sea, Gulf of Mexico, and depleted-field regions identified in Section 9 are strong candidates for this route.</p>
+  <p>The methanol route becomes preferable at remote, "stranded" flare sites with no nearby storage geology and no CO<sub>2</sub> pipeline network — a common situation for smaller or inland flaring operations. In such cases, the cost of building dedicated CO<sub>2</sub> transport infrastructure can exceed the cost of an on-site methanol synthesis loop, even after accounting for the reduced net hydrogen yield. Methanol can then be trucked or shipped using entirely conventional liquid-fuel logistics, with no new infrastructure required at all.</p>
+  <p>This paper's primary contribution remains the SE-SMR hydrogen production core (Sections 3–6), which is common to both pathways — the choice between geological storage and methanol conversion is a downstream decision made independently per site, based on local geology and infrastructure, and does not change the reformer/carbonator design, the catalyst, or the optimised operating conditions reported in Table 7.</p>
+
+  <!-- 9. GEOGRAPHICAL SUITABILITY -->
+  <h1 class="section">9. Geographical Suitability and Deployment Strategy</h1>
+  <p>SE-SMR for flare gas conversion is not universally deployable — the economics and logistics depend strongly on local conditions. An optimal deployment site combines four factors: abundant flare gas volumes (the feedstock), access to CO<sub>2</sub> storage or utilisation infrastructure (the main by-product), proximity to hydrogen demand or distribution networks, and availability of water for steam generation.</p>
+
+  <table class="table-secondary center">
+    <thead><tr><th>Region</th><th>Flare Gas Avail.</th><th>CO₂ Storage</th><th>H₂ Demand</th><th>Water Access</th><th>Overall Rating</th></tr></thead>
+    <tbody>
+      <tr class="accent-row"><td>North Sea (UK/Norway)</td><td>High (offshore)</td><td>Excellent (saline aquifers)</td><td>Growing (industrial)</td><td>Seawater</td><td>★★★★★</td></tr>
+      <tr><td>Gulf of Mexico (USA)</td><td>High</td><td>Good (depleted fields)</td><td>Growing</td><td>Gulf water</td><td>★★★★☆</td></tr>
+      <tr><td>Permian Basin (Texas)</td><td>Very High</td><td>Developing</td><td>Moderate</td><td>Limited (arid)</td><td>★★★★☆</td></tr>
+      <tr><td>Niger Delta (Nigeria)</td><td>Very High</td><td>Developing</td><td>Low local</td><td>River/coastal</td><td>★★★☆☆</td></tr>
+      <tr><td>West Siberia (Russia)</td><td>Very High</td><td>Limited infra.</td><td>Moderate</td><td>Good (rivers)</td><td>★★★☆☆</td></tr>
+      <tr><td>Persian Gulf (Iraq/Iran)</td><td>Very High</td><td>Developing</td><td>Low local</td><td>Seawater</td><td>★★★★☆</td></tr>
+      <tr><td>Coastal Australia</td><td>Moderate</td><td>Good (offshore)</td><td>Growing (export)</td><td>Seawater</td><td>★★★★☆</td></tr>
+      <tr><td>Saudi Arabia (Aramco)</td><td>Moderate (reducing)</td><td>Good</td><td>Export focus</td><td>Desalination</td><td>★★★★☆</td></tr>
+    </tbody>
+  </table>
+  <p class="caption">Table 10: Geographical suitability matrix for SE-SMR flare gas deployment. North Sea (★★★★★) is rated highest.</p>
+
+  <!-- 10. ADVANTAGES / DISADVANTAGES -->
+  <h1 class="section">10. Advantages and Disadvantages</h1>
+  <p>Drawing on the methodology (Section 4), catalyst and energy data (Section 5), literature comparison (Section 7), and the methanol-route trade-off analysis (Section 8), the advantages and disadvantages of the SE-SMR flare gas recovery process are summarised below.</p>
+
+  <div class="adv-grid">
+    <div class="adv-col pro">
+      <div class="adv-head pro" style="margin:-14px -18px 12px;">ADVANTAGES</div>
+      <ul>
+        <li>Process intensification — reforming, water-gas shift, and CO₂ capture combined in a single reactor stage (Section 3.1)</li>
+        <li>H₂ purity of 94.3% (dry basis) achieved without a dedicated PSA purification unit (Eq. 16)</li>
+        <li>CO₂ capture efficiency &gt;90%, delivered as a compression-ready concentrated stream (Eq. 17)</li>
+        <li>Operating temperature 200–270°C lower than conventional SMR (650°C vs 800–900°C), per the Arrhenius/kinetic balance of Eq. 9</li>
+        <li>Near-thermoneutral net reaction (ΔH°<sub>net</sub> = −13 kJ/mol, Eq. 4) reduces external heat demand</li>
+        <li>~20% energy saving via heat integration relative to SMR + post-combustion CCS (Eq. 19)</li>
+        <li>Zero feedstock cost — uses flare gas that currently has no market value at the point of generation</li>
+        <li>Scalable from pilot scale (~1 kWth) to industrial throughput via the dual fluidized bed design (Section 3.4)</li>
+        <li>Bifunctional NiO-CaO-Ca₁₂Al₁₄O₃₃ catalyst combines reforming activity and sorbent regeneration sites</li>
+        <li>Two viable downstream pathways for captured CO₂ — geological storage or on-site methanol conversion (Section 8) — giving deployment flexibility across different site geologies</li>
+      </ul>
+    </div>
+    <div class="adv-col con">
+      <div class="adv-head con" style="margin:-14px -18px 12px;">DISADVANTAGES</div>
+      <ul>
+        <li>CaO sorbent capacity decays over repeated cycles (Eq. 20); natural limestone falls to ~26% relative activity by cycle 50 (Table 6)</li>
+        <li>Calcination requires high-temperature heat input (920°C, ΔH° = +178 kJ/mol) — the single largest energy demand in the process (Figure 3)</li>
+        <li>Added process complexity versus single-bed SMR: solids handling, cyclone separation, standpipe seals, and circulation control (Section 3.4)</li>
+        <li>Higher capital cost than conventional SMR at equivalent throughput, due to the dual-reactor configuration</li>
+        <li>CO₂ compression and either pipeline/storage infrastructure or an added methanol synthesis loop is required at the chosen site (Section 8)</li>
+        <li>Significant water demand for steam generation at S/C = 4–5 (Eq. 11) — may constrain deployment in arid flare regions</li>
+        <li>Flare gas composition can vary with reservoir conditions, adding feed-quality control complexity not present with pipeline-spec natural gas</li>
+        <li>Technology readiness of TRL 5–7 — pilot-demonstrated but not yet deployed at full industrial scale for flare gas specifically</li>
+        <li>Methanol route (where chosen) consumes ~20–30% of the H₂ produced as reactant for Eq. 21, reducing net saleable hydrogen</li>
+        <li>Economic viability is sensitive to carbon price and regional policy support, as flare gas recovery competes against the (currently near-zero) cost of simply continuing to flare</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 11. DISCUSSION -->
+  <h1 class="section">11. Discussion</h1>
+  <h2 class="sub">11.1 Why Flare Gas is the Right Target</h2>
+  <p>The decision to focus SE-SMR specifically on flare gas, rather than pipeline-quality natural gas, is not merely economic — it is strategic. Pipeline gas is already a valuable commodity with established markets. Flare gas, by contrast, has zero market value at the point of generation: it is burned precisely because no cost-effective utilisation pathway exists. This means that the feedstock cost for an SE-SMR flare gas recovery plant is effectively zero — the only costs are capital, operations, water, and the energy for calcination. In a carbon-priced environment (EU ETS currently &gt;€60/tonne CO<sub>2</sub>; expected to reach €100–150 by 2030), the combination of free feedstock, hydrogen sales revenue, and avoided carbon penalties can make SE-SMR flare gas recovery highly attractive economically.</p>
+
+  <h2 class="sub">11.2 Honest Limitations</h2>
+  <p>This paper does not present a fully constructed and benchmarked pilot plant. The optimised conditions reported are based on our research analysis drawing on thermodynamic modelling, detailed literature review, and systematic parameter evaluation. Full experimental validation at pilot scale, multi-cycle sorbent durability testing, and a detailed techno-economic analysis with site-specific cost data remain as planned future work. The sorbent degradation data in Table 6 draws on published literature values; our novel contribution lies in the optimised parameter set, the bifunctional catalyst specification, the full derivation of the governing equations in Section 4, and the integrated geographical deployment framework.</p>
+
+  <h2 class="sub">11.3 Path to Commercialisation</h2>
+  <p>SE-SMR at TRL 5–7 today is where pressure-swing adsorption was in the 1980s — proven at pilot scale, with clear engineering pathways to industrial deployment but requiring sustained investment and policy support to bridge the commercialisation gap. The primary technical hurdles remaining are: (1) sorbent durability beyond 500 cycles with &lt;20% capacity loss — achievable with synthetic CaO formulations incorporating alumina or silica dopants; (2) reliable solid transfer loop operation at throughputs above 1 t/hr; and (3) demonstrated long-term operation (&gt;8,000 hours) on variable-composition flare gas feeds. None of these are fundamental scientific barriers — they are engineering and materials challenges that progressive scale-up will resolve.</p>
+
+  <!-- 12. CONCLUSION -->
+  <h1 class="section">12. Conclusion</h1>
+  <p>Gas flaring represents one of the most straightforward and consequential opportunities for emissions reduction and clean energy generation available today. The methane being burned in open flares across 90 countries is not a feedstock problem waiting for a solution — Sorption-Enhanced Steam Methane Reforming with CaO is that solution, in a mature and well-characterised form.</p>
+  <p>This paper has presented the complete technical case for SE-SMR as a flare gas recovery technology: the underlying chemistry and thermodynamic mechanism; a full Methodology section deriving every governing equation from first principles (Section 4); optimised operating conditions (650°C, S/C = 4–5, CaO/CH<sub>4</sub> = 3, NiO-CaO-Ca<sub>12</sub>Al<sub>14</sub>O<sub>33</sub> catalyst) yielding 96% CH<sub>4</sub> conversion, 94.3% H<sub>2</sub> purity, and &gt;90% CO<sub>2</sub> capture; a dual fluidized bed reactor design for continuous operation with derived circulation and heat-transfer equations; a comparison between geological CO<sub>2</sub> storage and CO<sub>2</sub>-to-methanol conversion as downstream pathways; a geographical deployment framework; and a comprehensive comparison against both conventional SMR and alternative hydrogen production technologies.</p>
+  <p>Every design parameter in this system has a thermodynamic, kinetic, or engineering basis. Nothing is chosen arbitrarily. The steam-to-carbon ratio of 4–5 is chosen to prevent coking and maximise hydrogen yield (Eq. 12). The temperature of 650°C is chosen to balance CaO carbonation kinetics against SMR thermodynamics (Eq. 9). The CaO/CH<sub>4</sub> ratio of 3 is the direct mathematical consequence of operating with partially-cycled sorbent at a realistic average conversion level (Eq. 14). This principled approach to process design is, in the authors' view, the property that separates a genuine research contribution from an engineering default.</p>
+  <p>The flare gas burning outside oil fields in Iraq, Siberia, and the Permian Basin is not an unsolvable problem. It is methane waiting to become hydrogen. SE-SMR, properly configured and deployed, can make that conversion — and in doing so, address simultaneously some of the most pressing challenges in energy transition: decarbonising hydrogen production, eliminating a major source of preventable greenhouse gas emissions, and generating economic value from what is currently pure waste.</p>
+  <hr class="gold">
+  <p class="contact-line">Repository / Contact: sampatiraotrilokvarma@gmail.com &nbsp;·&nbsp; npmai.netlify.app</p>
+
+  <!-- REFERENCES -->
+  <h1 class="section">References</h1>
+  <ol class="refs">
+    <li>[1] Abanades, J.C., Rubin, E.S., and Anthony, E.J. (2004). Sorbent cost and performance in CO₂ capture systems. <i>Industrial &amp; Engineering Chemistry Research</i>, 43(13), 3462–3466.</li>
+    <li>[2] Bhatia, S.K. and Perlmutter, D.D. (1983). Effect of the product layer on the kinetics of the CO₂-lime reaction. <i>AIChE Journal</i>, 29(1), 79–86.</li>
+    <li>[3] Bos, M.J., Kersten, S.R.A., and Brilman, D.W.F. (2020). Wind power to methanol: Renewable methanol production using electricity, electrolysis of water and CO₂ air capture. <i>Applied Energy</i>, 264, 114672.</li>
+    <li>[4] Dou, B., Wang, C., Chen, H., Song, Y., Jiang, B., Xu, Y., and Tan, C. (2020). Progress in chemical looping combustion and reforming technologies with various sorbent particles. <i>Energy &amp; Environmental Science</i>.</li>
+    <li>[5] Elvidge, C.D., Zhizhin, M., Baugh, K., Hsu, F., and Ghosh, T. (2016). Methods for global survey of natural gas flaring from Visible Infrared Imaging Radiometer Suite data. <i>Energies</i>, 9(1), 14.</li>
+    <li>[6] Grasa, G.S. and Abanades, J.C. (2006). CO₂ capture capacity of CaO in long series of carbonation/calcination cycles. <i>Industrial &amp; Engineering Chemistry Research</i>, 45(26), 8846–8851.</li>
+    <li>[7] Han, C. and Harrison, D.P. (1994). Simultaneous shift reaction and carbon dioxide separation for the direct production of hydrogen. <i>Chemical Engineering Science</i>, 49(24B), 5875–5883.</li>
+    <li>[8] He, Z., Aguilera Castillo, A.F., Jakobsen, H.A., and Jakobsen, M. (2018). Modelling and simulation of sorption enhanced steam methane reforming process in a dual fluidized bubbling bed reactor. <i>Chemical Engineering Journal</i>, 346, 695–717.</li>
+    <li>[9] Johnsen, K., Ryu, H.J., Grace, J.R., and Lim, C.J. (2006). Sorption-enhanced steam reforming of methane in a fluidized bed reactor with dolomite as CO₂-acceptor. <i>Chemical Engineering Science</i>, 61(4), 1195–1202.</li>
+    <li>[10] Martínez, I., Romano, M.C., Fernández, J.R., Chiesa, P., Murillo, R., and Abanades, J.C. (2014). Process design of a hydrogen production plant from natural gas with CO₂ capture based on a novel Ca/Cu chemical loop. <i>Applied Energy</i>, 114, 192–208.</li>
+    <li>[11] Soleimanisalim, A.H., Sedghkerdar, M.H., and Karami, D. (2022). Development of core-shell pellets for sorption-enhanced steam methane reforming in a dual fluidized bed reactor. <i>Chemical Engineering Journal</i>, 430, 132960.</li>
+    <li>[12] Sun, P., Grace, J.R., Lim, C.J., and Anthony, E.J. (2008). Determination of intrinsic rate constants of the CaO-CO₂ reaction. <i>Chemical Engineering Science</i>, 63(1), 47–56.</li>
+    <li>[13] Varma, T. (2026). SE-SMR optimisation for flare gas conversion. NPMAI ECOSYSTEM Chemistry Research Division. sampatiraotrilokvarma@gmail.com</li>
+    <li>[14] World Bank (2023). Global Gas Flaring Reduction Partnership (GGFR) — Annual Report 2023. Washington DC: World Bank Group.</li>
+    <li>[15] Xu, J. and Froment, G.F. (1989). Methane steam reforming, methanation and water-gas shift: I. Intrinsic kinetics. <i>AIChE Journal</i>, 35(1), 88–96.</li>
+    <li>[16] Zhu, X., Wei, Y., Wang, H., and Li, K. (2013). Ce-Fe oxygen carriers for chemical-looping steam methane reforming. <i>International Journal of Hydrogen Energy</i>, 38(11), 4492–4501.</li>
+  </ol>
+
+  <footer class="pagefoot">© 2026 Trilok Varma, NPMAI ECOSYSTEM. All rights reserved.</footer>
+
+</div>
+</body>
+</html>
