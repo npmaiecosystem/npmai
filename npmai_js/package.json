@@ -1,6 +1,5 @@
-﻿{
+{
   "name": "npmai",
-  "version": "0.1.9",
   "description": "npmai is a lightweight JavaScript package designed to bridge the gap between users and open-source LLMs. Connect with Ollama and 45+ other powerful models instantly— no installation, no login, and no API keys required, and help in development of RAG Agents without installing anything locally or on cloud and it is free without sigin or signup or any type of limit.",
   "main": "index.js",
   "type": "module",
@@ -11,11 +10,12 @@
   },
   "files": [
     "index.js",
-    "npmai.js"
+    "npmai.js",
+    "config.json"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sonuramashishnpm/npmai.git"
+    "url": "git+https://github.com/npmaiecosystem/npmai.git"
   },
   "homepage": "https://npmai.netlify.app"
 }

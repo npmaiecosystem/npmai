@@ -1,0 +1,4 @@
+{
+  "api": "https://npmaiecosystem-load_balancer.hf.space/load_balancer",
+  "fallback_api": "https://npmaiecosystem-loadbalancerfallback.hf.space/load_balancer"
+}

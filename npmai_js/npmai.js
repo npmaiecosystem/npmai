@@ -1,28 +1,58 @@
 import fs from 'fs';
 import { Blob } from 'buffer';
 
+const CONFIG_URL = 'https://raw.githubusercontent.com/npmaiecosystem/npmai/main/npmai_js/config.json';
+
+const FALLBACK_API = 'https://npmaiecosystem-load_balancer.hf.space/load_balancer';
+const FALLBACK_FALLBACK_API = 'https://npmaiecosystem-loadbalancerfallback.hf.space/load_balancer';
+
+let _cachedConfig = null;
+
+async function _loadConfig() {
+  if (_cachedConfig) return _cachedConfig;
+  try {
+    const res = await fetch(CONFIG_URL);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    _cachedConfig = await res.json();
+    if (!_cachedConfig.api || !_cachedConfig.fallback_api) throw new Error('Missing keys in config');
+    return _cachedConfig;
+  } catch {
+    _cachedConfig = { api: FALLBACK_API, fallback_api: FALLBACK_FALLBACK_API };
+    return _cachedConfig;
+  }
+}
+
 export class Ollama {
   constructor({
     model = 'llama3.2',
     temperature = 0.3,
     change = true,
     Models = null,
-    api = 'https://npmaiecosystem-load_balancer.hf.space/load_balancer',
-    fallback_api = 'https://npmaiecosystem-loadbalancerfallback.hf.space/load_balancer'
+    api = null,
+    fallback_api = null
   } = {}) {
     this.model = model;
     this.temperature = temperature;
     this.change = change;
     this.Models = Models;
-    this.api = api;
-    this.fallback_api = fallback_api;
+    this._api = api;
+    this._fallback_api = fallback_api;
   }
 
   get _llm_type() {
     return 'npmai';
   }
 
+  async _resolveUrls() {
+    if (this._api && this._fallback_api) return;
+    const config = await _loadConfig();
+    if (!this._api) this._api = config.api;
+    if (!this._fallback_api) this._fallback_api = config.fallback_api;
+  }
+
   async _call(prompt, stop = null) {
+    await this._resolveUrls();
+
     const payload = {
       prompt,
       model: this.model,
@@ -41,14 +71,14 @@ export class Ollama {
 
     let response;
     try {
-      response = await fetch(this.api, {
+      response = await fetch(this._api, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
     } catch {
-      response = await fetch(this.fallback_api, {
+      response = await fetch(this._fallback_api, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(fallback_payload)
