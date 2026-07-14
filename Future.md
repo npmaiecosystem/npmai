@@ -9,14 +9,13 @@ We will continue adding more free models and improving the free experience for s
 
 ---
 
-## Why Upgrade to NPMAI Premium?
+### Why Upgrade to NPMAI Premium?
 
 Many developers and companies are currently paying **₹1 Lakh to ₹6 Lakh+ per month** on OpenAI, Claude, or Gemini APIs due to high token usage in RAG, agents, and large context workflows.
 
 With NPMAI Premium, you get **fixed, predictable pricing** with access to much stronger models — without the expensive "token tax".
 
 **Benefits for You:**
-
 - Massive cost savings (often **80-95% lower** than proprietary APIs)
 - High-performance reasoning, coding, and agentic capabilities
 - Priority access + much higher rate limits
@@ -47,14 +46,12 @@ These models will give performance close to or better than GPT-4o / Claude 3.5 i
 
 ### Premium Pricing Plans
 
-**Option 1: Basic Premium** – ₹3,000 / month
-
+**Option 1: Basic Premium** – ₹3,000 / month  
 - Access to **2 premium models** of your choice  
 - High rate limits  
 - Priority queuing  
 
-**Option 2: Full Premium** – ₹5,000 / month
-
+**Option 2: Full Premium** – ₹5,000 / month  
 - Access to **all 10 premium models simultaneously**  
 - Highest rate limits & concurrency  
 - Early access to new models  

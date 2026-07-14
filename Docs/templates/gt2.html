@@ -460,7 +460,7 @@ table.compare th, table.compare td{border:1px solid var(--line); padding:9px 11p
     <p>The remainder of the paper is organized as follows. Section 1 establishes the mathematical model and the stochastic dynamics governing the population. Section 2 derives the representative agent's optimization problem and the associated FBSDE. Section 3 develops the analytical solution through a hierarchical decoupling procedure and states the explicit decentralized Nash equilibrium. Section 4 records structural corollaries and special cases. Section 5 concludes.</p>
 
     <h3 class="sub" id="s12">1.2 Mathematical Framework and Notation</h3>
-    <p>Throughout this paper, we consider a finite time horizon $T&gt;0$ defined on a complete filtered probability space</p>
+    <p>Throughout this paper, we consider a finite time horizon $T>0$ defined on a complete filtered probability space</p>
     <div class="eq-block">$$(\Omega,\mathcal{F},\{\mathcal{F}_t\}_{0\le t\le T},\mathbb{P}),$$</div>
     <p>satisfying the usual completeness and right-continuity assumptions. Unless otherwise stated, all stochastic processes are assumed adapted to $\{\mathcal{F}_t\}$. The game consists of an infinite continuum of strategically interacting agents indexed by $i\in[0,1]$. Each agent controls a one-dimensional stochastic state process $X_i(t)\in\mathbb{R}$, whose evolution depends upon its own control action, the aggregate population behavior, and both idiosyncratic and common sources of uncertainty.</p>
 
@@ -481,7 +481,7 @@ table.compare th, table.compare td{border:1px solid var(--line); padding:9px 11p
     </table>
 
     <p>The admissible control space is defined by</p>
-    <div class="eq-block">$$\mathcal U=\left\{u:\Omega\times[0,T]\rightarrow\mathbb R \;\middle|\; u\text{ progressively measurable, } \mathbb E\!\left[\int_0^T |u(t)|^2dt\right]&lt;\infty\right\},$$</div>
+    <div class="eq-block">$$\mathcal U=\left\{u:\Omega\times[0,T]\rightarrow\mathbb R \;\middle|\; u\text{ progressively measurable, } \mathbb E\!\left[\int_0^T |u(t)|^2dt\right]<\infty\right\},$$</div>
     <p>ensuring that every admissible strategy possesses finite expected energy and yields a well-defined stochastic state trajectory.</p>
 
     <h3 class="sub" id="s13">1.3 Model Formulation</h3>
@@ -489,7 +489,7 @@ table.compare th, table.compare td{border:1px solid var(--line); padding:9px 11p
 
     <p>The individual state dynamics are governed by the stochastic differential equation</p>
     <div class="eq-block">$$dX_i(t)=\big(-aX_i(t)+b\bar X(t)+u_i(t)\big)\,dt+\sigma\,dW_i(t)+\sigma_0\,dW_0(t),$$</div>
-    <p>where $a&gt;0$ denotes the intrinsic rate of mean reversion and $b\in\mathbb R$ measures the influence of the aggregate population on the individual dynamics. Positive values of $b$ encourage conformity with the population average, whereas negative values correspond to repulsive interactions. The process $W_i(t)$ represents idiosyncratic uncertainty unique to each agent, while $W_0(t)$ models common environmental uncertainty simultaneously experienced by the entire population, with diffusion intensities $\sigma$ and $\sigma_0$ respectively.</p>
+    <p>where $a>0$ denotes the intrinsic rate of mean reversion and $b\in\mathbb R$ measures the influence of the aggregate population on the individual dynamics. Positive values of $b$ encourage conformity with the population average, whereas negative values correspond to repulsive interactions. The process $W_i(t)$ represents idiosyncratic uncertainty unique to each agent, while $W_0(t)$ models common environmental uncertainty simultaneously experienced by the entire population, with diffusion intensities $\sigma$ and $\sigma_0$ respectively.</p>
 
     <p>The aggregate population state is defined by the conditional expectation</p>
     <div class="eq-block">$$\bar X(t)=\mathbb E\big[X_i(t)\mid \mathcal F_t^0\big],\qquad \mathcal F_t^0=\sigma\big(W_0(s),\,0\le s\le t\big),$$</div>
@@ -656,7 +656,7 @@ table.compare th, table.compare td{border:1px solid var(--line); padding:9px 11p
     <p>The consistency condition immediately reconstructs $\Theta(t)=\phi(t)-\Phi(t)$ and $\Xi(t)=\psi(t)$ — no additional differential equations need be solved.</p>
 
     <div class="boxed theorem" data-tag="Theorem 3.1">
-      <b>Explicit Decentralized Nash Equilibrium.</b> Assume $a&gt;0$, $q&gt;0$, $\eta&gt;0$, $g&gt;0$, and let $M\in C([0,T])$ be a deterministic continuous trajectory. Then the generalized LQ-MFG admits a unique affine decentralized Nash equilibrium, with optimal control of every representative agent given by
+      <b>Explicit Decentralized Nash Equilibrium.</b> Assume $a>0$, $q>0$, $\eta>0$, $g>0$, and let $M\in C([0,T])$ be a deterministic continuous trajectory. Then the generalized LQ-MFG admits a unique affine decentralized Nash equilibrium, with optimal control of every representative agent given by
       $$u_i^*(t)=-\Phi(t)X_i(t)-\big(\phi(t)-\Phi(t)+\gamma\big)\bar X(t)-\psi(t),$$
       where $\Phi(t)$ solves the individual Riccati equation, $\phi(t)$ the aggregate Riccati equation, and $\psi(t)$ the linear tracking equation. The associated state and adjoint processes satisfy the coupled FBSDE of Section 2, and the resulting aggregate trajectory satisfies the Mean Field consistency condition.
     </div>

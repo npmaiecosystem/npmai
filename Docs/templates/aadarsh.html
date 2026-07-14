@@ -469,16 +469,16 @@
     <p class="body-text">We consider a parallel two-path network linking a common origin to a common destination. The two paths differ in their fundamental characteristics &mdash; one imposes non-linear congestion delay while the other remains uncongested but structurally longer.</p>
 
     <p class="body-text"><b>Path 1 &mdash; The Bottleneck Link:</b> Governed by a power-law latency function mapping flow $x_1$:</p>
-    <div class="formula">$$T_1(x_1) = t_0 + d \cdot x_1^p, \quad p \geq 2,\; d &gt; 0$$</div>
+    <div class="formula">$$T_1(x_1) = t_0 + d \cdot x_1^p, \quad p \geq 2,\; d > 0$$</div>
 
     <p class="body-text"><b>Path 2 &mdash; The Uncongested Link:</b> Constant free-flow travel time independent of volume:</p>
-    <div class="formula">$$T_2 = t_2, \quad t_2 &gt; t_0$$</div>
+    <div class="formula">$$T_2 = t_2, \quad t_2 > t_0$$</div>
 
     <p class="body-text">Agents are indexed by $i \in [0, N]$. Their baseline wealth $w(i)$ follows a linear gradient across the population &mdash; a tractable and empirically motivated approximation (see Lam and Small, 2001) of the wealth distribution within a commuting population:</p>
-    <div class="formula">$$w(i) = w_0 + r \cdot i, \quad w_0 &gt; 0,\; r &gt; 0$$</div>
+    <div class="formula">$$w(i) = w_0 + r \cdot i, \quad w_0 > 0,\; r > 0$$</div>
 
     <p class="body-text">The Value of Time (VoT) converts travel delay into monetary units. Following the standard assumption that VoT scales proportionally with income (Becker, 1965; Small, 1992):</p>
-    <div class="formula">$$\alpha(w(i)) = k \cdot w(i) = k(w_0 + r \cdot i), \quad k &gt; 0$$</div>
+    <div class="formula">$$\alpha(w(i)) = k \cdot w(i) = k(w_0 + r \cdot i), \quad k > 0$$</div>
 
     <h2 class="sec-h2">3.3 Asymmetric Information Architecture</h2>
     <p class="body-text">A key structural feature of modern urban networks is the heterogeneous penetration of real-time routing applications (Google Maps, Waze, and equivalents). Empirical evidence consistently shows that technology adoption rates increase with income (Pew Research Center, 2021; ITU, 2022). We model this through a wealth-scaled adoption probability:</p>
@@ -530,7 +530,7 @@
     <div class="formula">$$(w_0 + r x_1^{SO})\!\left[t_0 + d\,(x_1^{SO})^p - t_2\right] + p\,d\,(x_1^{SO})^p\!\left(w_0 + \tfrac{1}{2}r\,x_1^{SO}\right) = 0$$</div>
 
     <p class="body-text"><b>Price of Anarchy:</b></p>
-    <div class="formula">$$\mathrm{PoA} = \frac{t_2 \cdot \Lambda(N)}{\Lambda(x_1^{SO})(t_0 + d\,(x_1^{SO})^p) + t_2(\Lambda(N) - \Lambda(x_1^{SO}))} &gt; 1$$</div>
+    <div class="formula">$$\mathrm{PoA} = \frac{t_2 \cdot \Lambda(N)}{\Lambda(x_1^{SO})(t_0 + d\,(x_1^{SO})^p) + t_2(\Lambda(N) - \Lambda(x_1^{SO}))} > 1$$</div>
 
     <p class="body-text">The strict inequality PoA&nbsp;&gt;&nbsp;1 holds because the denominator is strictly minimized at $x_1^{SO} \ne x_1^{UE}$ in general. This is the fundamental efficiency gap that the toll mechanism of Section 5 is designed to close.</p>
   </section>
@@ -632,7 +632,7 @@
 
     <div class="formula">$$\frac{dx_1(t)}{dt} = \kappa \cdot x_1(t) \cdot \Bigl[\bar{\alpha}_{\mathrm{sys}}\bigl(t_2 - T_1(x_1(t-\Delta t), \mu(t-\Delta t))\bigr) - \tau(x_1(t-\Delta t), \bar{\alpha}_{\mathrm{sys}})\Bigr]$$</div>
 
-    <p class="body-text">The term $\kappa &gt; 0$ is the adjustment speed parameter. The replicator structure captures the essential feedback: when Path 1 is perceived as cheaper than Path 2 (after toll), flow migrates toward it, increasing congestion and eventually reversing the incentive. The delay $\Delta t$ breaks the instantaneous feedback loop and is the central parameter governing stability.</p>
+    <p class="body-text">The term $\kappa > 0$ is the adjustment speed parameter. The replicator structure captures the essential feedback: when Path 1 is perceived as cheaper than Path 2 (after toll), flow migrates toward it, increasing congestion and eventually reversing the incentive. The delay $\Delta t$ breaks the instantaneous feedback loop and is the central parameter governing stability.</p>
 
     <h2 class="sec-h2">7.2 Hopf Bifurcation Threshold &mdash; Corollary 3</h2>
     <div class="corollary-label">Corollary 3</div>
