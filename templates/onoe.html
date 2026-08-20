@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Remainder Term Solution (ONOE) — Sonu Kumar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B0F1E;
+    --ink-2:#141B33;
+    --parchment:#F6F1E3;
+    --parchment-deep:#EFE7D2;
+    --gazette:#FBF7EC;
+    --line:#D9CDA9;
+    --line-soft:#E6DDC2;
+    --gold:#B8873A;
+    --gold-bright:#DDAE55;
+    --maroon:#7B1E2B;
+    --maroon-soft:#9C4351;
+    --ink-text:#1D2233;
+    --paper-text:#2A2113;
+    --muted:#6B6252;
+    --cream:#FBF8F0;
+    --shadow: 0 18px 50px -20px rgba(11,15,30,0.35);
+    --radius: 2px;
+    --maxw: 880px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+  body{
+    margin:0;
+    background:var(--parchment);
+    color:var(--ink-text);
+    font-family:'Source Serif 4', serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+    color:var(--ink);
+    margin:0;
+  }
+  .mono{font-family:'IBM Plex Mono', monospace; letter-spacing:0.04em;}
+  a{color:inherit;}
+  img,svg{display:block; max-width:100%;}
+
+  /* ===== Progress Ribbon (signature element) ===== */
+  #ribbon{
+    position:fixed; top:0; left:0; right:0; z-index:500;
+    height:46px;
+    background:var(--ink);
+    display:flex; align-items:center;
+    padding:0 18px;
+    border-bottom:1px solid rgba(221,174,85,0.25);
+  }
+  #ribbon .rib-track{
+    position:relative; flex:1; height:2px; background:rgba(255,255,255,0.12);
+    margin:0 14px; display:flex; align-items:center;
+  }
+  #ribbon .rib-fill{
+    position:absolute; left:0; top:0; height:100%; width:0%;
+    background:linear-gradient(90deg, var(--gold), var(--gold-bright));
+    transition:width 0.12s linear;
+  }
+  #ribbon .rib-seal{
+    position:absolute; top:50%; transform:translate(-50%,-50%);
+    width:14px; height:14px; border-radius:50%;
+    background:var(--gold-bright);
+    box-shadow:0 0 0 3px rgba(221,174,85,0.18), 0 0 10px rgba(221,174,85,0.6);
+    left:0%;
+    transition:left 0.12s linear;
+  }
+  #ribbon .rib-stage{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:9.5px;
+    letter-spacing:0.12em;
+    color:rgba(255,255,255,0.32);
+    white-space:nowrap;
+    transition:color .3s ease, text-shadow .3s ease;
+  }
+  #ribbon .rib-stage.active{ color:var(--gold-bright); text-shadow:0 0 12px rgba(221,174,85,0.5); }
+  #ribbon .rib-title{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10px; letter-spacing:0.1em; color:rgba(255,255,255,0.55);
+    display:none;
+  }
+  @media(min-width:760px){ #ribbon .rib-title{ display:block; } }
+
+  /* ===== Utility ===== */
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 26px; }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px; letter-spacing:0.22em; text-transform:uppercase;
+    color:var(--gold);
+  }
+  .reveal{ opacity:0; transform:translateY(28px); transition:opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+  .reveal-stagger > *{ opacity:0; transform:translateY(20px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal-stagger.in > *{ opacity:1; transform:translateY(0); }
+  .reveal-stagger.in > *:nth-child(1){transition-delay:.05s;}
+  .reveal-stagger.in > *:nth-child(2){transition-delay:.15s;}
+  .reveal-stagger.in > *:nth-child(3){transition-delay:.25s;}
+  .reveal-stagger.in > *:nth-child(4){transition-delay:.35s;}
+  .reveal-stagger.in > *:nth-child(5){transition-delay:.45s;}
+  .reveal-stagger.in > *:nth-child(6){transition-delay:.55s;}
+
+  /* ===== Cover ===== */
+  #cover{
+    position:relative;
+    min-height:100vh;
+    background:
+      radial-gradient(ellipse 90% 60% at 50% 0%, rgba(184,135,58,0.16), transparent 60%),
+      linear-gradient(180deg, var(--ink) 0%, #0D1226 60%, #0A0E1C 100%);
+    color:var(--cream);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    padding:110px 24px 60px;
+    overflow:hidden;
+  }
+  #cover::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 64px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 64px);
+    pointer-events:none;
+  }
+  .seal-wrap{ position:relative; width:190px; height:190px; margin-bottom:34px; }
+  .seal-wrap svg{ width:100%; height:100%; }
+  .seal-ring{ animation:spin 90s linear infinite; transform-origin:100px 100px; }
+  .seal-wheel{ animation:spin 46s linear infinite reverse; transform-origin:100px 100px; }
+  @keyframes spin{ from{ transform:rotate(0deg);} to{ transform:rotate(360deg);} }
+  .seal-glow{ animation:pulseGlow 4s ease-in-out infinite; }
+  @keyframes pulseGlow{ 0%,100%{ opacity:.55;} 50%{ opacity:1;} }
+
+  .cover-eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold-bright); opacity:0; animation:fadeUp .9s ease forwards; animation-delay:.15s; }
+  h1.title{
+    font-size:clamp(38px, 6.4vw, 74px);
+    line-height:0.98;
+    margin-top:18px;
+    max-width:920px;
+    color:var(--cream);
+    opacity:0; animation:fadeUp 1s ease forwards; animation-delay:.35s;
+  }
+  h1.title em{ font-style:italic; color:var(--gold-bright); }
+  .subtitle{
+    margin-top:22px; max-width:640px;
+    font-family:'Source Serif 4', serif; font-size:18px; color:rgba(251,248,240,0.72);
+    opacity:0; animation:fadeUp 1s ease forwards; animation-delay:.55s;
+  }
+  .cover-tags{
+    margin-top:16px; display:flex; gap:10px; flex-wrap:wrap; justify-content:center;
+    opacity:0; animation:fadeUp 1s ease forwards; animation-delay:.7s;
+  }
+  .tag{
+    font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.08em;
+    border:1px solid rgba(221,174,85,0.4); color:var(--gold-bright);
+    padding:5px 10px; border-radius:100px;
+  }
+  @keyframes fadeUp{ from{ opacity:0; transform:translateY(16px);} to{ opacity:1; transform:translateY(0);} }
+
+  .cover-author{
+    margin-top:52px; padding-top:30px; border-top:1px solid rgba(255,255,255,0.14);
+    width:100%; max-width:460px;
+    opacity:0; animation:fadeUp 1s ease forwards; animation-delay:.9s;
+  }
+  .cover-author .name{ font-family:'Fraunces',serif; font-size:24px; color:var(--cream); font-weight:600;}
+  .cover-author .role{ margin-top:8px; font-size:14.5px; color:var(--gold-bright); letter-spacing:0.02em; }
+  .cover-author .role.secondary{ color:rgba(251,248,240,0.6); margin-top:4px; }
+  .cover-author .extra{ margin-top:14px; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.04em; color:rgba(251,248,240,0.45); line-height:1.9;}
+
+  .scroll-cue{
+    position:absolute; bottom:26px; left:50%; transform:translateX(-50%);
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    color:rgba(251,248,240,0.45); font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.2em;
+    opacity:0; animation:fadeUp 1s ease forwards; animation-delay:1.15s;
+  }
+  .scroll-cue .line{ width:1px; height:34px; background:linear-gradient(180deg, rgba(221,174,85,0.8), transparent); animation:cueMove 1.8s ease-in-out infinite; }
+  @keyframes cueMove{ 0%{opacity:.2;} 50%{opacity:1;} 100%{opacity:.2;} }
+
+  /* ===== Chapter divider bands ===== */
+  .chapter{
+    background:var(--ink);
+    color:var(--cream);
+    padding:74px 26px;
+    position:relative;
+    overflow:hidden;
+  }
+  .chapter::after{
+    content:""; position:absolute; right:-60px; top:-60px; width:280px; height:280px;
+    border-radius:50%; background:radial-gradient(circle, rgba(184,135,58,0.22), transparent 70%);
+  }
+  .chapter .wrap{ position:relative; z-index:1; }
+  .chapter .num{
+    font-family:'IBM Plex Mono',monospace; font-size:15px; color:var(--gold-bright); letter-spacing:0.12em;
+  }
+  .chapter h2{
+    font-size:clamp(28px,4.4vw,46px); color:var(--cream); margin-top:10px; max-width:720px;
+  }
+  .chapter p.lede{
+    margin-top:16px; max-width:560px; color:rgba(251,248,240,0.68); font-size:16.5px;
+  }
+
+  /* ===== Content sections ===== */
+  section.body-sec{ padding:64px 26px; }
+  .card{
+    background:var(--cream);
+    border:1px solid var(--line-soft);
+    border-radius:var(--radius);
+    padding:30px 32px;
+    box-shadow:var(--shadow);
+  }
+  h3.sub{ font-size:22px; margin-top:46px; margin-bottom:14px; color:var(--ink); }
+  h3.sub .n{ color:var(--gold); font-family:'IBM Plex Mono',monospace; font-size:15px; margin-right:10px;}
+  h4.subsub{ font-size:17px; margin-top:28px; margin-bottom:10px; color:var(--ink-2); }
+  p{ margin:14px 0; font-size:16.5px; color:var(--ink-text); }
+  .lead-p{ font-size:19px; color:var(--ink); }
+  .divider{ height:1px; background:linear-gradient(90deg, var(--gold), transparent); margin:36px 0; }
+
+  blockquote.callout{
+    margin:26px 0; padding:18px 22px; border-left:3px solid var(--gold);
+    background:rgba(184,135,58,0.07); font-style:italic; color:var(--ink-2);
+  }
+  .flaw{ border-left-color:var(--maroon); background:rgba(123,30,43,0.06); }
+  .flaw .tag-x{ color:var(--maroon); font-weight:700; font-style:normal; margin-right:6px; }
+  .fix{ border-left-color:var(--gold); background:rgba(184,135,58,0.08); }
+  .fix .tag-c{ color:#5C7A3D; font-weight:700; font-style:normal; margin-right:6px; }
+
+  .keywords{ display:flex; flex-wrap:wrap; gap:8px; margin-top:22px; }
+  .kw{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; padding:5px 10px; border:1px solid var(--line); border-radius:100px; color:var(--muted); }
+
+  /* ===== TOC ===== */
+  .toc-grid{ display:grid; grid-template-columns:1fr; gap:0; }
+  .toc-item{
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding:13px 0; border-bottom:1px dashed var(--line);
+    text-decoration:none; color:var(--ink-text);
+    transition:padding-left .25s ease, color .25s ease;
+  }
+  .toc-item:hover{ padding-left:10px; color:var(--maroon); }
+  .toc-item .t-num{ font-family:'IBM Plex Mono',monospace; color:var(--gold); margin-right:14px; font-size:14px; }
+  .toc-item.sub{ padding-left:26px; font-size:15px; color:var(--muted); }
+  .toc-item .t-name{ flex:1; }
+
+  /* ===== Diagram (animated flow) ===== */
+  .flow{
+    display:flex; align-items:stretch; gap:0; overflow-x:auto; padding:26px 4px 10px;
+    scrollbar-width:thin;
+  }
+  .flow-node{
+    flex:0 0 auto; min-width:150px;
+    background:var(--gazette); border:1px solid var(--line);
+    border-radius:var(--radius); padding:16px 16px;
+    opacity:0; transform:translateY(14px) scale(.97);
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  .flow-node .fn-eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--gold); letter-spacing:0.1em; }
+  .flow-node .fn-title{ font-family:'Fraunces',serif; font-size:16px; margin-top:6px; color:var(--ink); font-weight:600; }
+  .flow-node .fn-sub{ font-size:12.5px; color:var(--muted); margin-top:4px; }
+  .flow-arrow{
+    flex:0 0 auto; width:44px; display:flex; align-items:center; justify-content:center;
+    color:var(--gold); font-size:20px;
+    opacity:0; transition:opacity .5s ease;
+  }
+  .flow.in .flow-node{ opacity:1; transform:translateY(0) scale(1); }
+  .flow.in .flow-node:nth-child(1){transition-delay:.05s;}
+  .flow.in .flow-node:nth-child(3){transition-delay:.25s;}
+  .flow.in .flow-node:nth-child(5){transition-delay:.45s;}
+  .flow.in .flow-node:nth-child(7){transition-delay:.65s;}
+  .flow.in .flow-node:nth-child(9){transition-delay:.85s;}
+  .flow.in .flow-arrow{ opacity:1; }
+  .flow.in .flow-arrow:nth-child(2){transition-delay:.18s;}
+  .flow.in .flow-arrow:nth-child(4){transition-delay:.38s;}
+  .flow.in .flow-arrow:nth-child(6){transition-delay:.58s;}
+  .flow.in .flow-arrow:nth-child(8){transition-delay:.78s;}
+
+  figcaption{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--muted); margin-top:10px; text-align:center; letter-spacing:0.03em;}
+
+  /* ===== Constitution provision cards ===== */
+  .prov{
+    display:grid; grid-template-columns:130px 1fr; gap:22px;
+    padding:22px 0; border-bottom:1px solid var(--line-soft);
+  }
+  .prov .prov-art{ font-family:'IBM Plex Mono',monospace; color:var(--gold); font-size:14px; padding-top:2px; }
+  .prov h4{ margin:0 0 8px; font-size:17px; }
+  @media(max-width:600px){ .prov{ grid-template-columns:1fr; gap:6px; } }
+
+  /* ===== Objections accordion ===== */
+  .qa{ border-bottom:1px solid var(--line-soft); padding:20px 0; }
+  .qa .q{ font-family:'Fraunces',serif; font-weight:600; font-size:17.5px; color:var(--maroon-soft); display:flex; gap:10px; }
+  .qa .q .qmark{ font-family:'IBM Plex Mono',monospace; color:var(--gold); }
+  .qa .a{ margin-top:10px; }
+
+  /* ===== Comparison table ===== */
+  .tbl-wrap{ overflow-x:auto; margin-top:20px; border:1px solid var(--line); border-radius:var(--radius); }
+  table.cmp{ width:100%; border-collapse:collapse; min-width:640px; background:var(--cream); }
+  table.cmp th, table.cmp td{ padding:13px 16px; font-size:14.5px; text-align:left; border-bottom:1px solid var(--line-soft); }
+  table.cmp th{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.06em; text-transform:uppercase; background:var(--ink); color:var(--gold-bright); position:sticky; top:0;}
+  table.cmp tr.new-row td{ background:rgba(184,135,58,0.08); }
+  table.cmp tr.new-row td:first-child{ border-left:3px solid var(--gold); }
+  table.cmp td:nth-child(2){ color:var(--maroon-soft); }
+  table.cmp td:nth-child(3){ color:#4C6B36; }
+
+  /* ===== Bill (static, formal, NO heavy animation) ===== */
+  #bill{
+    background:var(--gazette);
+    border-top:6px double var(--gold);
+    border-bottom:6px double var(--gold);
+    padding:70px 0 90px;
+  }
+  #bill .bill-head{ text-align:center; margin-bottom:44px; }
+  #bill .bill-head .mono{ font-size:12px; color:var(--muted); letter-spacing:0.2em; }
+  #bill .bill-head h2{ font-size:34px; margin-top:10px; }
+  #bill .bill-head .rule{ width:90px; height:3px; background:var(--gold); margin:18px auto 0; }
+  .article-block{ max-width:760px; margin:0 auto 54px; }
+  .article-block h3{ font-size:21px; text-align:center; border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:14px 0; margin-bottom:26px; }
+  .clause{ display:flex; gap:16px; margin:0 0 20px; padding-left:4px; }
+  .clause .cl-num{ font-family:'IBM Plex Mono',monospace; color:var(--gold); font-size:14px; flex:0 0 44px; padding-top:2px; }
+  .clause p{ margin:0; text-align:justify; font-size:15.6px; color:var(--paper-text); }
+  .clause p + p{ margin-top:10px; }
+  .status-chip{
+    display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:0.1em;
+    padding:2px 7px; border-radius:100px; margin-left:8px; vertical-align:2px; text-transform:uppercase;
+  }
+  .status-new{ background:rgba(184,135,58,0.18); color:#8A6420; border:1px solid rgba(184,135,58,0.5); }
+  .status-mod{ background:rgba(123,30,43,0.12); color:var(--maroon); border:1px solid rgba(123,30,43,0.35); }
+  .status-old{ background:rgba(76,107,54,0.12); color:#4C6B36; border:1px solid rgba(76,107,54,0.3); }
+  .legend{ display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin:6px 0 40px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted); }
+  .legend span{ display:flex; align-items:center; gap:6px; }
+
+  /* ===== Limitations ===== */
+  .limit-item{ display:flex; gap:16px; padding:18px 0; border-bottom:1px solid var(--line-soft); }
+  .limit-item .li-mark{ color:var(--maroon); font-size:20px; flex:0 0 auto; }
+  .limit-item.solved{ opacity:0.55; }
+  .limit-item.solved .li-mark{ color:#4C6B36; }
+  .strike{ text-decoration:line-through; text-decoration-color:var(--maroon-soft); }
+
+  /* ===== References ===== */
+  .ref{ font-size:14.5px; color:var(--muted); margin:10px 0; padding-left:28px; text-indent:-28px; }
+  .ref b{ color:var(--ink-text); }
+
+  /* ===== Footer ===== */
+  footer{
+    background:var(--ink); color:rgba(251,248,240,0.55);
+    padding:54px 26px 40px; text-align:center;
+    font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.04em;
+  }
+  footer .fname{ color:var(--gold-bright); font-family:'Fraunces',serif; font-size:20px; letter-spacing:0; margin-bottom:10px; }
+
+  ::selection{ background:var(--gold); color:var(--ink); }
+</style>
+</head>
+<body>
+
+<!-- ============ SIGNATURE ELEMENT: BILL PROGRESS RIBBON ============ -->
+<div id="ribbon">
+  <span class="rib-title">ARTICLE 82B · BRIDGE MECHANISM</span>
+  <div class="rib-track">
+    <div class="rib-fill" id="ribFill"></div>
+    <div class="rib-seal" id="ribSeal"></div>
+  </div>
+  <div style="display:flex; gap:16px;">
+    <span class="rib-stage mono" data-stage="0">INTRODUCED</span>
+    <span class="rib-stage mono" data-stage="1">COMMITTEE</span>
+    <span class="rib-stage mono" data-stage="2">FLOOR DEBATE</span>
+    <span class="rib-stage mono" data-stage="3">ENACTED</span>
+  </div>
+</div>
+
+<!-- ============ COVER ============ -->
+<header id="cover">
+  <div class="seal-wrap">
+    <svg viewBox="0 0 200 200">
+      <defs>
+        <path id="ringPath" d="M100,20 a80,80 0 1,1 -0.1,0" fill="none"/>
+      </defs>
+      <g class="seal-glow">
+        <circle cx="100" cy="100" r="94" fill="none" stroke="#B8873A" stroke-opacity="0.25" stroke-width="1"/>
+      </g>
+      <g class="seal-ring">
+        <circle cx="100" cy="100" r="80" fill="none" stroke="#DDAE55" stroke-width="1" stroke-opacity="0.55"/>
+        <text font-family="IBM Plex Mono, monospace" font-size="7.4" letter-spacing="2.2" fill="#DDAE55" fill-opacity="0.85">
+          <textPath href="#ringPath" startOffset="0%">NPMAI ECOSYSTEM · CONSTITUTIONAL RESEARCH · ARTICLE 82B · </textPath>
+        </text>
+      </g>
+      <g class="seal-wheel" stroke="#DDAE55" stroke-width="1.1" fill="none" stroke-opacity="0.8">
+        <circle cx="100" cy="100" r="52"/>
+        <circle cx="100" cy="100" r="6" fill="#DDAE55" fill-opacity="0.9" stroke="none"/>
+        <g id="spokes"></g>
+      </g>
+      <text x="100" y="106" text-anchor="middle" font-family="Fraunces, serif" font-weight="600" font-size="15" fill="#F6F1E3">82B</text>
+    </svg>
+  </div>
+
+  <div class="cover-eyebrow">NPMAI Ecosystem &nbsp;·&nbsp; Constitutional Research &nbsp;·&nbsp; 2026</div>
+  <h1 class="title">Remainder Term<br><em>Solution</em> (ONOE)</h1>
+  <p class="subtitle">A Constitutional Bridge Mechanism for Synchronization Continuity in One Nation One Election — Article 82B and Article 82C as a Legislative Alternative to Mid-Term Elections under the Constitution (129th Amendment) Bill, 2024.</p>
+  <div class="cover-tags">
+    <span class="tag">ARTICLE 82B</span>
+    <span class="tag">ARTICLE 82C</span>
+    <span class="tag">ONOE</span>
+    <span class="tag">NO-CONFIDENCE BRIDGE</span>
+    <span class="tag">ANTI-DEFECTION LOCK</span>
+    <span class="tag">EXPEDITED JUDICIAL REVIEW</span>
+  </div>
+
+  <div class="cover-author">
+    <div class="name">Sonu Kumar</div>
+    <div class="role">Founder of NPMAI ECOSYSTEM</div>
+    <div class="role secondary">HOD Research Tech, Political Science</div>
+    <div class="extra">github.com/sonuramashishnpm &nbsp;·&nbsp; npmai.netlify.app</div>
+  </div>
+
+  <div class="scroll-cue"><span class="line"></span>SCROLL</div>
+</header>
+
+<!-- ============ ABSTRACT ============ -->
+<section class="body-sec" id="abstract">
+  <div class="wrap reveal">
+    <span class="eyebrow">Abstract</span>
+    <p class="lead-p" style="margin-top:14px;">The Constitution (One Hundred and Twenty-Ninth Amendment) Bill, 2024 is a serious and overdue attempt to reduce the financial and governance cost of India's near-continuous election cycle. But the Bill, as drafted, carries a structural flaw — the <b>remainder term</b> provision — which will, in practice, defeat its own purpose. When a House is dissolved mid-cycle and reconstituted only for the unexpired remainder of the synchronized term, the result is a government without the mandate, stability, or time-horizon to govern effectively. The instability ONOE was designed to eliminate is preserved under a different name.</p>
+    <p>This paper proposes a legislative alternative: a <b>Constitutional Bridge Mechanism</b>, enacted as <b>Article 82B</b> of the Constitution, together with a companion judicial safeguard, <b>Article 82C</b>. When a government falls through a no-confidence motion under Article 75(3) or Article 164 and no alternative majority can be constituted within fourteen days, the President or Governor assumes the functions of Head of Government in addition to Head of State on a strictly limited, temporary basis, within the constitutionally prescribed council-size ceiling. Ministerial portfolios — excluding Home Affairs, Defence, and Intelligence, which vest directly in the President or Governor — are filled on the recommendation of the party or alliance holding the largest number of seats, the <i>Recommending Party</i>. A dedicated anti-defection lock prevents horse-trading during the bridge period, a tie-break rule governs the rare case of equal seat shares, the Speaker's continuity is preserved with a fallback election and interim chair, and an expedited Judicial Review Committee under Article 82C gives any aggrieved minority of members fast-tracked constitutional recourse without displacing the ordinary jurisdiction of the courts. The bridge terminates automatically upon proof of majority. The synchronized election cycle is preserved intact throughout.</p>
+    <p>This is a revised edition of the original proposal. It restructures the mechanism to close three gaps identified in the first draft — control over ministerial appointments, the incentive for horse-trading during a prolonged bridge, and the absence of a judicial safeguard — and expresses the complete, amended text of Article 82B and the new Article 82C in full legislative drafting language.</p>
+    <div class="keywords">
+      <span class="kw">One Nation One Election</span><span class="kw">Article 82B</span><span class="kw">Article 82C</span>
+      <span class="kw">Constitutional Bridge Mechanism</span><span class="kw">Remainder Term</span><span class="kw">129th Amendment</span>
+      <span class="kw">Anti-Defection Lock</span><span class="kw">Tenth Schedule</span><span class="kw">Recommending Party</span>
+      <span class="kw">Expedited Judicial Review</span><span class="kw">S.R. Bommai</span><span class="kw">Speaker</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TABLE OF CONTENTS ============ -->
+<section class="body-sec" id="toc" style="background:var(--parchment-deep);">
+  <div class="wrap reveal">
+    <span class="eyebrow">Contents</span>
+    <h2 style="margin-top:10px; font-size:30px;">Table of Contents</h2>
+    <div class="toc-grid" style="margin-top:26px;">
+      <a class="toc-item" href="#introduction"><span><span class="t-num">01</span><span class="t-name">Introduction</span></span></a>
+      <a class="toc-item" href="#background"><span><span class="t-num">02</span><span class="t-name">Background: The 129th Amendment and the Remainder Term Problem</span></span></a>
+      <a class="toc-item sub" href="#background">2.1 What the 129th Amendment Proposes</a>
+      <a class="toc-item sub" href="#background">2.2 Why the Remainder Term is a Structural Flaw</a>
+      <a class="toc-item" href="#framework"><span><span class="t-num">03</span><span class="t-name">Constitutional Framework: Existing Provisions</span></span></a>
+      <a class="toc-item" href="#mechanism"><span><span class="t-num">04</span><span class="t-name">The Constitutional Bridge Mechanism — Full Proposal</span></span></a>
+      <a class="toc-item sub" href="#mechanism">4.1 Triggering Conditions</a>
+      <a class="toc-item sub" href="#mechanism">4.2 The HOG–HOS Merger and its Constitutional Basis</a>
+      <a class="toc-item sub" href="#mechanism">4.3 The Recommending Party System &amp; Council-Size Ceiling</a>
+      <a class="toc-item sub" href="#mechanism">4.4 Reserved Portfolios — Home, Defence &amp; Intelligence</a>
+      <a class="toc-item sub" href="#mechanism">4.5 The Speaker During the Bridge Period</a>
+      <a class="toc-item sub" href="#mechanism">4.6 HOG Accountability to the House</a>
+      <a class="toc-item sub" href="#mechanism">4.7 Accountability During the Bridge Period</a>
+      <a class="toc-item sub" href="#mechanism">4.8 Bridge Termination</a>
+      <a class="toc-item sub" href="#mechanism">4.9 Anti-Defection Lock &amp; Prohibition on Horse-Trading <span class="status-chip status-new">New</span></a>
+      <a class="toc-item sub" href="#mechanism">4.10 Tied Recommending Party <span class="status-chip status-new">New</span></a>
+      <a class="toc-item" href="#judicial"><span><span class="t-num">05</span><span class="t-name">Judicial Safeguard — The Expedited Review Committee <span class="status-chip status-new">New</span></span></span></a>
+      <a class="toc-item" href="#dissolution"><span><span class="t-num">06</span><span class="t-name">Early Dissolution and Synchronization Continuity</span></span></a>
+      <a class="toc-item" href="#bill"><span><span class="t-num">07</span><span class="t-name">Proposed Text — Article 82B and Article 82C</span></span></a>
+      <a class="toc-item" href="#objections"><span><span class="t-num">08</span><span class="t-name">Addressing Potential Objections</span></span></a>
+      <a class="toc-item" href="#comparison"><span><span class="t-num">09</span><span class="t-name">Comparison: 129th Amendment vs. Article 82B Mechanism</span></span></a>
+      <a class="toc-item" href="#limitations"><span><span class="t-num">10</span><span class="t-name">Honest Limitations</span></span></a>
+      <a class="toc-item" href="#conclusion"><span><span class="t-num">11</span><span class="t-name">Conclusion</span></span></a>
+      <a class="toc-item" href="#references"><span><span class="t-num">—</span><span class="t-name">References</span></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 01 INTRODUCTION ============ -->
+<div class="chapter reveal" data-stage-marker="0">
+  <div class="wrap">
+    <div class="num">01 / 11</div>
+    <h2>Introduction</h2>
+    <p class="lede">Right diagnosis, wrong remedy — and how a bridge, not a shorter term, closes the gap.</p>
+  </div>
+</div>
+<section class="body-sec" id="introduction">
+  <div class="wrap reveal">
+    <p>When I look at the 129th Constitutional Amendment Bill, I see something that is both right and wrong at the same time. It is right in its diagnosis: India spends enormous resources, administrative energy, and political attention on elections that happen somewhere in the country almost every year. The Model Code of Conduct freezes governance. Coalition governments collapse mid-term. The idea of synchronizing all elections to a single cycle is not new — it was the practice until 1967, and its erosion was the result of political fragmentation rather than constitutional design.</p>
+    <p>But the Bill is wrong in one specific and consequential way. When it provides that a House dissolved before completing its term shall be reconstituted only for the unexpired remainder of that term, it creates the very problem it was designed to solve. A government elected for eighteen months does not govern with the confidence of a government with a five-year mandate. It governs defensively, with one eye on the next election. The remainder term is not a solution to instability. It is instability with a different label.</p>
+    <p>What this paper proposes is a repair of that flaw. The <b>Constitutional Bridge Mechanism</b>, enacted as Article 82B, ensures that when a government falls and no alternative majority can be immediately constituted, governance continues through a temporary, constitutionally limited arrangement — without dissolving the House, without holding mid-term elections, and without creating a remainder-term government. This revised edition closes three additional gaps: it fixes exactly who controls what during ministerial appointment, it shuts the door on horse-trading for as long as the bridge lasts, and it adds a fast-track judicial safeguard, Article 82C, so the mechanism is never unaccountable even for a single day. The synchronized cycle is preserved intact.</p>
+
+    <figure class="flow" id="flow1">
+      <div class="flow-node"><div class="fn-eyebrow mono">STEP 1</div><div class="fn-title">Govt Falls</div><div class="fn-sub">No-confidence motion passes</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><div class="fn-eyebrow mono">STEP 2</div><div class="fn-title">14-Day Window</div><div class="fn-sub">Alternative majority sought</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><div class="fn-eyebrow mono">STEP 3</div><div class="fn-title">Bridge Begins</div><div class="fn-sub">Article 82B activated</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><div class="fn-eyebrow mono">STEP 4</div><div class="fn-title">Majority Formed</div><div class="fn-sub">Bridge ends automatically</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><div class="fn-eyebrow mono">STEP 5</div><div class="fn-title">Normal Government</div><div class="fn-sub">ONOE cycle intact</div></div>
+    </figure>
+    <figcaption>FIG. 1 — Constitutional Bridge Mechanism: from government fall to cycle restoration</figcaption>
+  </div>
+</section>
+
+<!-- ============ 02 BACKGROUND ============ -->
+<div class="chapter reveal">
+  <div class="wrap">
+    <div class="num">02 / 11</div>
+    <h2>Background: The 129th Amendment and the Remainder Term Problem</h2>
+    <p class="lede">A shorter term is not the absence of instability. It is instability, compressed.</p>
+  </div>
+</div>
+<section class="body-sec" id="background">
+  <div class="wrap reveal">
+    <h3 class="sub"><span class="n">2.1</span>What the 129th Amendment Proposes</h3>
+    <p>The Constitution (One Hundred and Twenty-Ninth Amendment) Bill, 2024, currently before the Joint Parliamentary Committee, proposes amendments to Articles 82A, 83, 172, and 327A to enable simultaneous elections for the Lok Sabha and all State Legislative Assemblies. A common synchronized election date is established and all Houses are expected to complete their terms in alignment with this date.</p>
+    <p>The critical provision is the one dealing with mid-term dissolution. The Bill proposes that if the Lok Sabha or a State Legislative Assembly is dissolved before completing its term, elections held to reconstitute that House shall be for the unexpired remainder of the term only.</p>
+
+    <h3 class="sub"><span class="n">2.2</span>Why the Remainder Term is a Structural Flaw</h3>
+    <blockquote class="callout flaw"><span class="tag-x">✖</span><b>Does not eliminate instability — it shortens it.</b> A government with 18 months in office has the same structural incentives for short-termism and populism as a caretaker. The compression of instability into fewer months does not remove it.</blockquote>
+    <blockquote class="callout flaw"><span class="tag-x">✖</span><b>Contradicts the democratic mandate.</b> Under Article 75(3), the Council of Ministers is collectively responsible to the House. A remainder-term government carries a mandate voters did not confer for the full period. This dilutes democratic legitimacy in a way the Constitution does not sanction.</blockquote>
+    <blockquote class="callout flaw"><span class="tag-x">✖</span><b>Defeats the purpose of ONOE.</b> Recurring political instability under an ONOE regime using remainder terms could produce more frequent elections than the current system — the opposite of the intended outcome.</blockquote>
+    <blockquote class="callout fix"><b>Core Problem.</b> The 129th Amendment assumes Houses will not collapse mid-cycle. When they do — and they will — the remainder term provision breaks synchronization. Article 82B ensures synchronization is maintained regardless of mid-cycle political events.</blockquote>
+  </div>
+</section>
+
+<!-- ============ 03 FRAMEWORK ============ -->
+<div class="chapter reveal">
+  <div class="wrap">
+    <div class="num">03 / 11</div>
+    <h2>Constitutional Framework: Existing Provisions</h2>
+    <p class="lede">Article 82B borrows no new power. It gives direct effect to power that already exists.</p>
+  </div>
+</div>
+<section class="body-sec" id="framework">
+  <div class="wrap reveal">
+    <div class="prov">
+      <div class="prov-art mono">Art. 75(3)<br>&amp; 164</div>
+      <div><h4>No-Confidence and Ministerial Accountability</h4>
+      <p>Article 75(3) provides that the Council of Ministers shall be collectively responsible to the House of the People. The established convention is that this collective responsibility is tested through a motion of no-confidence; when the House passes such a motion, the Council of Ministers is obligated to resign. Article 164 provides the equivalent for State Legislative Assemblies. The Constitutional Bridge Mechanism activates at precisely this moment.</p></div>
+    </div>
+    <div class="prov">
+      <div class="prov-art mono">Art. 74<br>&amp; 163</div>
+      <div><h4>Council of Ministers and Advice</h4>
+      <p>Article 74(1) provides that there shall be a Council of Ministers with the Prime Minister at the head to aid and advise the President, and that the President shall act in accordance with such advice — binding since the 44th Amendment. Article 163(1) provides the equivalent for states. During the bridge period, this relationship is temporarily modified: the Head of Government function vests directly in the President or Governor, so the advice mechanism operates internally within the same constitutional office.</p></div>
+    </div>
+    <div class="prov">
+      <div class="prov-art mono">Art. 75(1A)<br>&amp; 164(1A)</div>
+      <div><h4>Ceiling on Council Size</h4>
+      <p>Inserted by the Ninety-First Amendment, these clauses cap the total strength of the Council of Ministers, including the Prime Minister or Chief Minister, at fifteen per centum of the total membership of the House, with a floor of twelve Ministers for a State Legislative Assembly. Article 82B(3)(a) binds the President or Governor to this existing ceiling — the bridge mechanism does not create a new, uncapped executive.</p></div>
+    </div>
+    <div class="prov">
+      <div class="prov-art mono">Art. 83<br>&amp; 172</div>
+      <div><h4>Duration of Houses</h4>
+      <p>Article 83(2) provides that the House of the People, unless sooner dissolved, shall continue for five years from the date appointed for its first meeting; Article 172(1) provides the equivalent for State Legislative Assemblies. The bridge mechanism rests on a critical insight: there is no constitutional requirement that dissolution follow immediately upon the fall of a government. The House continues to exist. Its members remain in office. Article 82B uses this continuity to keep governance functioning until a majority re-emerges.</p></div>
+    </div>
+    <div class="prov">
+      <div class="prov-art mono">Art. 93<br>&amp; 178</div>
+      <div><h4>The Speaker — Continuity and Reconstitution</h4>
+      <p>Under Articles 94 and 179, the Speaker vacates office on ceasing to be a member of the House, but otherwise continues in office — including after a no-confidence motion against the government. The Speaker is not a member of the Council of Ministers and is unaffected by its fall. This continuity is central to the mechanism and is addressed fully in Section 4.5.</p></div>
+    </div>
+    <div class="prov">
+      <div class="prov-art mono">Art. 356</div>
+      <div><h4>Why It Does Not Apply Here</h4>
+      <p>Article 356 is an emergency provision invoked when the government of a State cannot be carried on in accordance with the Constitution, typically on the Governor's report at the Centre's instance. <i>S.R. Bommai v. Union of India</i> (1994) circumscribed its use severely. Article 82B has no connection with it: it is triggered by a constitutionally objective fact — the passage of a no-confidence motion — not Central initiative or a Governor's report. No legislative body is suspended and no Central interference in state governance occurs. Article 82B expressly disclaims any invocation of Article 356.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 MECHANISM ============ -->
+<div class="chapter reveal">
+  <div class="wrap">
+    <div class="num">04 / 11</div>
+    <h2>The Constitutional Bridge Mechanism — Full Proposal</h2>
+    <p class="lede">Ten components, each grounded in a specific constitutional provision, each with a precise operational scope.</p>
+  </div>
+</div>
+<section class="body-sec" id="mechanism">
+  <div class="wrap reveal">
+
+    <h3 class="sub"><span class="n">4.1</span>Triggering Conditions</h3>
+    <p>Two conditions must be simultaneously satisfied for the bridge to commence, automatically and without proclamation:</p>
+    <p><b>Condition One.</b> A motion of no-confidence has been passed against the Council of Ministers under Article 75(3) (Lok Sabha) or Article 164 (State Legislative Assembly), and the outgoing Council has tendered its resignation.</p>
+    <p><b>Condition Two.</b> No member or combination of members has demonstrated, through a letter of support signed by a majority of members, the ability to form an alternative government within fourteen days of acceptance of that resignation.</p>
+
+    <h3 class="sub"><span class="n">4.2</span>The HOG–HOS Merger and its Constitutional Basis</h3>
+    <p>During the bridge period, the President of India — for the Lok Sabha — and the Governor of the concerned State — for a State Legislative Assembly — assume the functions of Head of Government in addition to Head of State. The constitutional basis derives from Articles 52–61 (President) and 153–161 (Governor). Both offices already vest executive power of the Union and of the State respectively. The merger is not the creation of new power; it is direct exercise of power that already constitutionally vests in these offices, temporarily without the mediation of a Council of Ministers that does not exist.</p>
+    <blockquote class="callout"><b>Operational Limits on HOG.</b> Limited to (1) maintenance of existing policy, (2) continuance of existing programmes and schemes, (3) administrative functions necessary for normal government functioning. No new policy, no new scheme, and no financial commitment beyond limits prescribed by Parliament — except with House approval.</blockquote>
+
+    <h3 class="sub"><span class="n">4.3</span>The Recommending Party System &amp; Council-Size Ceiling</h3>
+    <p>The party or pre-poll alliance holding the largest number of seats — the <b>Recommending Party</b> — is certified by the Speaker. Two separate powers are then exercised by two separate actors, and this revision draws that line precisely:</p>
+    <blockquote class="callout fix"><span class="tag-c">✔</span><b>President/Governor controls:</b> the total number of ministers (bound by the existing 15%-of-House ceiling under Article 75(1A) / 164(1A)), and which portfolios exist. <br><span class="tag-c">✔</span><b>Recommending Party controls:</b> which of its own nominated members fills which of those specified portfolios.</blockquote>
+    <p>This split answers the objection that the President or Governor would be "choosing the government." They are not. They set the shape of the table; the largest party decides who sits where at it.</p>
+
+    <figure class="flow" id="flow2">
+      <div class="flow-node"><div class="fn-eyebrow mono">01</div><div class="fn-title">Identify</div><div class="fn-sub">Party with most seats</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><div class="fn-eyebrow mono">02</div><div class="fn-title">Specify</div><div class="fn-sub">HOG sets number &amp; portfolios, within the 15% ceiling</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><div class="fn-eyebrow mono">03</div><div class="fn-title">Nominate</div><div class="fn-sub">Party assigns its members to portfolios</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><div class="fn-eyebrow mono">04</div><div class="fn-title">Appoint</div><div class="fn-sub">HOG appoints as Ministers of State</div></div>
+    </figure>
+    <figcaption>FIG. 2 — Recommending Party System: four-step ministerial appointment, with authority split at each step</figcaption>
+
+    <h3 class="sub"><span class="n">4.4</span>Reserved Portfolios — Home, Defence &amp; Intelligence</h3>
+    <p>The Ministry of Home Affairs, the Ministry of Defence, and all organs of intelligence and internal security — or their State equivalents — are not included among the portfolios offered to the Recommending Party. They vest directly in, and are administered solely by, the President or the Governor throughout the bridge period.</p>
+    <blockquote class="callout"><b>Why.</b> If coercive or security powers were available to a political party simultaneously negotiating coalition formation, those powers could be turned toward influencing negotiations, security deployments, or the political process itself. The original draft reserved only Home Affairs; this revision extends the same logic to Defence and Intelligence, since both carry an equal or greater capacity to be misused as leverage during a period of live political bargaining.</blockquote>
+
+    <h3 class="sub"><span class="n">4.5</span>The Speaker During the Bridge Period</h3>
+    <p>The Speaker is constitutionally distinct from the Council of Ministers and unaffected by its fall. Under Articles 94 and 179, a no-confidence motion has no effect on Speaker's tenure — the Speaker continues to hold office and discharge all constitutional functions, including certifying the Recommending Party as a factual, non-discretionary determination of House composition.</p>
+    <p><b>If the Speaker's own office falls vacant</b> during the bridge period, the House elects a new Speaker by simple majority of members present and voting, who holds office for the remainder of the bridge period and stands down when it ends, whereupon the ordinary Article 93 / 178 procedure resumes. <b>If that election ends in a tie,</b> a fresh election is held after an interval fixed by the rules of procedure. In the intervening period — between the vacancy and a valid election — the senior-most officer of the House Secretariat presides for the sole purpose of conducting that election, exercising no other function of the Speaker's office.</p>
+
+    <h3 class="sub"><span class="n">4.6</span>HOG Accountability to the House</h3>
+    <p>The President or Governor acting as Head of Government is fully accountable to the House in the same manner as a Prime Minister or Chief Minister — Question Hour, calling attention motions, adjournment motions, and short duration discussions all apply with full force. The bridge period is a parliamentary arrangement, not a presidential one; the HOG is never shielded from oversight by virtue of holding constitutional office.</p>
+
+    <h3 class="sub"><span class="n">4.7</span>Accountability During the Bridge Period</h3>
+    <blockquote class="callout fix"><span class="tag-c">✔</span><b>Legislative accountability.</b> The House sits and functions normally; Ministers may be questioned, their decisions debated.</blockquote>
+    <blockquote class="callout fix"><span class="tag-c">✔</span><b>Opposition status.</b> All parties and members outside the Recommending Party are constitutionally treated as the opposition, with full rights and procedural protections.</blockquote>
+    <blockquote class="callout fix"><span class="tag-c">✔</span><b>Limitations on HOG.</b> A Minister may not be unilaterally removed by the President or Governor — removal requires a House resolution, moved at the President's or Governor's instance and passed by majority.</blockquote>
+    <blockquote class="callout fix"><span class="tag-c">✔</span><b>Judicial review.</b> Every action during the bridge period remains subject to the ordinary jurisdiction of the Supreme Court and High Courts — and, under this revision, to the expedited Article 82C committee as well. See Section 5.</blockquote>
+
+    <h3 class="sub"><span class="n">4.8</span>Bridge Termination</h3>
+    <p>The bridge is self-terminating. It ends automatically upon <b>Proof of Majority</b> — any combination of members submitting a signed letter of support of a House majority, upon which the President or Governor forthwith invites that leader to form government — or upon <b>Expiry of House Term</b> under Articles 83 / 172, at which point the synchronized election proceeds in the normal course. There is no periodic floor test and no artificial deadline; the mechanism remains open to majority formation at all times.</p>
+
+    <h3 class="sub"><span class="n">4.9</span>Anti-Defection Lock &amp; Prohibition on Horse-Trading <span class="status-chip status-new">New</span></h3>
+    <p>The 4.8 mechanism — "the bridge ends the moment a majority forms" — only holds together if majority formation cannot be gamed through defection and re-alignment while the bridge is running. This revision closes that gap directly.</p>
+    <p><b>No new alliances.</b> Once the Recommending Party is first certified, no party or combination of members may form a new political alliance for the purpose of constituting or displacing it during the bridge period. A member of a party outside the Recommending Party gains no ministerial right merely by virtue of holding seats — being "in" a coalition confers no entitlement to actually run a ministry unless that party is the certified Recommending Party.</p>
+    <p><b>The 25% threshold.</b> If members holding, in aggregate, <i>less than</i> 25% of the Recommending Party's own strength resign from it or from the House, the Recommending Party's status is unaffected and no Minister is removed on that account. If 25% or more resign, the Speaker re-certifies which party or alliance now holds the largest number of seats — but even then, re-certification alone does not remove a sitting Minister; removal still requires the House-resolution process under 4.7. This prevents both a trivial defection from destabilizing government and a large, genuine shift in numbers from being ignored.</p>
+    <p><b>Ordinary Tenth Schedule switching is suspended for this purpose.</b> Article 82B, read with this clause, displaces the normal disqualification-for-defection framework during the bridge period and substitutes this bespoke threshold rule — because the normal framework was built for a functioning government-versus-opposition floor, not for a caretaker bridge where the incentive to defect is structurally different.</p>
+    <p>Because the door to defection and alliance-shopping is shut, a bridge that runs long is not a bridge that invites chaos — see the discussion of long-duration bridges in Section 8.</p>
+
+    <h3 class="sub"><span class="n">4.10</span>Tied Recommending Party <span class="status-chip status-new">New</span></h3>
+    <p>Where two or more parties or pre-poll alliances hold an equal and the largest number of seats, and are not themselves in alliance with each other, <b>both jointly constitute the Recommending Party.</b> For every specified portfolio, each must submit one nominee; if they cannot agree on a single name within five days, the Speaker — at the President's or Governor's request — opens candidature to the whole House, and the member with the most votes is appointed.</p>
+    <p>Accountability follows the same joint logic: if a Minister nominated by one of the tied parties is found to have acted wrongly, responsibility and any consequent action attaches equally to both parties constituting the Recommending Party, not only to the one that nominated the individual Minister.</p>
+  </div>
+</section>
+
+<!-- ============ 05 JUDICIAL SAFEGUARD (NEW) ============ -->
+<div class="chapter reveal">
+  <div class="wrap">
+    <div class="num">05 / 11</div>
+    <h2>Judicial Safeguard — The Expedited Review Committee <span class="status-chip status-new">New</span></h2>
+    <p class="lede">A bridge with no judicial safety net is a bridge nobody should trust. Article 82C is that net.</p>
+  </div>
+</div>
+<section class="body-sec" id="judicial">
+  <div class="wrap reveal">
+    <p>Every version of this proposal has said that ordinary judicial review continues to apply during the bridge period. That is necessary but not sufficient — ordinary litigation timelines are not built for a mechanism designed to be temporary. This revision adds <b>Article 82C</b>, an expedited, self-contained review channel that runs <i>alongside</i>, and never instead of, the ordinary courts.</p>
+
+    <h3 class="sub"><span class="n">5.1</span>How It Is Triggered</h3>
+    <p>Not less than 5% of the total membership of the House of the People, or of a State Legislative Assembly, may jointly sign a request to the Chief Justice of India, or the Chief Justice of the relevant High Court, asking that a Judicial Review Committee be constituted to examine a specific resolution, guideline, order, or action taken under Article 82B.</p>
+
+    <h3 class="sub"><span class="n">5.2</span>What It Does</h3>
+    <p>On receipt of a valid request, the Chief Justice constitutes the Committee <i>forthwith</i>. The Committee examines the impugned action and issues whatever order it considers appropriate under the Constitution and the law — it is not an advisory body; its orders bind.</p>
+
+    <h3 class="sub"><span class="n">5.3</span>What It Does Not Do</h3>
+    <p>It does not replace, narrow, or gate the ordinary jurisdiction of the Supreme Court or High Courts. A person may bring a public interest litigation or any other ordinary proceeding entirely independently of Article 82C, at any time. The Committee is additive, not exclusive.</p>
+
+    <h3 class="sub"><span class="n">5.4</span>Sunset</h3>
+    <p>The Committee stands automatically dissolved the moment the bridge period ends — whether by proof of majority or by natural expiry — or the moment an election date is announced and finalised, whichever comes first. Orders already passed remain valid and binding after dissolution; nothing further is heard by the Committee itself. Anything left unresolved at that point reverts to the ordinary courts through the ordinary process. The Committee's entire reason for existing is speed during a short, defined window — not a parallel judiciary that outlives its trigger.</p>
+  </div>
+</section>
+
+<!-- ============ 06 DISSOLUTION ============ -->
+<div class="chapter reveal">
+  <div class="wrap">
+    <div class="num">06 / 11</div>
+    <h2>Early Dissolution and Synchronization Continuity</h2>
+    <p class="lede">Voluntary exit can break the cycle just as surely as a no-confidence motion.</p>
+  </div>
+</div>
+<section class="body-sec" id="dissolution">
+  <div class="wrap reveal">
+    <p>A separate but related question is what happens when a government seeks early dissolution on the advice of the Prime Minister or Chief Minister — not through a no-confidence motion but by choice. Under the ONOE framework, early dissolution would break synchronization just as surely as a no-confidence motion.</p>
+    <p>Article 82B therefore also provides that dissolution on the advice of the Head of Government, before expiry of the synchronized term, requires the concurrence of all other Legislatures under the ONOE framework. If any Legislature withholds concurrence, the request for early dissolution is denied — making mid-cycle dissolution practically very difficult, and ensuring the synchronized cycle is disrupted only with genuine, broad constitutional consensus.</p>
+    <p>In the last three months of the synchronized five-year term, the Election Commission of India shall fix a common election date under Article 324. If all Heads of Government reach consensus on a date, that date is adopted; if not, within thirty days of the commencement of the last three months, the Election Commission determines the common date independently.</p>
+  </div>
+</section>
+
+<!-- ============ 07 THE BILL (STATIC / FORMAL / NO HEAVY ANIMATION) ============ -->
+<section id="bill">
+  <div class="wrap">
+    <div class="bill-head">
+      <div class="mono">DRAFT LEGISLATIVE TEXT — FOR PARLIAMENTARY EXAMINATION</div>
+      <h2>Proposed Text of Article 82B &amp; Article 82C</h2>
+      <div class="rule"></div>
+    </div>
+
+    <div class="legend">
+      <span><span class="status-chip status-old">Unchanged</span> retained from the original draft</span>
+      <span><span class="status-chip status-mod">Modified</span> existing clause, rewritten</span>
+      <span><span class="status-chip status-new">New</span> did not exist before</span>
+    </div>
+
+    <div class="article-block">
+      <h3>ARTICLE 82B — Constitutional Bridge Mechanism for Synchronization Continuity</h3>
+
+      <div class="clause"><div class="cl-num">(1)</div><div>
+        <p><span class="status-chip status-old">Unchanged</span></p>
+        <p>Where, in consequence of a motion of no-confidence passed in the House of the People under clause (3) of Article 75, or in a Legislative Assembly of a State under Article 164, the Council of Ministers has resigned, and no member of the House of the People or of such Legislative Assembly, as the case may be, has demonstrated the support of a majority of members of that House within fourteen days of the acceptance of such resignation, the President of India or the Governor of the State concerned, as the case may be, shall, by operation of this Article, assume the functions of Head of Government in addition to the functions of Head of State, for the duration of the bridge period as defined in this Article.</p>
+      </div></div>
+
+      <div class="clause"><div class="cl-num">(2)</div><div>
+        <p><span class="status-chip status-old">Unchanged</span></p>
+        <p>During the bridge period, the President or the Governor, as the case may be, shall exercise executive functions solely for the purpose of maintaining existing policy, continuing existing programmes and schemes of the government, and performing such administrative functions as are necessary for the ordinary and continuous functioning of the government. No new policy shall be introduced, no new scheme shall be launched, and no financial commitment exceeding such limits as Parliament may by law prescribe shall be entered into during the bridge period, except with the approval of the House.</p>
+      </div></div>
+
+      <div class="clause"><div class="cl-num">(3)</div><div>
+        <p><span class="status-chip status-mod">Modified</span> — council-size ceiling added; control split between number/portfolios and nominee-assignment.</p>
+        <p><b>(a)</b> The total number of Ministers appointed under this Article, including the President or Governor acting as Head of Government, shall in no case exceed the limit prescribed under clause (1A) of Article 75 or clause (1A) of Article 164, as applicable, and in the case of a State shall not be less than twelve.</p>
+        <p><b>(b)</b> Within seven days of the commencement of the bridge period, the President or the Governor, as the case may be, shall specify, within the limit prescribed under sub-clause (a), the number of ministerial portfolios to be filled and the designation of each such portfolio. The determination of the number and designation of portfolios shall rest solely with the President or the Governor and shall not be subject to the recommendation of any party.</p>
+        <p><b>(c)</b> The President or the authorized leader of the party or pre-poll alliance holding the largest number of seats in the House, as certified by the Speaker under clause (5), and referred to in this Article as the "Recommending Party," shall, within seven days of the specification under sub-clause (b), submit a list of nominees from among the sitting members of the House, indicating against each nominee the specific portfolio, from among those specified under sub-clause (b), to which such nominee is proposed to be assigned. The assignment of a specific nominee to a specific portfolio, within the set of portfolios so specified, shall rest solely with the Recommending Party.</p>
+        <p><b>(d)</b> The President or the Governor shall appoint the nominees so submitted as Ministers of State with charge of the portfolios so assigned, and shall not vary the assignment made under sub-clause (c) except where a nominee is disqualified from membership of the House under the Constitution or any law for the time being in force.</p>
+      </div></div>
+
+      <div class="clause"><div class="cl-num">(4)</div><div>
+        <p><span class="status-chip status-mod">Modified</span> — extended from Home Affairs alone to Home, Defence and Intelligence.</p>
+        <p>The Ministry of Home Affairs, the Ministry of Defence, and all departments, agencies, and organs of intelligence and internal security functioning under the Union, or the equivalent departments responsible for internal security, law and order, and intelligence coordination in a State, shall not be included among the portfolios specified under clause (3)(b) of this Article and shall vest directly in, and be administered by, the President of India or the Governor of the State, as the case may be, throughout the bridge period. No person other than the President or the Governor shall exercise ministerial charge over these portfolios during the bridge period.</p>
+      </div></div>
+
+      <div class="clause"><div class="cl-num">(5)</div><div>
+        <p><span class="status-chip status-mod">Modified</span> — tie-break election and interim chair added.</p>
+        <p><b>(a)</b> Where the office of the Speaker of the House of the People or of the Legislative Assembly of a State falls vacant during the bridge period, the House shall elect a new Speaker by simple majority of members present and voting. The Speaker so elected shall hold office for the duration of the bridge period and shall cease to hold office upon the termination of the bridge period, whereupon the House shall elect a Speaker in accordance with the ordinary procedure under Articles 93 and 178.</p>
+        <p><b>(b)</b> Where, upon an election held under sub-clause (a), two or more candidates receive an equal and highest number of votes, a fresh election shall be held after such interval as the rules of procedure of the House may prescribe.</p>
+        <p><b>(c)</b> During the period between the vacancy of the office of Speaker and the election of a Speaker under sub-clause (a) or (b), the senior-most officer of the Secretariat of the House shall preside over the proceedings of the House for the sole purpose of conducting such election, and shall exercise no other function of the office of Speaker.</p>
+      </div></div>
+
+      <div class="clause"><div class="cl-num">(6)</div><div>
+        <p><span class="status-chip status-old">Unchanged</span></p>
+        <p>The President or the Governor acting as Head of Government under this Article shall be subject to all parliamentary accountability mechanisms applicable to the Head of Government under the Constitution and the rules of procedure of the House, including but not limited to questions, calling attention motions, adjournment motions, and short duration discussions.</p>
+      </div></div>
+
+      <div class="clause"><div class="cl-num">(7)</div><div>
+        <p><span class="status-chip status-mod">Modified</span> — removal procedure formalised; 25% defection threshold added.</p>
+        <p><b>(a)</b> A Minister appointed under clause (3) may not be removed during the bridge period except by a resolution passed by a majority of members of the House present and voting, upon a motion moved at the instance of the President or the Governor and seconded by not less than one-tenth of the total membership of the House.</p>
+        <p><b>(b)</b> Where members of the House holding, in aggregate, less than twenty-five per centum of the total strength of the party or pre-poll alliance constituting the Recommending Party resign their membership of such party or alliance, or of the House, the status of the Recommending Party shall remain unaffected, and no Minister appointed on its recommendation shall be removed by reason only of such resignation.</p>
+        <p><b>(c)</b> Where members holding, in aggregate, twenty-five per centum or more of the total strength of the party or pre-poll alliance constituting the Recommending Party resign as described in sub-clause (b), the Speaker shall re-certify which party or pre-poll alliance holds the largest number of seats in the House, and the party or alliance so certified shall thereafter be the Recommending Party for the purposes of clause (3): <i>Provided that</i> such re-certification shall not, of itself, effect the removal of any Minister already holding office, and no Minister shall be removed except in accordance with sub-clause (a).</p>
+      </div></div>
+
+      <div class="clause"><div class="cl-num">(8)</div><div>
+        <p><span class="status-chip status-new">New</span></p>
+        <p><b>(a)</b> No party, member, or combination of members of the House shall form, announce, or enter into a new political party or alliance for the purpose of constituting or displacing the Recommending Party at any time after the Recommending Party has first been certified under clause (3)(c) and during the continuance of the bridge period.</p>
+        <p><b>(b)</b> A member of a party or alliance that does not constitute the Recommending Party shall not, by virtue of such membership, be entitled to any right, privilege, or function in the administration of any Ministry, notwithstanding that such member's party or alliance may hold seats in the House.</p>
+        <p><b>(c)</b> No provision of this clause shall be construed to prevent an individual member from resigning membership of the House in accordance with the Constitution; the consequences of such resignation for the status of the Recommending Party shall be governed by clause (7)(b) and (7)(c).</p>
+      </div></div>
+
+      <div class="clause"><div class="cl-num">(9)</div><div>
+        <p><span class="status-chip status-old">Unchanged</span></p>
+        <p>The bridge period shall terminate immediately and automatically upon submission to the President of India or the Governor, as the case may be, of a letter of support bearing the signatures of a majority of members of the House, demonstrating the ability to form an alternative government. Upon receipt and acceptance of such letter, the President or Governor shall forthwith invite the leader of the majority so demonstrated to form the government in accordance with Articles 75 and 164 respectively.</p>
+      </div></div>
+
+      <div class="clause"><div class="cl-num">(10)</div><div>
+        <p><span class="status-chip status-old">Unchanged</span></p>
+        <p>For the purposes of this Article, "bridge period" means the period commencing on the fifteenth day after the acceptance by the President or Governor of the resignation of the Council of Ministers following a motion of no-confidence, and ending upon the occurrence of any of the events specified for termination of the bridge period, or upon the natural expiry of the term of the House under Articles 83 and 172, whichever is earlier.</p>
+      </div></div>
+
+      <div class="clause"><div class="cl-num">(11)</div><div>
+        <p><span class="status-chip status-mod">Modified</span> — now cross-refers to Article 82C.</p>
+        <p>Nothing in this Article shall be construed as invoking or modifying the provisions of Article 356 of this Constitution, or as conferring on the President of India or the Governor of any State any power to suspend, dissolve, or interfere with the normal legislative functions of the House of the People or of the Legislative Assembly of any State. All actions taken under this Article shall be subject to the ordinary jurisdiction of the Supreme Court and the High Courts, and additionally to the expedited review mechanism established under Article 82C, which shall be supplementary to, and shall not diminish, restrict, or replace, such ordinary jurisdiction.</p>
+      </div></div>
+
+      <div class="clause"><div class="cl-num">(12)</div><div>
+        <p><span class="status-chip status-new">New</span></p>
+        <p><b>(a)</b> Where two or more parties or pre-poll alliances hold an equal and the largest number of seats in the House, and none of them stands in a post-poll alliance with the other for the purposes of this Article, both or all such parties or alliances shall jointly constitute the Recommending Party.</p>
+        <p><b>(b)</b> For every portfolio specified under clause (3)(b), each party or alliance constituting the Recommending Party under sub-clause (a) shall submit one nominee. Where the parties or alliances are unable to agree upon a single nominee for a portfolio within five days of the specification of that portfolio, the Speaker shall, on the request of the President or the Governor, invite candidatures from among members of the House for that portfolio, and the candidate receiving the largest number of votes of members present and voting shall be appointed.</p>
+        <p><b>(c)</b> Where two or more parties or alliances jointly constitute the Recommending Party under this clause, responsibility and accountability for any act or omission of a Minister appointed on the recommendation of any one of them shall attach equally to all such parties or alliances for the purposes of clause (7)(a).</p>
+      </div></div>
+
+      <div class="clause"><div class="cl-num">(13)</div><div>
+        <p><span class="status-chip status-mod">Modified</span> — extended to expressly disapply the Tenth Schedule during the bridge period.</p>
+        <p>This Article shall have effect notwithstanding anything contained in Articles 74, 75, 93, 163, 164, 178, and the Tenth Schedule, to the extent necessary to give effect to its provisions, and shall be read as supplementary to and not in derogation of the provisions of those Articles and that Schedule in all other respects and at all other times.</p>
+      </div></div>
+    </div>
+
+    <div class="article-block">
+      <h3>ARTICLE 82C — Expedited Judicial Review During the Bridge Period <span class="status-chip status-new">New</span></h3>
+
+      <div class="clause"><div class="cl-num">(1)</div><div>
+        <p>Where not less than five per centum of the total membership of the House of the People, or of a Legislative Assembly of a State, as the case may be, consider any resolution, guideline, order, or action taken by the President, the Governor, a Minister, or the House under Article 82B during the continuance of a bridge period to be contrary to the Constitution or the law, such members may, by a request signed by them, apply to the Chief Justice of India or the Chief Justice of the High Court of the State concerned, as the case may be, for the constitution of a Judicial Review Committee.</p>
+      </div></div>
+
+      <div class="clause"><div class="cl-num">(2)</div><div>
+        <p>On receipt of a request under clause (1), the Chief Justice of India or the Chief Justice of the High Court, as the case may be, shall constitute a Judicial Review Committee forthwith, which shall examine the resolution, guideline, order, or action complained of and pass such order as it considers appropriate in accordance with the Constitution and the law.</p>
+      </div></div>
+
+      <div class="clause"><div class="cl-num">(3)</div><div>
+        <p>The jurisdiction of the Judicial Review Committee under this Article is supplementary to, and not in derogation of, the ordinary jurisdiction of the Supreme Court and the High Courts, including their jurisdiction to entertain a public interest litigation or any other proceeding independently of this Article.</p>
+      </div></div>
+
+      <div class="clause"><div class="cl-num">(4)</div><div>
+        <p>The Judicial Review Committee constituted under this Article shall stand dissolved upon the termination of the bridge period under Article 82B, or upon the announcement and finalisation of the date of an election, whether under the ordinary constitutional process or otherwise, whichever is earlier. An order passed by the Committee prior to its dissolution shall remain valid and binding notwithstanding such dissolution, but no further hearing shall be conducted by the Committee after such dissolution.</p>
+      </div></div>
+
+      <div class="clause"><div class="cl-num">(5)</div><div>
+        <p>Nothing in this Article shall prevent any person aggrieved by an order of the Judicial Review Committee, or by any matter not finally disposed of before the dissolution of the Committee, from seeking recourse before the Supreme Court or the High Court in accordance with the ordinary procedure of law.</p>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 08 OBJECTIONS ============ -->
+<div class="chapter reveal">
+  <div class="wrap">
+    <div class="num">07 / 11</div>
+    <h2>Addressing Potential Objections</h2>
+    <p class="lede">Every mechanism invites a "but what if" — here are the ones this proposal has to answer.</p>
+  </div>
+</div>
+<section class="body-sec" id="objections">
+  <div class="wrap reveal">
+    <div class="qa"><div class="q"><span class="qmark">Q.</span>Does this violate the basic structure doctrine?</div>
+      <div class="a"><p>The parliamentary character of the Constitution, identified in <i>Kesavananda Bharati v. State of Kerala</i> (1973) as basic structure, rests on executive accountability to the legislature. Article 82B does not eliminate this. The House continues to sit. Ministers remain accountable. The HOG itself is accountable under clause (6). The bridge is temporary and automatically terminates upon majority formation. Parliamentary character is preserved throughout.</p></div></div>
+
+    <div class="qa"><div class="q"><span class="qmark">Q.</span>Is the HOG–HOS merger incompatible with the Constitution?</div>
+      <div class="a"><p>The merger is temporary, limited, and circumscribed by clause (2). The President and Governor already vest executive power under Articles 53 and 154. Article 82B gives direct effect to that existing vesting during a period when no Council of Ministers exists to mediate it. This is not Presidential government — it is a parliamentary bridge.</p></div></div>
+
+    <div class="qa"><div class="q"><span class="qmark">Q.</span>Could the Recommending Party abuse its ministerial positions?</div>
+      <div class="a"><p>The structural constraints substantially limit this risk. Ministers cannot introduce new policy. Home Affairs, Defence and Intelligence are not available to them. They are subject to full parliamentary oversight and the removal procedure of clause (7). All decisions remain subject to judicial review under clause (11) and Article 82C.</p></div></div>
+
+    <div class="qa"><div class="q"><span class="qmark">Q.</span>Does the ban on new alliances restrict members' political freedom to associate?</div>
+      <div class="a"><p>The restriction under clause (8) is narrow and time-bound: it prevents the formation of a <i>new</i> alliance for the specific purpose of constituting or displacing the Recommending Party during a defined, self-terminating window. It does not restrict a member's freedom to resign, to vote as they choose, or to associate for any other purpose. The alternative — permitting continuous re-alignment during the bridge — is precisely the horse-trading that would make a long bridge period untenable and would replicate the instability ONOE is meant to end.</p></div></div>
+
+    <div class="qa"><div class="q"><span class="qmark">Q.</span>Is the tied Recommending Party rule fair to a party that narrowly missed being the sole largest?</div>
+      <div class="a"><p>The rule under clause (12) applies only where seat counts are genuinely equal, not merely close. Where they are equal, joint recommendation with equal accountability is the more defensible allocation than an arbitrary tie-breaking rule such as alphabetical order or lot, both of which would carry no democratic content at all.</p></div></div>
+
+    <div class="qa"><div class="q"><span class="qmark">Q.</span>Does a Judicial Review Committee constituted by the Chief Justice intrude on judicial independence or create a parallel judiciary?</div>
+      <div class="a"><p>The Committee under Article 82C is constituted by the Chief Justice, from within the judiciary, exercising a docket-management function analogous to constituting any special bench — it is not an executive or legislative body reviewing itself. Clause (3) expressly preserves ordinary jurisdiction in parallel, and clause (4) sunsets the Committee the moment its trigger condition ends. It is closer to an expedited-hearing mechanism than to a new court.</p></div></div>
+
+    <div class="qa"><div class="q"><span class="qmark">Q.</span>What if the bridge period lasts for years?</div>
+      <div class="a"><p>The self-terminating character of Article 82B means the bridge ends the moment any combination produces a majority. Political parties retain every incentive to form one — the Recommending Party to secure full government, the opposition to displace it from ministerial positions — and clause (8)'s anti-defection lock ensures that incentive is channelled into forming a genuine majority rather than into piecemeal defection that never quite crosses the threshold. At the latest, the bridge ends on natural expiry of the House term.</p></div></div>
+
+    <div class="qa"><div class="q"><span class="qmark">Q.</span>Does this undermine federalism by giving the Governor too much power?</div>
+      <div class="a"><p>Article 82B is triggered by a constitutionally objective event — the passage of a no-confidence motion — not by Central government initiative. The Governor acts under the constraints of Article 82B itself, not on the advice of the Central government. Clause (11) expressly excludes any connection with Article 356. This is structurally different from Article 356, where the Governor acts as an agent of the Centre.</p></div></div>
+  </div>
+</section>
+
+<!-- ============ 09 COMPARISON ============ -->
+<div class="chapter reveal">
+  <div class="wrap">
+    <div class="num">08 / 11</div>
+    <h2>Comparison: 129th Amendment vs. Article 82B Mechanism</h2>
+    <p class="lede">Nine original dimensions, now with four more that the revision resolves.</p>
+  </div>
+</div>
+<section class="body-sec" id="comparison">
+  <div class="wrap reveal">
+    <div class="tbl-wrap">
+      <table class="cmp">
+        <thead><tr><th>Feature</th><th>129th Amendment (Current Bill)</th><th>Article 82B Mechanism (Proposed)</th></tr></thead>
+        <tbody>
+          <tr><td>Mid-cycle govt collapse</td><td>Mid-term election with remainder term</td><td>Bridge — no mid-term election held</td></tr>
+          <tr><td>Synchronization maintained</td><td>No — mid-term election breaks cycle</td><td>Yes — cycle intact throughout</td></tr>
+          <tr><td>Democratic legitimacy</td><td>Diluted — remainder term mandate</td><td>Maintained — largest party nominates</td></tr>
+          <tr><td>House status during gap</td><td>Dissolved — members lose seats</td><td>Intact — members remain, House functions</td></tr>
+          <tr><td>Home Ministry during gap</td><td>Contested in fresh election</td><td>Vests in President/Governor — neutral</td></tr>
+          <tr><td>Speaker during gap</td><td>House dissolved, Speaker also ends</td><td>Continues under Art. 94/179, with tie-break rule</td></tr>
+          <tr><td>HOG accountability</td><td>Not applicable — election called</td><td>Full parliamentary accountability — cl. (6)</td></tr>
+          <tr><td>New govt formation</td><td>After remainder-term election only</td><td>Any time majority demonstrated</td></tr>
+          <tr><td>Connection to Art. 356</td><td>None</td><td>None — expressly excluded, cl. (11)</td></tr>
+          <tr><td>Policy continuity</td><td>Uncertain during election period</td><td>Maintained — bridge limited to existing policy</td></tr>
+          <tr class="new-row"><td>Council size during gap</td><td>N/A — fresh election, no cap issue</td><td>Capped at existing 15% ceiling, cl. (3)(a)</td></tr>
+          <tr class="new-row"><td>Defection / horse-trading risk</td><td>Ordinary Tenth Schedule applies post-election</td><td>Locked — 25% threshold rule, cl. (7)–(8)</td></tr>
+          <tr class="new-row"><td>Tied largest-party scenario</td><td>Resolved by election result directly</td><td>Joint recommendation + House vote, cl. (12)</td></tr>
+          <tr class="new-row"><td>Dedicated judicial safeguard</td><td>None — ordinary courts only</td><td>Expedited Committee under Art. 82C</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 10 LIMITATIONS ============ -->
+<div class="chapter reveal">
+  <div class="wrap">
+    <div class="num">09 / 11</div>
+    <h2>Honest Limitations</h2>
+    <p class="lede">Two gaps from the first draft are closed. What remains open is stated plainly.</p>
+  </div>
+</div>
+<section class="body-sec" id="limitations">
+  <div class="wrap reveal">
+    <div class="limit-item"><div class="li-mark">■</div><div>
+      <h4>Draft text requires Parliamentary scrutiny</h4>
+      <p>The text of Article 82B and Article 82C proposed in Section 7 is a working draft. It requires examination by the Parliamentary Standing Committee, the Law Commission, and constitutional experts before any definitive formulation is possible.</p>
+    </div></div>
+
+    <div class="limit-item solved"><div class="li-mark">✔</div><div>
+      <h4 class="strike">Recommending Party definition in coalition contexts</h4>
+      <p>Resolved in this revision by clause (12) — the tied Recommending Party rule now gives an explicit procedure for equal seat shares, including nominee agreement, House-vote fallback, and joint accountability.</p>
+    </div></div>
+
+    <div class="limit-item solved"><div class="li-mark">✔</div><div>
+      <h4 class="strike">Relationship with the Tenth Schedule</h4>
+      <p>Resolved in this revision by clauses (7)(b)–(c) and (8), and the extended non-obstante clause (13) — the ordinary defection framework is expressly displaced during the bridge period by the 25% threshold rule.</p>
+    </div></div>
+
+    <div class="limit-item"><div class="li-mark">■</div><div>
+      <h4>Are the numerical thresholds correctly calibrated?</h4>
+      <p>The 25% defection threshold in clause (7), and the 5% membership threshold to trigger Article 82C in clause (1), are reasoned starting points, not empirically derived figures. They require calibration against India's actual party-size distribution and coalition history before enactment.</p>
+    </div></div>
+
+    <div class="limit-item"><div class="li-mark">■</div><div>
+      <h4>The interim Speaker's-office role needs Rules of Procedure</h4>
+      <p>Clause (5)(c) assigns interim presiding functions to the senior-most Secretariat officer. The precise scope of that role — what, if anything, it may certify or decide — needs elaboration in the Rules of Procedure of each House, not in the constitutional text itself.</p>
+    </div></div>
+
+    <div class="limit-item"><div class="li-mark">■</div><div>
+      <h4>The mechanism has not been tested in practice</h4>
+      <p>This is a proposal. Its practical operation across India's diverse political environments cannot be fully predicted without implementation experience. The paper claims constitutional coherence — not operational perfection.</p>
+    </div></div>
+  </div>
+</section>
+
+<!-- ============ 11 CONCLUSION ============ -->
+<div class="chapter reveal">
+  <div class="wrap">
+    <div class="num">10 / 11</div>
+    <h2>Conclusion</h2>
+    <p class="lede">A bridge, built with locks on both ends and a court on call.</p>
+  </div>
+</div>
+<section class="body-sec" id="conclusion">
+  <div class="wrap reveal">
+    <p>One Nation One Election is a legitimate constitutional objective. The financial cost of elections, the governance paralysis caused by the Model Code of Conduct, and the political distortion produced by year-round electoral calculations are real problems that deserve a serious constitutional response. The 129th Amendment is a serious attempt at that response.</p>
+    <p>But the remainder term provision is a structural flaw that will, in time, break the synchronization ONOE is designed to establish. Political instability is not a hypothetical. Indian parliamentary history is full of governments that have fallen before the expiry of their terms. Every such collapse under the 129th Amendment as currently drafted produces a mid-cycle election, breaks synchronization, and creates a remainder-term government that cannot govern with the confidence and mandate of a full-term administration.</p>
+    <p>Article 82B, read with Article 82C, offers a constitutionally grounded alternative. It uses the existing constitutional office of the President and Governor, limits their executive functions strictly and within the existing council-size ceiling, preserves the legislative functions of the House, ensures democratic participation through the Recommending Party system, removes Home Affairs, Defence, and Intelligence from political reach, anchors the Speaker's role in the existing constitutional framework with a tie-break fallback, closes the door on horse-trading through a calibrated anti-defection lock, resolves the tied-seat scenario with joint accountability, holds the HOG to full parliamentary accountability, gives every aggrieved minority of members a fast-track judicial channel that never displaces the ordinary courts, and terminates automatically the moment democratic majority re-emerges.</p>
+    <blockquote class="callout">The Constitution of India was built to be amended. It has been amended one hundred and six times. Each amendment has been an attempt to make the constitutional machinery work better for the people it governs. Article 82B and Article 82C are proposed in that spirit — not to alter the parliamentary character of the Constitution, but to give it the resilience it needs to absorb political instability without abandoning the synchronized democratic cycle that One Nation One Election seeks to establish.</blockquote>
+  </div>
+</section>
+
+<!-- ============ REFERENCES ============ -->
+<section class="body-sec" id="references" style="background:var(--parchment-deep);">
+  <div class="wrap reveal">
+    <span class="eyebrow">References</span>
+    <h2 style="margin-top:10px; font-size:28px;">Sources Cited</h2>
+    <div style="margin-top:26px;">
+      <p class="ref">[1] Constitution of India, Articles 52–61 (President), 74–75 &amp; 75(1A) (Council of Ministers, Centre), 83 (Duration of Parliament), 85 (Dissolution of Lok Sabha), 93–94 (Speaker, Lok Sabha), 153–161 (Governor), 163–164 &amp; 164(1A) (Council of Ministers, States), 172 (Duration of State Legislatures), 174 (Dissolution of State Legislature), 178–179 (Speaker, State Assemblies), 324 (Election Commission), 356 (Emergency in States), Tenth Schedule (Anti-Defection Law).</p>
+      <p class="ref">[2] The Constitution (One Hundred and Twenty-Ninth Amendment) Bill, 2024. Introduced in Lok Sabha, December 2024. Referred to Joint Parliamentary Committee.</p>
+      <p class="ref">[3] <i>S.R. Bommai v. Union of India</i> (1994) 3 SCC 1. Restrictions on Article 356, judicial review of Presidential Proclamation, federalism as basic structure.</p>
+      <p class="ref">[4] <i>Kesavananda Bharati v. State of Kerala</i> (1973) 4 SCC 225. Basic structure doctrine.</p>
+      <p class="ref">[5] <i>Shamsher Singh v. State of Punjab</i> (1974) 2 SCC 831. President and Governor act on aid and advice of Council of Ministers.</p>
+      <p class="ref">[6] High Level Committee on Simultaneous Elections, Report (March 2024). Chaired by former President Ram Nath Kovind.</p>
+      <p class="ref">[7] The Constitution (Forty-Fourth Amendment) Act, 1978. Amendment to Article 74.</p>
+      <p class="ref">[8] The Constitution (Ninety-First Amendment) Act, 2003. Insertion of Articles 75(1A) and 164(1A) — ceiling on Council of Ministers.</p>
+      <p class="ref">[9] <i>U.N. Rao v. Indira Gandhi</i> (1971) 2 SCC 63. Executive powers of the President.</p>
+      <p class="ref">[10] Law Commission of India, 170th Report: Reform of Electoral Laws (1999).</p>
+      <p class="ref">[11] Kumar, S. (2026). <i>Representative Ideal Democracy.</i> NPMAI ECOSYSTEM.</p>
+      <p class="ref">[12] Kumar, S. (2026). <i>Ideal Administrative System Theory.</i> NPMAI ECOSYSTEM.</p>
+      <p class="ref">[13] Election Commission of India. (2024). <i>General Election Results 2024.</i> eci.gov.in</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fname">Remainder Term Solution (ONOE)</div>
+  <div>Sonu Kumar &nbsp;·&nbsp; Founder of NPMAI ECOSYSTEM &nbsp;·&nbsp; HOD Research Tech, Political Science</div>
+  <div style="margin-top:10px;">© 2026 Sonu Kumar, NPMAI ECOSYSTEM. All rights reserved. &nbsp;·&nbsp; npmai.netlify.app</div>
+</footer>
+
+<script>
+  // Build wheel spokes for the cover seal
+  (function(){
+    const spokesG = document.getElementById('spokes');
+    const n = 16, cx=100, cy=100, r1=18, r2=52;
+    for(let i=0;i<n;i++){
+      const a = (i/n) * Math.PI * 2;
+      const x1 = cx + r1*Math.cos(a), y1 = cy + r1*Math.sin(a);
+      const x2 = cx + r2*Math.cos(a), y2 = cy + r2*Math.sin(a);
+      const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+      line.setAttribute('x1',x1); line.setAttribute('y1',y1);
+      line.setAttribute('x2',x2); line.setAttribute('y2',y2);
+      spokesG.appendChild(line);
+    }
+  })();
+
+  // Scroll reveal
+  (function(){
+    const els = document.querySelectorAll('.reveal, .reveal-stagger, .flow');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){ e.target.classList.add('in'); }
+      });
+    }, {threshold:0.1, rootMargin:'0px 0px -8% 0px'});
+    els.forEach(el=>io.observe(el));
+  })();
+
+  // Progress ribbon
+  (function(){
+    const fill = document.getElementById('ribFill');
+    const seal = document.getElementById('ribSeal');
+    const stages = document.querySelectorAll('.rib-stage');
+    const billEl = document.getElementById('bill');
+    let ticking = false;
+    function update(){
+      const doc = document.documentElement;
+      const scrollTop = doc.scrollTop || document.body.scrollTop;
+      const height = doc.scrollHeight - doc.clientHeight;
+      const pct = Math.min(100, Math.max(0, (scrollTop/height)*100));
+      fill.style.width = pct + '%';
+      seal.style.left = pct + '%';
+      const stageIdx = pct < 15 ? 0 : pct < 45 ? 1 : pct < 75 ? 2 : 3;
+      stages.forEach(s=> s.classList.toggle('active', parseInt(s.dataset.stage)===stageIdx));
+      ticking = false;
+    }
+    window.addEventListener('scroll', ()=>{ if(!ticking){ requestAnimationFrame(update); ticking = true; } });
+    update();
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tx Synthetic Petrol — Integrated Ethanol Upgrading with Biogas SE-SMR | NPMAI ECOSYSTEM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,500&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0f1a;
+  --bg-raise:#101828;
+  --surface:#131e30;
+  --surface-2:#0d1622;
+  --border:#20304a;
+  --border-soft:#1a2740;
+  --text:#e7edf7;
+  --text-dim:#93a4bf;
+  --text-faint:#5c6f8f;
+  --teal:#2fd6c6;
+  --teal-dim:#1a8f85;
+  --gold:#f0b23c;
+  --amber:#e08a2e;
+  --clay:#c9603f;
+  --green:#5fbf8e;
+  --font-display:'Newsreader', serif;
+  --font-body:'Inter', sans-serif;
+  --font-mono:'IBM Plex Mono', monospace;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  font-size:16px;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--teal-dim);color:#fff;}
+img{max-width:100%;display:block;}
+a{color:var(--teal);text-decoration:none;}
+a:hover{text-decoration:underline;}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;color:var(--text);margin:0 0 .5em;}
+p{margin:0 0 1.1em;color:var(--text-dim);}
+strong{color:var(--text);}
+.wrap{max-width:960px;margin:0 auto;padding:0 32px;}
+.eyebrow{
+  font-family:var(--font-mono);
+  font-size:.72rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--teal);
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:14px;
+}
+.eyebrow::before{content:"";width:22px;height:1px;background:var(--teal);display:inline-block;}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;}
+@media (prefers-reduced-motion: reduce){ *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important;} }
+
+/* ---------- NAV ---------- */
+.topnav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  background:rgba(10,15,26,.82);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border-soft);
+  transform:translateY(-100%);transition:transform .4s ease;
+}
+.topnav.show{transform:translateY(0);}
+.topnav-inner{max-width:1100px;margin:0 auto;padding:12px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
+.topnav .brand{font-family:var(--font-mono);font-size:.78rem;letter-spacing:.08em;color:var(--text);white-space:nowrap;}
+.topnav .brand span{color:var(--teal);}
+.navlinks{display:flex;gap:22px;overflow-x:auto;scrollbar-width:none;}
+.navlinks::-webkit-scrollbar{display:none;}
+.navlinks a{font-size:.78rem;color:var(--text-dim);white-space:nowrap;font-family:var(--font-mono);}
+.navlinks a:hover{color:var(--gold);text-decoration:none;}
+
+/* ---------- COVER ---------- */
+.cover{
+  min-height:100vh;position:relative;
+  display:flex;flex-direction:column;justify-content:space-between;
+  overflow:hidden;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% -10%, rgba(47,214,198,.14), transparent 60%),
+    radial-gradient(ellipse 70% 50% at 100% 110%, rgba(240,178,60,.10), transparent 60%),
+    var(--bg);
+}
+.cover-grid{position:absolute;inset:0;opacity:.35;
+  background-image:linear-gradient(var(--border-soft) 1px, transparent 1px), linear-gradient(90deg, var(--border-soft) 1px, transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(ellipse 90% 70% at 50% 30%, black 30%, transparent 85%);
+}
+.cover-glyph{position:absolute;right:-6%;top:8%;width:60vw;max-width:760px;opacity:.5;pointer-events:none;}
+.cover-inner{position:relative;z-index:2;padding:120px 32px 60px;max-width:1100px;margin:0 auto;width:100%;}
+.cover-tag{font-family:var(--font-mono);font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin-bottom:26px;display:flex;gap:14px;flex-wrap:wrap;align-items:center;}
+.cover-tag .dot{width:5px;height:5px;border-radius:50%;background:var(--text-faint);}
+.cover h1{
+  font-size:clamp(2.4rem, 6vw, 4.6rem);
+  line-height:1.03; letter-spacing:-.01em; font-weight:600;
+  max-width:920px; margin-bottom:20px;
+}
+.cover h1 em{font-style:italic;color:var(--gold);}
+.cover .sub{font-size:clamp(1.05rem,2vw,1.3rem);color:var(--text-dim);max-width:680px;font-weight:400;margin-bottom:36px;}
+.cover-meta{display:flex;flex-wrap:wrap;gap:34px;margin-top:10px;}
+.cover-meta .m-label{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint);margin-bottom:6px;}
+.cover-meta .m-val{font-size:.98rem;color:var(--text);}
+.cover-foot{position:relative;z-index:2;border-top:1px solid var(--border-soft);padding:22px 32px;}
+.cover-foot .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-family:var(--font-mono);font-size:.75rem;color:var(--text-faint);}
+.scrollcue{display:flex;align-items:center;gap:10px;color:var(--text-faint);font-family:var(--font-mono);font-size:.72rem;letter-spacing:.08em;}
+.scrollcue .bar{width:1px;height:26px;background:linear-gradient(var(--teal), transparent);animation:dropcue 1.8s ease-in-out infinite;}
+@keyframes dropcue{0%{transform:scaleY(0);transform-origin:top;}50%{transform:scaleY(1);transform-origin:top;}50.01%{transform-origin:bottom;}100%{transform:scaleY(0);transform-origin:bottom;}}
+
+/* ---------- SECTION SHELL ---------- */
+section.page{padding:96px 0;border-bottom:1px solid var(--border-soft);}
+section.page.tight{padding:72px 0;}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease, transform .7s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+/* ---------- ORG / AUTHORS ---------- */
+.org-hero{display:grid;grid-template-columns:1fr;gap:36px;}
+.org-badge-row{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 10px;}
+.badge{font-family:var(--font-mono);font-size:.72rem;padding:6px 12px;border:1px solid var(--border);border-radius:100px;color:var(--text-dim);}
+.repo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:34px;}
+.repo-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 18px 16px;transition:border-color .25s, transform .25s;}
+.repo-card:hover{border-color:var(--teal-dim);transform:translateY(-3px);}
+.repo-card .rname{font-family:var(--font-mono);font-size:.86rem;color:var(--gold);margin-bottom:8px;}
+.repo-card p{font-size:.86rem;margin:0;color:var(--text-dim);}
+
+.author-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:20px;}
+@media(max-width:760px){.author-grid{grid-template-columns:1fr;}}
+.author-card{background:linear-gradient(180deg, var(--surface), var(--surface-2));border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+.author-photo-wrap{aspect-ratio:4/3;overflow:hidden;background:var(--bg-raise);position:relative;}
+.author-photo-wrap img{width:100%;height:100%;object-fit:cover;object-position:center top;filter:grayscale(15%);}
+.author-photo-wrap .ph-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:3rem;color:var(--text-faint);background:var(--bg-raise);}
+.author-body{padding:22px 24px 26px;}
+.author-body .a-role{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--teal);margin-bottom:6px;}
+.author-body h3{font-size:1.5rem;margin-bottom:4px;}
+.author-body .a-mail{font-family:var(--font-mono);font-size:.78rem;color:var(--text-faint);margin-bottom:14px;display:block;}
+.author-body p{font-size:.92rem;}
+
+/* ---------- TOC ---------- */
+.toc-list{columns:2;column-gap:44px;list-style:none;margin:0;padding:0;}
+@media(max-width:700px){.toc-list{columns:1;}}
+.toc-list li{break-inside:avoid;margin-bottom:10px;}
+.toc-list a{display:flex;justify-content:space-between;gap:10px;color:var(--text-dim);font-size:.94rem;padding:6px 0;border-bottom:1px dotted var(--border);}
+.toc-list a:hover{color:var(--gold);text-decoration:none;}
+.toc-list .tnum{font-family:var(--font-mono);color:var(--text-faint);font-size:.8rem;}
+
+/* ---------- headings/pattern ---------- */
+.sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:28px;}
+.sec-num{font-family:var(--font-mono);font-size:1rem;color:var(--teal);}
+.sec-head h2{font-size:clamp(1.6rem,3vw,2.2rem);margin:0;}
+h3.sub{font-size:1.25rem;color:var(--gold);margin-top:2.4em;}
+.lead{font-size:1.08rem;color:var(--text);}
+
+/* ---------- callouts / eq ---------- */
+.eq-block{
+  background:var(--surface-2);border:1px solid var(--border);border-left:3px solid var(--teal);
+  border-radius:6px;padding:16px 20px;margin:18px 0 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;
+}
+.eq-block .eq{font-family:var(--font-mono);font-size:1rem;color:var(--text);}
+.eq-block .eq-tag{font-family:var(--font-mono);font-size:.72rem;color:var(--teal);white-space:nowrap;}
+.eq-note{font-size:.86rem;color:var(--text-faint);margin:-14px 0 22px;}
+.callout{background:rgba(240,178,60,.07);border:1px solid rgba(240,178,60,.28);border-radius:8px;padding:16px 20px;margin:20px 0;}
+.callout p{margin:0;color:var(--text);font-size:.95rem;}
+.callout .ctag{font-family:var(--font-mono);font-size:.68rem;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;display:block;}
+
+/* ---------- tables ---------- */
+.tbl-wrap{overflow-x:auto;margin:22px 0 8px;border:1px solid var(--border);border-radius:8px;}
+table{width:100%;border-collapse:collapse;font-size:.88rem;min-width:560px;}
+thead th{background:var(--bg-raise);text-align:left;padding:11px 14px;font-family:var(--font-mono);font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;color:var(--text-faint);border-bottom:1px solid var(--border);white-space:nowrap;}
+tbody td{padding:10px 14px;border-bottom:1px solid var(--border-soft);color:var(--text-dim);}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:hover{background:rgba(47,214,198,.04);}
+td.hl, tr.hl td{color:var(--text);}
+tr.best td{background:rgba(95,191,142,.07);}
+tr.best td:first-child{border-left:2px solid var(--green);}
+.tbl-cap{font-size:.82rem;color:var(--text-faint);margin:8px 0 26px;font-style:italic;}
+td strong{color:var(--gold);}
+
+/* ---------- reactor diagram ---------- */
+.reactor-wrap{margin:34px 0;background:var(--surface-2);border:1px solid var(--border);border-radius:14px;padding:20px;}
+.reactor-wrap svg{width:100%;height:auto;display:block;}
+.chamber-label{font-family:var(--font-mono);font-size:11px;fill:var(--text-dim);}
+.chamber-title{font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:600;}
+.flow-dot{animation:flowmove 5s linear infinite;}
+@keyframes flowmove{ to { offset-distance: 100%; } }
+
+/* ---------- pill list ---------- */
+.pill-row{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 8px;}
+.pill{font-family:var(--font-mono);font-size:.76rem;padding:7px 13px;border-radius:100px;border:1px solid var(--border);color:var(--text-dim);}
+.pill.gold{border-color:rgba(240,178,60,.4);color:var(--gold);}
+.pill.teal{border-color:rgba(47,214,198,.4);color:var(--teal);}
+
+/* ---------- two col ---------- */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin:24px 0;}
+@media(max-width:700px){.two-col{grid-template-columns:1fr;}}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px 22px;}
+.card h4{font-size:1rem;color:var(--gold);margin-bottom:10px;}
+.card.adv{border-top:3px solid var(--green);}
+.card.dis{border-top:3px solid var(--clay);}
+.card ul{margin:0;padding-left:18px;}
+.card li{color:var(--text-dim);font-size:.9rem;margin-bottom:8px;}
+
+/* ---------- stat strip ---------- */
+.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:30px 0;}
+@media(max-width:700px){.stat-strip{grid-template-columns:repeat(2,1fr);}}
+.stat{background:var(--surface);padding:22px 18px;}
+.stat .sv{font-family:var(--font-display);font-size:1.9rem;color:var(--teal);}
+.stat .sl{font-family:var(--font-mono);font-size:.68rem;color:var(--text-faint);letter-spacing:.04em;margin-top:6px;text-transform:uppercase;}
+
+/* ---------- refs ---------- */
+.refs{font-size:.85rem;color:var(--text-dim);}
+.refs ol{padding-left:20px;}
+.refs li{margin-bottom:10px;}
+
+/* ---------- footer ---------- */
+footer{padding:60px 0 80px;}
+footer .fgrid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;padding-top:26px;border-top:1px solid var(--border-soft);font-size:.85rem;color:var(--text-faint);}
+footer .fbrand{font-family:var(--font-mono);color:var(--text-dim);}
+
+/* utility */
+.center{text-align:center;}
+.mt0{margin-top:0;}
+.small{font-size:.86rem;color:var(--text-faint);}
+</style>
+</head>
+<body>
+
+<nav class="topnav" id="topnav">
+  <div class="topnav-inner">
+    <div class="brand">NPMAI<span>·</span>TX RESEARCH</div>
+    <div class="navlinks">
+      <a href="#org">Organisation</a>
+      <a href="#authors">Authors</a>
+      <a href="#reactions">Reactions</a>
+      <a href="#reactor">Reactor</a>
+      <a href="#biogas">Biogas SE-SMR</a>
+      <a href="#tea">TEA</a>
+      <a href="#compare">Comparison</a>
+      <a href="#impact">Impact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ COVER ============ -->
+<header class="cover">
+  <div class="cover-grid"></div>
+  <svg class="cover-glyph" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="200" cy="200" r="140" stroke="#2fd6c6" stroke-opacity="0.18" stroke-width="1"/>
+    <circle cx="200" cy="200" r="100" stroke="#f0b23c" stroke-opacity="0.15" stroke-width="1"/>
+    <circle cx="200" cy="200" r="60" stroke="#2fd6c6" stroke-opacity="0.25" stroke-width="1"/>
+    <path d="M60 200 H340 M200 60 V340" stroke="#20304a" stroke-width="1"/>
+  </svg>
+  <div class="cover-inner">
+    <div class="cover-tag">NPMAI ECOSYSTEM <span class="dot"></span> TECHNICAL &amp; TECHNO-ECONOMIC RESEARCH PAPER <span class="dot"></span> 2026</div>
+    <h1>From Molasses to Metal: an Integrated Route to <em>T<span style="font-size:.62em;vertical-align:sub;">x</span></em> Synthetic Petrol</h1>
+    <p class="sub">A single-vessel, four-chamber ethanol-upgrading reactor — dehydrator, polymeriser, hydrogenator and purifier — coupled to a right-sized, biogas-fed SE-SMR hydrogen loop built on vinasse. Chemistry by the NPMAI Chemistry Research Division; techno-economics by the NPMAI Tech &amp; Political Science Research Division.</p>
+    <div class="cover-meta">
+      <div><div class="m-label">Naming Convention</div><div class="m-val">Tx — x = % synthetic petrol blended into commercial petrol</div></div>
+      <div><div class="m-label">Chemistry Lead</div><div class="m-val">Trilok Varma, HOD Research — Chemistry</div></div>
+      <div><div class="m-label">TEA Lead</div><div class="m-val">Sonu Kumar, Founder &amp; HOD — Tech &amp; Political Science</div></div>
+      <div><div class="m-label">Series</div><div class="m-val">Biofuel Upgrading · Vol. 2, follows SE-SMR Flare Gas paper</div></div>
+    </div>
+  </div>
+  <div class="cover-foot">
+    <div class="wrap">
+      <span>NPMAI ECOSYSTEM · npmai.netlify.app</span>
+      <span class="scrollcue"><span class="bar"></span> Scroll to read</span>
+      <span>© 2026, all rights reserved</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============ ABOUT ORGANISATION ============ -->
+<section class="page" id="org">
+  <div class="wrap reveal">
+    <div class="eyebrow">About the Organisation</div>
+    <div class="org-hero">
+      <div>
+        <h2 style="font-size:clamp(1.8rem,3.4vw,2.6rem);max-width:760px;">NPMAI ECOSYSTEM is an open-source research and development community, built out of India, that ships across chemistry, energy economics, and applied AI.</h2>
+        <p class="lead">NPMAI does not treat "research" and "product" as separate departments. The same organisation that derives sorption-enhanced reforming kinetics from first principles also ships open-source agent frameworks and RAG tooling under permissive licenses — the belief underneath both is that serious technical work should be published in the open, checked by whoever wants to check it, and built on by the next person for free.</p>
+        <p>This paper is a companion to NPMAI's earlier work on Sorption-Enhanced Steam Methane Reforming (SE-SMR) for flare-gas-to-hydrogen conversion. Where that paper targeted stranded methane at oil and gas sites, this one turns the same core chemistry inward — toward India's own ethanol economy — and asks a narrower, more immediately actionable question: can ethanol already flowing through India's blending programme be upgraded, in a single integrated reactor, into a hydrocarbon fuel that behaves like petrol instead of diluting it?</p>
+        <div class="org-badge-row">
+          <span class="badge">Open Source · MIT-licensed repositories</span>
+          <span class="badge">India</span>
+          <span class="badge">Chemistry Research Division</span>
+          <span class="badge">Tech &amp; Political Science Research Division</span>
+          <span class="badge">npmai.netlify.app</span>
+        </div>
+      </div>
+      <div>
+        <h3 class="sub" style="margin-top:2em;">Selected products from the ecosystem</h3>
+        <p class="small">A sample of what the organisation maintains in the open, alongside its research output.</p>
+        <div class="repo-grid">
+          <div class="repo-card"><div class="rname">npmai</div><p>A lightweight Python package connecting users to 10+ open-source LLMs — including local Ollama models — with no installation, login, or API keys required.</p></div>
+          <div class="repo-card"><div class="rname">npmai-agent</div><p>A production-grade, multi-LLM agentic framework with 1,371 integrated tools across 100 classes, orchestrated by a five-role pipeline: Planner → Tool Manager → Coder → Auditor → Verifier.</p></div>
+          <div class="repo-card"><div class="rname">NPMAI-Civilisation</div><p>An experimental AI-civilisation simulation project exploring emergent multi-agent behaviour.</p></div>
+          <div class="repo-card"><div class="rname">NPM-Journalist</div><p>Lets a citizen file a complaint or suggestion against named Indian officials without disclosing an email address or phone number — untraceable civic reporting by design.</p></div>
+          <div class="repo-card"><div class="rname">NPM-Rag-A.I</div><p>A web application for building and querying private or public knowledge bases via retrieval-augmented generation.</p></div>
+          <div class="repo-card"><div class="rname">NPM-Debater-AI</div><p>A platform where language models debate a user-supplied topic from opposing sides.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT AUTHORS ============ -->
+<section class="page" id="authors">
+  <div class="wrap reveal">
+    <div class="eyebrow">About the Authors</div>
+    <h2 style="font-size:clamp(1.8rem,3.4vw,2.4rem);max-width:760px;">Two research divisions, one integrated paper.</h2>
+    <p class="lead" style="max-width:700px;">The chemistry in this paper — reaction selection, catalyst formulation, reactor design, and every governing equation — is the independent work of the Chemistry Research Division. The techno-economic analysis, blend strategy, and comparative cost work is the independent work of the Tech &amp; Political Science Research Division. Where the two meet is the reactor itself: chemistry decides what's physically possible, economics decides what's worth building.</p>
+    <div class="author-grid">
+      <div class="author-card">
+        <div class="author-photo-wrap">
+          <img src="trilok.jpg" alt="Trilok Varma" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="ph-fallback" style="display:none;">TV</div>
+        </div>
+        <div class="author-body">
+          <div class="a-role">Chemistry Research Division</div>
+          <h3>Trilok Varma</h3>
+          <span class="a-mail">HOD Research, Chemistry &nbsp;·&nbsp; sampatiraotrilokvarma@gmail.com</span>
+          <p>Leads NPMAI's Chemistry Research Division. Author of the organisation's SE-SMR flare-gas-to-hydrogen paper, which established the optimised operating window (650°C, S/C ≈ 5, CaO/CH₄ ≈ 3, NiO-CaO-Ca₁₂Al₁₄O₃₃ catalyst) that this paper's biogas-adapted SE-SMR module builds directly on. In this work, Varma is responsible for the dehydration, oligomerisation, and hydrogenation chemistry, the quad-chamber reactor design, and every governing equation in Sections 3–7.</p>
+        </div>
+      </div>
+      <div class="author-card">
+        <div class="author-photo-wrap">
+          <img src="https://i.ibb.co/rGJ6bGHc/Sonu2.jpg" alt="Sonu Kumar">
+        </div>
+        <div class="author-body">
+          <div class="a-role">Tech &amp; Political Science Research Division</div>
+          <h3>Sonu Kumar</h3>
+          <span class="a-mail">Founder &amp; HOD Research, Tech &amp; Political Science &nbsp;·&nbsp; sonuramashishnpm@gmail.com</span>
+          <p>Founder of NPMAI ECOSYSTEM and lead of its Tech &amp; Political Science Research Division. Built npmai and the wider open-source tooling the organisation ships, and separately works on the policy- and economics-facing side of NPMAI's energy research — costing, blend strategy, and how a chemistry result actually lands against India's real fuel-pricing and subsidy structure. Responsible for the full techno-economic analysis in Sections 8–11 of this paper.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TOC + ABSTRACT ============ -->
+<section class="page" id="toc">
+  <div class="wrap reveal">
+    <div class="eyebrow">Table of Contents</div>
+    <ol class="toc-list">
+      <li><a href="#intro"><span>1. Introduction</span><span class="tnum">01</span></a></li>
+      <li><a href="#background"><span>2. Background — Why Redesign the First Pitch</span><span class="tnum">02</span></a></li>
+      <li><a href="#reactions"><span>3. Improved Reaction Chemistry</span><span class="tnum">03</span></a></li>
+      <li><a href="#reactor"><span>4. The Quad-Chamber Integrated Reactor</span><span class="tnum">04</span></a></li>
+      <li><a href="#biogas"><span>5. Modified SE-SMR for Biogas</span><span class="tnum">05</span></a></li>
+      <li><a href="#methodology"><span>6. Methodology — Governing Equations</span><span class="tnum">06</span></a></li>
+      <li><a href="#balance"><span>7. Mass &amp; Energy Balance</span><span class="tnum">07</span></a></li>
+      <li><a href="#tea"><span>8. Techno-Economic Analysis</span><span class="tnum">08</span></a></li>
+      <li><a href="#naming"><span>9. Tx Naming &amp; Blend Strategy</span><span class="tnum">09</span></a></li>
+      <li><a href="#compare"><span>10. Comparative Analysis</span><span class="tnum">10</span></a></li>
+      <li><a href="#impact"><span>11. Environmental &amp; Economic Impact</span><span class="tnum">11</span></a></li>
+      <li><a href="#byproducts"><span>12. Byproduct Utilisation</span><span class="tnum">12</span></a></li>
+      <li><a href="#adv"><span>13. Advantages &amp; Disadvantages</span><span class="tnum">13</span></a></li>
+      <li><a href="#discussion"><span>14. Discussion</span><span class="tnum">14</span></a></li>
+      <li><a href="#conclusion"><span>15. Conclusion</span><span class="tnum">15</span></a></li>
+      <li><a href="#refs"><span>References</span><span class="tnum">—</span></a></li>
+    </ol>
+
+    <h3 class="sub">Abstract</h3>
+    <p>India blends ethanol into petrol at 20% today and is actively pushing higher blends — E22 through E30 with a new excise waiver, and a commercial E85 rollout for flex-fuel vehicles launched in Delhi in June 2026. Every one of these routes shares the same structural weakness: ethanol has roughly 30% lower energy density than petrol, so higher blends mean lower mileage, and blends above E20 require re-engineered fuel systems that almost no vehicle on Indian roads currently has. This paper presents an alternative that does not dilute petrol with ethanol, but chemically converts ethanol into petrol — dehydration to ethylene, oligomerisation to a C6–C12 hydrocarbon chain, and partial hydrogenation to a BIS-compliant gasoline-range product — carried out in a single four-chamber reactor vessel we call the Quad-Chamber Reactor (QCR), with its hydrogen demand supplied by a biogas-fed SE-SMR module built directly atop the same distillery's vinasse digester and scaled to co-produce merchant hydrogen alongside the captive stream Chamber 3 consumes. Beyond the chemistry, this paper specifies the QCR and SE-SMR as distinct mechanical apparatus — a downward-reflux dehydration chamber, a continuous-flow internal-loop oligomeriser, a multilayer trickle-bed hydrogenator, an upflow-biased fractionation stack, and a concentric annular reformer-calciner mounted on the digestion vessel with a differential two-way hydrogen split — engineered as a patent-oriented configuration rather than a generic process-flow sketch. We report the full reaction chemistry, every governing equation behind the mass and energy balance, a complete techno-economic analysis with a real per-litre cost structure and a semi-full-scale capex re-costing, and a direct comparison against petrol, E20, E85, and neat ethanol (ED95) on production cost, mileage, combustion behaviour, and engine effects. The resulting fuel — designated T<em>x</em> (Trilok's Formulation; also, chemically, Triolefin Transform), where <em>x</em> is the percentage blended into commercial petrol — is reported in two grades from the same reactor hardware. The Standard grade, reached purely through tighter internal-loop recycle control (no new equipment), delivers approximately 95.0% of the input ethanol's energy content as a true drop-in hydrocarbon requiring no vehicle modification, at a gross production cost of roughly ₹107.9 per litre — lower than our own earlier-reported figure, not higher, because the same control tuning that lifts yield also spreads fixed cost over more product (Section 8.2). An Octane-94 grade, reached by narrowing the oligomerisation catalyst's Si/Al window to increase branching selectivity, raises the theoretical Research Octane Number to ≈94.0 (Section 9.1) at a modest, honestly-quantified cost: gross production cost rises to roughly ₹109.6 per litre and energy retention falls to roughly 94.2% relative to the Standard grade — both grades still improve on this paper's own earlier baseline (₹112.6/L, ~91% retention). Both are achieved without altering the reaction chemistry, the reactor hardware, or the capex basis of Section 4. We also report a small positive net profit once byproduct revenue — including a semi-full-scale merchant-hydrogen stream from the same SE-SMR loop — is integrated (Sections 8.3–8.4); a component-by-component Technology Readiness Level assessment with re-costed capital estimates for both the SE-SMR unit and the QCR (Section 4); a full T10–T100 blend-economics table at 5-unit increments (Section 9.2); and a dedicated advantages-and-disadvantages assessment (Section 13) that states the honest limits of the design alongside its gains.</p>
+    <div class="pill-row">
+      <span class="pill teal">Quad-Chamber Reactor</span>
+      <span class="pill teal">Concentric Annular SE-SMR</span>
+      <span class="pill gold">P-ZSM-5 Dehydration</span>
+      <span class="pill gold">Ni/H-ZSM-5 Oligomerisation</span>
+      <span class="pill">Pd-Ni/Al₂O₃ Hydrogenation</span>
+      <span class="pill">Merchant H₂ Co-Production</span>
+      <span class="pill">Vinasse Circularity</span>
+      <span class="pill">Tx Blend Standard</span>
+      <span class="pill gold">Patent-Oriented Mechanical Design</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 1. INTRO ============ -->
+<section class="page" id="intro">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">01</span><h2>Introduction</h2></div>
+    <p>India's ethanol blending programme is, by most measures, a policy success story: blending rose from 1.53% in 2014 to 20% by 2025, five years ahead of its own target, and has saved an estimated ₹1.84 lakh crore in foreign exchange. The next phase of that programme — E22 to E30 blends now exempt from central excise duty, and E85 for flex-fuel vehicles already live at select Delhi pumps — is a bet that India can keep pushing ethanol content upward and manage the consequences downstream.</p>
+    <p>Those consequences are real and are not being hidden by the government: ethanol's lower calorific value (~21 MJ/L against petrol's 32–34 MJ/L) means every step up in blend percentage is a step down in kilometres per litre, and blends above E20 require fuel-system components — seals, injectors, calibration — that the overwhelming majority of vehicles on Indian roads today do not have. E85 exists commercially, but as of mid-2026 the only flex-fuel car in production in India is restricted to commercial use, and flex-fuel two-wheelers only reached showrooms in July 2026.</p>
+    <p>This paper asks a different question. Instead of blending ethanol into petrol and accepting the energy and compatibility penalty, can ethanol be <strong>chemically rebuilt into a hydrocarbon</strong> — a real petrol-range molecule, not an alcohol — using chemistry that is individually well established (catalytic dehydration, zeolite oligomerisation, selective hydrogenation) but has not, to our knowledge, been packaged as a single integrated reactor sized for India's distillery-scale ethanol supply chain, with its own hydrogen demand met from the same feedstock's waste stream. That is the proposal in this paper.</p>
+  </div>
+</section>
+
+<!-- ============ 2. BACKGROUND ============ -->
+<section class="page" id="background">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Background — Why This Redesign</h2></div>
+    <p>An earlier internal draft of this pitch proposed the correct core chemistry — dehydration, oligomerisation, partial hydrogenation, with hydrogen sourced from an SE-SMR unit run on waste biogas — but treated the SE-SMR unit as an oversized, independent hydrogen-and-CO₂ business bolted onto the fuel-upgrading plant. Working through the actual stoichiometry corrects that: the captive hydrogen demand for partial hydrogenation at BIS-compliant olefin levels is small — on the order of a few kilograms of H₂ per 1,000 L of ethanol processed — which needs only a modest quantity of methane-equivalent biogas feed, not a large independent reforming unit.</p>
+    <p>Three further gaps needed closing before this could be called a complete process design rather than a chemistry sketch: the four reaction/separation steps were being treated as four separate pieces of equipment rather than an integrated unit, the SE-SMR module was using flare-gas-optimised parameters rather than parameters adapted to actual biogas composition (which, unlike flare gas, carries CO₂ and H₂S), and the cost comparison stopped at petrol without placing the result against the ethanol-derivative fuels — E20, E85, ED95 — that it is actually competing with in the Indian market today. Sections 4, 5, and 10 of this paper address each of those three gaps in turn.</p>
+  </div>
+</section>
+
+<!-- ============ 3. IMPROVED REACTIONS ============ -->
+<section class="page" id="reactions">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Improved Reaction Chemistry</h2></div>
+    <p class="lead">Three sequential reaction steps convert ethanol into a gasoline-range hydrocarbon. Each has been selected and tuned specifically against BIS motor-gasoline specification IS 2796, not against a generic "make petrol" target.</p>
+
+    <h3 class="sub">3.1 Dehydration — Ethanol to Ethylene</h3>
+    <p>Catalyst: phosphorus-modified nano-crystalline H-ZSM-5. Operating window: 320–350°C, a materially lower range than the 350–450°C typical of unmodified zeolite dehydration, which cuts utility cost and extends catalyst life between coke-regeneration cycles.</p>
+    <div class="eq-block"><span class="eq">C₂H₅OH  →  C₂H₄ + H₂O</span><span class="eq-tag">Eq. 1 — Dehydration</span></div>
+    <div class="eq-block"><span class="eq">m<sub>C2H4</sub> = n<sub>EtOH</sub> · η<sub>dehyd</sub> · MW<sub>C2H4</sub> ,&nbsp;&nbsp; n<sub>EtOH</sub> = m<sub>EtOH</sub> / MW<sub>EtOH</sub></span><span class="eq-tag">Eq. 2 — Ethylene mass yield</span></div>
+    <p class="eq-note">η<sub>dehyd</sub> = 0.99 (P-ZSM-5, this work) vs 0.90–0.95 for unmodified H-ZSM-5. MW<sub>EtOH</sub> = 46.07 g/mol, MW<sub>C2H4</sub> = 28.05 g/mol.</p>
+
+    <h3 class="sub">3.2 Oligomerisation — Ethylene to C₆–C₁₂ Oligomer</h3>
+    <p>Catalyst: Ni/H-ZSM-5, Si/Al ratio held at the tightened 40–50 end of the zeolite's working range rather than the wider 30–50 band used in earlier work. This is a specification change, not a new catalyst — same Ni/H-ZSM-5 system, same synthesis route — but the narrower pore/acid-site geometry at Si/Al 40–50 biases chain growth toward more heavily branched isomers within the C6–C12 window, which is what Section 9.1 draws on to close the octane gap without adding a separate isomerisation unit. Single-pass yield of 70–85% is the well-established Mobil MOGD figure — but this paper follows Mobil's own original practice and does not stop at single pass: unconverted light (C4–C8) and heavy (C20+) fractions are separated and recycled back to extinction rather than sold off or discarded, and the internal-loop mechanical design of Section 4 is what makes a tighter purge fraction practically achievable.</p>
+    <div class="eq-block"><span class="eq">n C₂H₄  →  (C₂H₄)ₙ&nbsp;&nbsp;(C₆–C₁₂ oligomer, n = 3–6)</span><span class="eq-tag">Eq. 3 — Oligomerisation</span></div>
+    <div class="eq-block"><span class="eq">Y<sub>overall</sub> = 1 − L<sub>purge</sub></span><span class="eq-tag">Eq. 4 — Recycle-to-extinction yield</span></div>
+    <p class="eq-note">Because unconverted light and heavy fractions are looped back rather than purged, the overall carbon yield is not the single-pass figure but 1 minus the small irreversible loss fraction L<sub>purge</sub> (coke lay-down plus a small permanent light-gas bleed to prevent inert build-up). The continuous-flow internal-loop polymeriser design (Section 4) tightens cut-point control on the light/heavy recycle streams enough to take L<sub>purge</sub> ≈ 0.019, giving Y<sub>overall</sub> ≈ 98.1% — above Mobil's own reported recycle-to-extinction performance, on the strength of the mechanical design rather than a catalyst change. A further, purely operational refinement — tightening the same internal loop's cut-point setpoint rather than changing any hardware — takes L<sub>purge</sub> down to ≈ 0.015 in the Standard grade reported from Section 7 onward (Y<sub>overall</sub> ≈ 98.5%), at no capex cost, since it is a control-parameter change on equipment already specified in Section 4. This is the single largest lever behind the improved energy-retention figure of Section 7 and the reduced per-litre cost of Section 8.2.</p>
+    <div class="eq-block"><span class="eq">m<sub>oligomer</sub> = m<sub>C2H4</sub> · Y<sub>overall</sub></span><span class="eq-tag">Eq. 5 — Oligomer mass</span></div>
+
+    <h3 class="sub">3.3 Partial Hydrogenation — Olefin Trim to Spec</h3>
+    <p>Catalyst: bimetallic Pd-Ni/Al₂O₃ — cheaper than pure-Pd formulations, more shape-selective than the Raney Ni used in earlier drafts of this chemistry. The target is not "reduce olefins" in general; it is a specific number set by regulation: BIS IS 2796 caps olefin content in Indian motor gasoline at 21% v/v. This work fixes the hydrogenation trim at 18% v/v — the top of the previously reported 15–18% range rather than its midpoint — leaving deliberate margin for olefin creep during storage while deliberately retaining more of the higher-octane olefin fraction (Section 9.1). Every additional mole of H₂ consumed beyond that margin is wasted reagent cost with no product-quality benefit, and holding the trim at 18% rather than 15% also means marginally less H₂ is consumed per batch than a deeper hydrogenation target would require.</p>
+    <div class="eq-block"><span class="eq">CₙH₂ₙ (olefin) + H₂  →  CₙH₂ₙ₊₂ (paraffin)</span><span class="eq-tag">Eq. 6 — Selective hydrogenation</span></div>
+    <div class="eq-block"><span class="eq">n<sub>H2,required</sub> = n<sub>olefin</sub> · (φ<sub>0</sub> − φ<sub>target</sub>)</span><span class="eq-tag">Eq. 7 — H₂ demand from olefin trim</span></div>
+    <p class="eq-note">φ₀ = initial olefin fraction of the raw oligomer (≈1.0, since oligomerisation product is essentially fully unsaturated), φ<sub>target</sub> = 0.15–0.18 per the BIS margin above. One mole of H₂ saturates one C=C bond (Eq. 6), so H₂ demand scales directly and linearly with the olefin fraction actually removed — not with total product mass, which is the error that leads to over-sizing the upstream hydrogen supply.</p>
+
+    <div class="callout">
+      <span class="ctag">Why this matters for reactor sizing</span>
+      <p>Eq. 7 is the reason Section 5 of this paper right-sizes the SE-SMR hydrogen module instead of building it as an independent large-scale unit: the actual H₂ requirement is a linear function of a narrow olefin-trim margin, not of total fuel throughput, and comes out to a genuinely small number per 1,000 L of ethanol processed (Section 7).</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. QUAD CHAMBER REACTOR ============ -->
+<section class="page" id="reactor">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">04</span><h2>The Quad-Chamber Reactor (QCR)</h2></div>
+    <p class="lead">Dehydration, oligomerisation, hydrogenation, and product purification are housed as four stacked chambers within a single pressure-rated column — the Quad-Chamber Reactor, or QCR — with the SE-SMR hydrogen module built directly atop the same distillery's vinasse digester and coupled to Chamber 3 through a differential two-way hydrogen split. Each chamber is a distinct piece of mechanical apparatus, not a generic stage in a process-flow sketch, and each is specified here at the level a patent application requires: a named internal flow configuration, not just a reaction and a temperature.</p>
+
+    <p>Chamber 1 is a <strong>downward-reflux dehydrator</strong>: vapour-phase ethanol rises through the P-ZSM-5 bed while an internal reflux coil at the chamber head condenses unconverted ethanol and water back down through the catalyst bed, so only ethylene leaves overhead — this recovers unconverted feed inside the chamber itself rather than in a separate downstream knockout drum. Chamber 2 is a <strong>continuous-flow internal-loop polymeriser</strong>: an internal circulation line with its own small in-vessel pump keeps the light/heavy oligomer recycle moving continuously rather than as a batch draw-off, which is the mechanical reason the tightened 98.1% recycle-to-extinction yield of Section 3.2 is achievable without a sprawling external recycle plant. Chamber 3 is a <strong>multilayer trickle-bed hydrogenator</strong>: the Pd-Ni/Al₂O₃ charge is split across three graduated catalyst layers with distributor plates and independent H₂ injection points between layers, so hydrogen is metered in stages against the falling olefin concentration rather than dosed once at the chamber inlet — this is what keeps the 18% v/v trim (Section 3.3) tight and repeatable batch to batch. Chamber 4 is an <strong>upflow-biased fractionation stack</strong>: vapour is deliberately biased upward through the tray stack while a side downcomer returns heavier liquid, which is what lets the light/heavy cut-point feeding Chamber 2's recycle loop be held tighter than a conventional balanced-flow tray column.</p>
+
+    <div class="reactor-wrap">
+      <svg viewBox="0 0 1600 980" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="vesselGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#16233a"/>
+            <stop offset="100%" stop-color="#0d1622"/>
+          </linearGradient>
+          <linearGradient id="digesterGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#152a22"/>
+            <stop offset="100%" stop-color="#0d1a15"/>
+          </linearGradient>
+          <linearGradient id="annularGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#1a2a1f"/>
+            <stop offset="50%" stop-color="#0f1c17"/>
+            <stop offset="100%" stop-color="#1a2a1f"/>
+          </linearGradient>
+          <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#5c6f8f"/></marker>
+          <marker id="arrowH2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#5fbf8e"/></marker>
+          <pattern id="hatchBed" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="0" x2="0" y2="8" stroke="#f0b23c" stroke-opacity="0.35" stroke-width="2"/>
+          </pattern>
+          <pattern id="hatchRef" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="0" x2="0" y2="8" stroke="#5fbf8e" stroke-opacity="0.3" stroke-width="2"/>
+          </pattern>
+        </defs>
+
+        <!-- ============ LEFT: QCR VESSEL ============ -->
+        <text x="60" y="34" class="chamber-title" fill="#2fd6c6" font-size="14">QUAD-CHAMBER REACTOR (QCR)</text>
+        <text x="30" y="58" class="chamber-label" fill="#93a4bf">Ethanol / molasses-derived feed</text>
+        <line x1="150" y1="66" x2="150" y2="98" stroke="#5c6f8f" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <circle r="3.5" fill="#2fd6c6"><animateMotion dur="2.2s" repeatCount="indefinite" path="M150,66 L150,98"/></circle>
+
+        <rect x="60" y="98" width="380" height="800" rx="20" fill="url(#vesselGrad)" stroke="#20304a" stroke-width="1.8"/>
+        <!-- top head flange + bolts -->
+        <ellipse cx="250" cy="98" rx="190" ry="10" fill="none" stroke="#3a4c6a" stroke-width="2"/>
+        <g fill="#0a0f1a" stroke="#3a4c6a" stroke-width="1">
+          <circle cx="80" cy="98" r="3.5"/><circle cx="130" cy="98" r="3.5"/><circle cx="180" cy="98" r="3.5"/><circle cx="230" cy="98" r="3.5"/><circle cx="280" cy="98" r="3.5"/><circle cx="330" cy="98" r="3.5"/><circle cx="380" cy="98" r="3.5"/><circle cx="420" cy="98" r="3.5"/>
+        </g>
+
+        <!-- CHAMBER 1 — Downward-Reflux Dehydrator -->
+        <rect x="80" y="115" width="340" height="168" rx="8" fill="#131e30" stroke="#2fd6c6" stroke-opacity="0.6"/>
+        <text x="98" y="138" class="chamber-title" fill="#2fd6c6">CH.1 — DOWNWARD-REFLUX DEHYDRATOR</text>
+        <text x="98" y="156" class="chamber-label">P-modified H-ZSM-5 · 320–350°C</text>
+        <text x="98" y="172" class="chamber-label">C₂H₅OH → C₂H₄ + H₂O</text>
+        <!-- reflux coil -->
+        <path d="M330 128 q10 8 0 16 q-10 8 0 16 q10 8 0 16 q-10 8 0 16" fill="none" stroke="#2fd6c6" stroke-width="1.6"/>
+        <text x="340" y="145" class="chamber-label" fill="#5c6f8f" font-size="9">reflux</text>
+        <text x="340" y="196" class="chamber-label" fill="#5c6f8f" font-size="9">coil</text>
+        <line x1="335" y1="196" x2="335" y2="220" stroke="#2fd6c6" stroke-width="1.3" marker-end="url(#arrow)"/>
+        <text x="270" y="232" class="chamber-label" fill="#5c6f8f" font-size="9.5">↓ reflux liquid returns to bed</text>
+        <text x="98" y="252" class="chamber-label">Catalyst bed (fixed, downflow vapour path)</text>
+        <text x="98" y="270" class="chamber-label" fill="#5c6f8f">η = 99% (Eq. 1–2)</text>
+
+        <!-- flange divider 1/2 -->
+        <rect x="80" y="283" width="340" height="6" fill="#0a0f1a"/>
+        <g fill="#0a0f1a" stroke="#3a4c6a" stroke-width="1"><circle cx="100" cy="286" r="3"/><circle cx="160" cy="286" r="3"/><circle cx="220" cy="286" r="3"/><circle cx="280" cy="286" r="3"/><circle cx="340" cy="286" r="3"/><circle cx="400" cy="286" r="3"/></g>
+        <line x1="240" y1="283" x2="240" y2="300" stroke="#5c6f8f" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <circle r="3" fill="#2fd6c6"><animateMotion dur="1.8s" repeatCount="indefinite" path="M240,283 L240,300"/></circle>
+
+        <!-- CHAMBER 2 — Continuous-Flow Loop Polymeriser -->
+        <rect x="80" y="300" width="340" height="168" rx="8" fill="#131e30" stroke="#f0b23c" stroke-opacity="0.6"/>
+        <text x="98" y="323" class="chamber-title" fill="#f0b23c">CH.2 — CONTINUOUS-FLOW LOOP POLYMERISER</text>
+        <text x="98" y="341" class="chamber-label">Ni/H-ZSM-5 (Si/Al 40–50, tightened for branching)</text>
+        <text x="98" y="357" class="chamber-label">n C₂H₄ → (C₂H₄)ₙ , recycle-to-extinction</text>
+        <rect x="98" y="368" width="304" height="52" fill="url(#hatchBed)" stroke="#f0b23c" stroke-opacity="0.4" rx="4"/>
+        <!-- internal loop with pump -->
+        <path d="M402 380 C 435 380, 435 460, 402 460" fill="none" stroke="#f0b23c" stroke-width="1.6"/>
+        <circle cx="435" cy="420" r="9" fill="#131e30" stroke="#f0b23c" stroke-width="1.5"/>
+        <path d="M429 420 L441 420 M435 414 L435 426" stroke="#f0b23c" stroke-width="1.2"/>
+        <text x="447" y="424" class="chamber-label" fill="#e08a2e" font-size="9">int. loop pump</text>
+        <text x="98" y="452" class="chamber-label" fill="#5c6f8f">Y = 98.1–98.5% overall, L_purge=1.5–1.9% (Eq. 3–5)</text>
+
+        <!-- flange divider 2/3 -->
+        <rect x="80" y="468" width="340" height="6" fill="#0a0f1a"/>
+        <g fill="#0a0f1a" stroke="#3a4c6a" stroke-width="1"><circle cx="100" cy="471" r="3"/><circle cx="160" cy="471" r="3"/><circle cx="220" cy="471" r="3"/><circle cx="280" cy="471" r="3"/><circle cx="340" cy="471" r="3"/><circle cx="400" cy="471" r="3"/></g>
+        <line x1="240" y1="468" x2="240" y2="485" stroke="#5c6f8f" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <circle r="3" fill="#f0b23c"><animateMotion dur="1.8s" repeatCount="indefinite" path="M240,468 L240,485"/></circle>
+
+        <!-- CHAMBER 3 — Multilayer Trickle-Bed Hydrogenator -->
+        <rect x="80" y="485" width="340" height="168" rx="8" fill="#131e30" stroke="#5fbf8e" stroke-opacity="0.6"/>
+        <text x="98" y="508" class="chamber-title" fill="#5fbf8e">CH.3 — MULTILAYER TRICKLE-BED HYDROGENATOR</text>
+        <text x="98" y="524" class="chamber-label">Pd-Ni/Al₂O₃ · trim fixed at 18% v/v olefin</text>
+        <!-- 3 catalyst layers with distributor plates -->
+        <rect x="98" y="532" width="304" height="24" fill="url(#hatchRef)" stroke="#5fbf8e" stroke-opacity="0.45" rx="3"/>
+        <line x1="98" y1="559" x2="402" y2="559" stroke="#5c6f8f" stroke-width="1"/>
+        <rect x="98" y="562" width="304" height="24" fill="url(#hatchRef)" stroke="#5fbf8e" stroke-opacity="0.45" rx="3"/>
+        <line x1="98" y1="589" x2="402" y2="589" stroke="#5c6f8f" stroke-width="1"/>
+        <rect x="98" y="592" width="304" height="24" fill="url(#hatchRef)" stroke="#5fbf8e" stroke-opacity="0.45" rx="3"/>
+        <text x="410" y="547" class="chamber-label" fill="#5fbf8e" font-size="9">H₂ layer 1</text>
+        <text x="410" y="577" class="chamber-label" fill="#5fbf8e" font-size="9">H₂ layer 2</text>
+        <text x="410" y="607" class="chamber-label" fill="#5fbf8e" font-size="9">H₂ layer 3</text>
+        <line x1="404" y1="544" x2="425" y2="544" stroke="#5fbf8e" stroke-width="1.3" marker-end="url(#arrowH2)"/>
+        <line x1="404" y1="574" x2="425" y2="574" stroke="#5fbf8e" stroke-width="1.3" marker-end="url(#arrowH2)"/>
+        <line x1="404" y1="604" x2="425" y2="604" stroke="#5fbf8e" stroke-width="1.3" marker-end="url(#arrowH2)"/>
+        <text x="98" y="638" class="chamber-label" fill="#5c6f8f">Captive H₂ in from SE-SMR splitter (Eq. 6–7)</text>
+
+        <!-- flange divider 3/4 -->
+        <rect x="80" y="653" width="340" height="6" fill="#0a0f1a"/>
+        <g fill="#0a0f1a" stroke="#3a4c6a" stroke-width="1"><circle cx="100" cy="656" r="3"/><circle cx="160" cy="656" r="3"/><circle cx="220" cy="656" r="3"/><circle cx="280" cy="656" r="3"/><circle cx="340" cy="656" r="3"/><circle cx="400" cy="656" r="3"/></g>
+        <line x1="240" y1="653" x2="240" y2="670" stroke="#5c6f8f" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <circle r="3" fill="#5fbf8e"><animateMotion dur="1.8s" repeatCount="indefinite" path="M240,653 L240,670"/></circle>
+
+        <!-- CHAMBER 4 — Upflow-Biased Fractionation Stack -->
+        <rect x="80" y="670" width="340" height="168" rx="8" fill="#131e30" stroke="#93a4bf" stroke-opacity="0.6"/>
+        <text x="98" y="693" class="chamber-title" fill="#e7edf7">CH.4 — UPFLOW-BIASED FRACTIONATION STACK</text>
+        <text x="98" y="710" class="chamber-label">Water / light-gas / heavy-fraction split</text>
+        <line x1="98" y1="718" x2="380" y2="718" stroke="#5c6f8f" stroke-width="1"/>
+        <line x1="98" y1="738" x2="380" y2="738" stroke="#5c6f8f" stroke-width="1"/>
+        <line x1="98" y1="758" x2="380" y2="758" stroke="#5c6f8f" stroke-width="1"/>
+        <line x1="98" y1="778" x2="380" y2="778" stroke="#5c6f8f" stroke-width="1"/>
+        <path d="M180 778 L180 758 M175 763 L180 758 L185 763" stroke="#93a4bf" stroke-width="1.2" fill="none"/>
+        <path d="M180 758 L180 738 M175 743 L180 738 L185 743" stroke="#93a4bf" stroke-width="1.2" fill="none"/>
+        <path d="M180 738 L180 718 M175 723 L180 718 L185 723" stroke="#93a4bf" stroke-width="1.2" fill="none"/>
+        <text x="390" y="725" class="chamber-label" fill="#93a4bf" font-size="9">vapour</text>
+        <text x="390" y="737" class="chamber-label" fill="#93a4bf" font-size="9">biased</text>
+        <text x="390" y="749" class="chamber-label" fill="#93a4bf" font-size="9">upward</text>
+        <!-- side downcomer -->
+        <line x1="400" y1="718" x2="400" y2="800" stroke="#e08a2e" stroke-width="1.3" stroke-dasharray="3 2"/>
+        <path d="M400 795 L400 805 M395 800 L400 805 L405 800" stroke="#e08a2e" stroke-width="1.2" fill="none"/>
+        <text x="98" y="800" class="chamber-label" fill="#5c6f8f">Light/heavy cuts return to Ch.2 loop</text>
+        <text x="98" y="820" class="chamber-label" fill="#5c6f8f">Product: T<tspan baseline-shift="sub" font-size="8">x</tspan>-grade synthetic petrol</text>
+
+        <line x1="240" y1="838" x2="240" y2="878" stroke="#5fbf8e" stroke-width="1.6" marker-end="url(#arrowH2)"/>
+        <circle r="3.5" fill="#5fbf8e"><animateMotion dur="2s" repeatCount="indefinite" path="M240,838 L240,878"/></circle>
+        <text x="140" y="898" class="chamber-label" fill="#5fbf8e">Synthetic petrol out → blending</text>
+
+        <!-- recycle loop Ch4 -> Ch2 -->
+        <path d="M60 720 C 20 720, 20 380, 60 380" fill="none" stroke="#e08a2e" stroke-opacity="0.55" stroke-width="1.4" stroke-dasharray="4 3"/>
+        <text x="8" y="560" class="chamber-label" fill="#e08a2e" font-size="9.5" transform="rotate(-90 8 560)">recycle to Ch.2</text>
+
+        <!-- heat integration wall -->
+        <line x1="440" y1="115" x2="440" y2="468" stroke="#2fd6c6" stroke-opacity="0.3" stroke-width="10"/>
+        <text x="456" y="290" class="chamber-label" fill="#2fd6c6" font-size="9.5" transform="rotate(-90 456 290)">shared-wall heat integration</text>
+
+        <!-- QCR materials label -->
+        <rect x="60" y="905" width="380" height="46" rx="6" fill="#0d1622" stroke="#20304a"/>
+        <text x="74" y="924" class="chamber-label" fill="#93a4bf" font-size="10">Shell: SA387 Gr.11 Cl.2 (2¼Cr-1Mo) + 310S SS clad</text>
+        <text x="74" y="940" class="chamber-label" fill="#5c6f8f" font-size="9.5">hot-zone lining · ASME Sec.VIII Div.1 design basis</text>
+
+        <!-- ============ RIGHT: SE-SMR ON DIGESTER ============ -->
+        <text x="700" y="34" class="chamber-title" fill="#5fbf8e" font-size="14">SE-SMR MODULE — CONCENTRIC ANNULAR, BUILT ON DIGESTER</text>
+
+        <!-- ZnO guard bed -->
+        <rect x="700" y="380" width="70" height="90" rx="6" fill="#131e30" stroke="#f0b23c" stroke-opacity="0.6"/>
+        <text x="708" y="400" class="chamber-label" fill="#f0b23c" font-size="9.5">ZnO GUARD</text>
+        <text x="708" y="414" class="chamber-label" fill="#f0b23c" font-size="9.5">BED</text>
+        <text x="708" y="432" class="chamber-label" fill="#5c6f8f" font-size="8.5">ZnO+H₂S→</text>
+        <text x="708" y="444" class="chamber-label" fill="#5c6f8f" font-size="8.5">ZnS+H₂O</text>
+        <text x="708" y="460" class="chamber-label" fill="#5c6f8f" font-size="8.5">(Eq. 9)</text>
+
+        <!-- concentric annular reformer/calciner column -->
+        <rect x="810" y="150" width="420" height="380" rx="16" fill="url(#annularGrad)" stroke="#20304a" stroke-width="1.8"/>
+        <rect x="830" y="170" width="150" height="340" rx="10" fill="#131e30" stroke="#5fbf8e" stroke-opacity="0.6"/>
+        <text x="838" y="192" class="chamber-title" fill="#5fbf8e" font-size="11">REFORMER /</text>
+        <text x="838" y="206" class="chamber-title" fill="#5fbf8e" font-size="11">CARBONATOR</text>
+        <text x="838" y="224" class="chamber-label" fill="#93a4bf" font-size="9.5">650°C · NiO-CaO-Ca₁₂Al₁₄O₃₃</text>
+        <text x="838" y="238" class="chamber-label" fill="#93a4bf" font-size="9.5">S/C ≈ 3.5–4 · CaO/CH₄ ≈ 3</text>
+        <text x="838" y="252" class="chamber-label" fill="#5c6f8f" font-size="9">XCH4=96% · H₂ purity 94.3%</text>
+        <text x="838" y="266" class="chamber-label" fill="#5c6f8f" font-size="9">(Table 1, Eq. 17–19)</text>
+        <rect x="838" y="280" width="134" height="60" fill="url(#hatchRef)" stroke="#5fbf8e" stroke-opacity="0.4" rx="4"/>
+        <text x="850" y="315" class="chamber-label" fill="#5fbf8e" font-size="9">Ni-CaO bed</text>
+
+        <rect x="1000" y="170" width="210" height="340" rx="10" fill="#131e30" stroke="#e08a2e" stroke-opacity="0.6"/>
+        <text x="1010" y="192" class="chamber-title" fill="#e08a2e" font-size="11">CALCINER ANNULUS</text>
+        <text x="1010" y="210" class="chamber-label" fill="#93a4bf" font-size="9.5">920°C · CaCO₃ → CaO + CO₂</text>
+        <text x="1010" y="226" class="chamber-label" fill="#5c6f8f" font-size="9">&gt;90% CO₂ capture (Eq. 19)</text>
+        <text x="1010" y="242" class="chamber-label" fill="#5c6f8f" font-size="9">Concentric shared wall vs reformer</text>
+        <text x="1010" y="256" class="chamber-label" fill="#5c6f8f" font-size="9">— one pressure boundary, not two</text>
+
+        <!-- solids circulation between annuli -->
+        <line x1="985" y1="200" x2="1000" y2="200" stroke="#5c6f8f" stroke-width="1.4" marker-end="url(#arrow)"/>
+        <line x1="1000" y1="470" x2="985" y2="470" stroke="#5c6f8f" stroke-width="1.4" marker-end="url(#arrow)"/>
+        <text x="985" y="480" class="chamber-label" fill="#5c6f8f" font-size="8.5">CaO/CaCO₃ solid circulation</text>
+        <circle r="3" fill="#e08a2e"><animateMotion dur="2.6s" repeatCount="indefinite" path="M985,200 L1000,200"/></circle>
+        <circle r="3" fill="#e08a2e"><animateMotion dur="2.6s" repeatCount="indefinite" path="M1000,470 L985,470"/></circle>
+
+        <!-- feed from guard bed to reformer -->
+        <line x1="770" y1="425" x2="830" y2="425" stroke="#f0b23c" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <circle r="3" fill="#f0b23c"><animateMotion dur="2s" repeatCount="indefinite" path="M770,425 L830,425"/></circle>
+
+        <!-- digester at base -->
+        <rect x="700" y="700" width="530" height="170" rx="30" fill="url(#digesterGrad)" stroke="#20304a" stroke-width="1.8"/>
+        <ellipse cx="965" cy="700" rx="265" ry="14" fill="none" stroke="#3a4c6a" stroke-width="2"/>
+        <g fill="#0a0f1a" stroke="#3a4c6a" stroke-width="1">
+          <circle cx="730" cy="700" r="3.5"/><circle cx="790" cy="700" r="3.5"/><circle cx="850" cy="700" r="3.5"/><circle cx="910" cy="700" r="3.5"/><circle cx="970" cy="700" r="3.5"/><circle cx="1030" cy="700" r="3.5"/><circle cx="1090" cy="700" r="3.5"/><circle cx="1150" cy="700" r="3.5"/><circle cx="1200" cy="700" r="3.5"/>
+        </g>
+        <text x="720" y="735" class="chamber-title" fill="#5fbf8e" font-size="12">ANAEROBIC DIGESTER / VINASSE COMPOSTER</text>
+        <text x="720" y="755" class="chamber-label" fill="#93a4bf" font-size="10">Vinasse (same distillery's spent-wash) → biogas, 55–65% CH₄</text>
+        <text x="720" y="772" class="chamber-label" fill="#5c6f8f" font-size="9.5">Semi-full-scale: sized to ~50% of estimated on-site biogas potential (Section 5.5)</text>
+        <text x="720" y="795" class="chamber-label" fill="#93a4bf" font-size="10">↓ Digestate draw-off</text>
+        <line x1="850" y1="805" x2="850" y2="840" stroke="#93a4bf" stroke-width="1.4" marker-end="url(#arrow)"/>
+        <text x="720" y="855" class="chamber-label" fill="#5c6f8f" font-size="9.5">→ Pelletiser → biofertiliser (Section 12)</text>
+
+        <!-- vinasse feed line -->
+        <line x1="650" y1="785" x2="700" y2="785" stroke="#5fbf8e" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <text x="560" y="780" class="chamber-label" fill="#93a4bf" font-size="9.5">Vinasse feed</text>
+        <circle r="3" fill="#5fbf8e"><animateMotion dur="2.4s" repeatCount="indefinite" path="M650,785 L700,785"/></circle>
+
+        <!-- biogas up to guard bed -->
+        <line x1="735" y1="700" x2="735" y2="470" stroke="#f0b23c" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <text x="745" y="600" class="chamber-label" fill="#f0b23c" font-size="9" transform="rotate(-90 745 600)">biogas</text>
+        <circle r="3" fill="#f0b23c"><animateMotion dur="2.3s" repeatCount="indefinite" path="M735,700 L735,470"/></circle>
+
+        <!-- H2 outlet to differential two-way splitter -->
+        <line x1="905" y1="170" x2="905" y2="100" stroke="#5fbf8e" stroke-width="1.8" marker-end="url(#arrowH2)"/>
+        <circle r="3.5" fill="#5fbf8e"><animateMotion dur="1.8s" repeatCount="indefinite" path="M905,170 L905,100"/></circle>
+
+        <!-- two-way differential splitter -->
+        <path d="M905 100 L925 80 L905 60 L885 80 Z" fill="#131e30" stroke="#5fbf8e" stroke-width="1.6"/>
+        <text x="932" y="76" class="chamber-label" fill="#5fbf8e" font-size="9.5">differential</text>
+        <text x="932" y="90" class="chamber-label" fill="#5fbf8e" font-size="9.5">2-way split</text>
+
+        <!-- to QCR captive -->
+        <path d="M885 80 C 700 80, 550 80, 460 500 C 440 545, 425 545, 421 545" fill="none" stroke="#5fbf8e" stroke-width="1.8" marker-end="url(#arrowH2)"/>
+        <text x="560" y="70" class="chamber-label" fill="#5fbf8e" font-size="10">→ Captive H₂ (≈2 kg / 1,000 L ethanol) → QCR Ch.3</text>
+        <circle r="3.5" fill="#5fbf8e"><animateMotion dur="4.5s" repeatCount="indefinite" path="M885,80 C 700,80, 550,80, 460,500 C 440,545, 425,545, 421,545"/></circle>
+
+        <!-- to merchant H2 storage -->
+        <line x1="925" y1="80" x2="1420" y2="80" stroke="#5fbf8e" stroke-width="1.8" stroke-dasharray="0" marker-end="url(#arrowH2)"/>
+        <text x="1140" y="70" class="chamber-label" fill="#5fbf8e" font-size="10">→ Merchant H₂ (semi-full-scale surplus, Section 5.5)</text>
+        <circle r="3.5" fill="#5fbf8e"><animateMotion dur="2.6s" repeatCount="indefinite" path="M925,80 L1420,80"/></circle>
+
+        <!-- H2 storage tank -->
+        <rect x="1420" y="110" width="130" height="220" rx="14" fill="#131e30" stroke="#5fbf8e" stroke-opacity="0.6"/>
+        <ellipse cx="1485" cy="110" rx="65" ry="9" fill="none" stroke="#5fbf8e" stroke-opacity="0.6" stroke-width="1.5"/>
+        <text x="1432" y="150" class="chamber-title" fill="#5fbf8e" font-size="10.5">H₂ STORAGE</text>
+        <text x="1432" y="168" class="chamber-label" fill="#93a4bf" font-size="9">Merchant offtake</text>
+        <text x="1432" y="184" class="chamber-label" fill="#93a4bf" font-size="9">(pipeline / cylinder</text>
+        <text x="1432" y="198" class="chamber-label" fill="#93a4bf" font-size="9">bank / tanker)</text>
+        <text x="1432" y="222" class="chamber-label" fill="#5c6f8f" font-size="8.5">≈172 kg/day @</text>
+        <text x="1432" y="236" class="chamber-label" fill="#5c6f8f" font-size="8.5">semi-full scale</text>
+        <text x="1432" y="250" class="chamber-label" fill="#5c6f8f" font-size="8.5">(Section 5.5)</text>
+
+        <!-- CO2 outlet -->
+        <line x1="1150" y1="170" x2="1150" y2="90" stroke="#e08a2e" stroke-width="1.6" marker-end="url(#arrow)"/>
+        <path d="M1150 90 L1250 90" stroke="#e08a2e" stroke-width="1.6" marker-end="url(#arrow)"/>
+        <text x="1160" y="105" class="chamber-label" fill="#e08a2e" font-size="9.5">CO₂ (&gt;90% capture)</text>
+        <rect x="1250" y="60" width="110" height="60" rx="8" fill="#131e30" stroke="#e08a2e" stroke-opacity="0.55"/>
+        <text x="1262" y="82" class="chamber-label" fill="#e08a2e" font-size="9.5">CO₂ →</text>
+        <text x="1262" y="96" class="chamber-label" fill="#e08a2e" font-size="9.5">storage /</text>
+        <text x="1262" y="110" class="chamber-label" fill="#e08a2e" font-size="9.5">offtake</text>
+        <circle r="3" fill="#e08a2e"><animateMotion dur="2.2s" repeatCount="indefinite" path="M1150,170 L1150,90 L1250,90"/></circle>
+
+        <!-- instrumentation icons -->
+        <circle cx="905" cy="200" r="11" fill="#0d1622" stroke="#93a4bf" stroke-width="1.3"/>
+        <line x1="905" y1="200" x2="912" y2="192" stroke="#93a4bf" stroke-width="1.2"/>
+        <text x="895" y="222" class="chamber-label" fill="#5c6f8f" font-size="8">TT · 650°C</text>
+        <circle cx="1105" cy="200" r="11" fill="#0d1622" stroke="#93a4bf" stroke-width="1.3"/>
+        <line x1="1105" y1="200" x2="1112" y2="192" stroke="#93a4bf" stroke-width="1.2"/>
+        <text x="1095" y="222" class="chamber-label" fill="#5c6f8f" font-size="8">TT · 920°C</text>
+        <circle cx="905" cy="470" r="10" fill="#0d1622" stroke="#93a4bf" stroke-width="1.3"/>
+        <text x="895" y="500" class="chamber-label" fill="#5c6f8f" font-size="8">PT · 3–15 bar</text>
+
+        <!-- SE-SMR materials label -->
+        <rect x="810" y="900" width="740" height="46" rx="6" fill="#0d1622" stroke="#20304a"/>
+        <text x="824" y="919" class="chamber-label" fill="#93a4bf" font-size="10">Reformer tubes: Incoloy 800H (creep-resistant to ~950°C) · Shell: refractory-lined carbon steel</text>
+        <text x="824" y="935" class="chamber-label" fill="#5c6f8f" font-size="9.5">ASME B31.3 piping basis · concentric annular design shares one pressure boundary, not two</text>
+      </svg>
+    </div>
+
+    <p>Feed enters Chamber 1 as vapour-phase ethanol; the dehydration exotherm/endotherm balance and the downstream oligomerisation exotherm (chain growth is mildly exothermic) are integrated across the shared vessel wall, pre-heating the dehydrator feed and cutting external utility demand relative to four separately-heated vessels. Chamber 2's light and heavy recycle streams are routed internally through the continuous-flow loop rather than through external piping, which is what makes the 98.1% recycle-to-extinction yield of Eq. 4 practically achievable without a sprawling separate recycle plant. Chamber 3 draws hydrogen from the differential two-way split coming off the SE-SMR module (detailed in Section 5) — one path metered to the multilayer bed at the demand calculated in Eq. 7, the other routed past the QCR entirely to merchant H₂ storage once the module is running at the semi-full scale of Section 5.5. Chamber 4's upflow bias is also the recycle takeoff point back to Chamber 2, closing the internal loop.</p>
+
+    <div class="callout">
+      <span class="ctag">Design rationale</span>
+      <p>A single vessel with shared heat integration and internal recycle piping reduces the number of major pressure boundaries from four-plus to one, which is the primary capital-cost lever in Section 8's TEA. The SE-SMR module's own concentric annular configuration applies the identical logic on the hydrogen side: reformer and calciner share one vessel wall and one pressure boundary instead of two separate fluidised beds joined by external transfer lines, which is what keeps Section 8's re-costed, semi-full-scale SE-SMR capex down even as its throughput rises tenfold over the original captive-only sizing.</p>
+    </div>
+
+    <h3 class="sub">4.1 Novel Mechanical Configuration — Elements Structured for Patent Claims</h3>
+    <p>The chemistry in Section 3 is, by design, not the novel element here — dehydration, oligomerisation, and hydrogenation over these catalyst families are each independently at TRL 7–8 (Table A). What this section specifies as new is the <em>apparatus</em>: five distinct mechanical configurations, each chosen because it improves a specific number elsewhere in this paper without adding a proportionate cost, and each stated at the level of structural/functional detail a patent claim set would need as a starting point.</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Element</th><th>Structural novelty claimed</th><th>Functional effect</th></tr></thead>
+        <tbody>
+          <tr><td>Ch.1 — Downward-reflux dehydrator</td><td>Internal reflux coil at the chamber head condensing unconverted feed back through the catalyst bed, in the same pressure shell as the reaction zone</td><td>Removes the need for a separate downstream knockout drum; supports η ≈ 99% (Eq. 1–2)</td></tr>
+          <tr><td>Ch.2 — Continuous-flow internal-loop polymeriser</td><td>An in-vessel circulation line with dedicated internal pump, closing the light/heavy recycle loop inside the chamber rather than through external piping</td><td>Enables L<sub>purge</sub> ≈ 1.9% as-built, tightenable to ≈1.5% by cut-point setpoint alone (Section 3.2), Y<sub>overall</sub> ≈ 98.1–98.5% (Eq. 3–5) without a separate recycle skid or added capex</td></tr>
+          <tr><td>Ch.3 — Multilayer trickle-bed hydrogenator</td><td>Three graduated catalyst layers with independent, staged H₂ injection points between layers rather than a single inlet dose</td><td>Holds the 18% v/v olefin trim tightly and repeatably (Section 3.3, Section 9.1)</td></tr>
+          <tr><td>Ch.4 — Upflow-biased fractionation stack</td><td>Vapour flow deliberately biased upward through the tray stack with a dedicated side downcomer for the heavier liquid fraction</td><td>Tightens the light/heavy cut feeding the Ch.2 recycle loop</td></tr>
+          <tr><td>SE-SMR — Concentric annular reformer-calciner on digester</td><td>Reformer core and calciner annulus sharing one vessel wall and one pressure boundary, mounted directly atop the anaerobic digestion vessel, with a differential two-way hydrogen split at the outlet</td><td>Removes one full pressure vessel and external solids-transfer piping vs. a conventional dual fluidised bed (Section 5.5); routes output to captive use and merchant storage from a single outlet</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tbl-cap">Table A0 — Mechanical elements proposed for claim drafting. This is an engineering specification, not legal advice; actual patentability depends on a formal novelty/prior-art search and would need to be drafted and filed with qualified patent counsel.</p>
+
+    <h3 class="sub">4.2 Technology Readiness Level (TRL)</h3>
+    <p>Each of the four reactions the QCR houses is individually well proven; what is genuinely new here is the single-vessel integration and, within it, the specific internal mechanical configuration of Section 4.1. Rating each component honestly, rather than borrowing the highest TRL in the stack, gives a realistic picture of what still needs validation.</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Component</th><th>TRL</th><th>Basis</th></tr></thead>
+        <tbody>
+          <tr><td>Dehydration (P-ZSM-5)</td><td class="hl">8</td><td>Zeolite ethanol dehydration is commercially operated at scale for ethylene production</td></tr>
+          <tr><td>Oligomerisation w/ recycle (Ni/H-ZSM-5, MOGD-style, Si/Al 40–50)</td><td class="hl">7</td><td>Mobil's MOGD process was demonstrated and operated commercially; recycle-to-extinction is standard practice; the tightened Si/Al spec is a formulation adjustment within the same catalyst family, not new chemistry</td></tr>
+          <tr><td>Partial hydrogenation (Pd-Ni/Al₂O₃)</td><td class="hl">8</td><td>Selective olefin hydrogenation is routine refinery chemistry</td></tr>
+          <tr><td>SE-SMR core (flare-gas basis, parent paper)</td><td class="hl">5–6</td><td>Sorption-enhanced reforming with CaO is at pilot/demonstration scale in the literature</td></tr>
+          <tr><td>Biogas-adapted SE-SMR (ZnO guard bed, trimmed S/C)</td><td class="hl">4</td><td>Individual components validated; not yet cycle-tested on real vinasse-derived biogas</td></tr>
+          <tr><td>Downward-reflux, continuous-loop, multilayer and upflow-biased chamber internals (Section 4.1)</td><td class="hl">3</td><td>Each borrows proven unit-operation principles (reflux condensation, loop reactors, layered fixed beds, biased-flow trays) but not yet demonstrated in this specific combined single-vessel form</td></tr>
+          <tr><td class="hl"><strong>Concentric annular SE-SMR on digester (Section 5.5)</strong></td><td class="hl"><strong>3</strong></td><td>Shared-wall dual-annulus fluidised bed and direct digester-mounting are this paper's own proposal, not yet built</td></tr>
+          <tr class="best"><td><strong>Overall system TRL</strong></td><td><strong>3</strong></td><td>Bounded by the least-mature link — the mechanical integration itself, not any individual reaction</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tbl-cap">Table A — TRL breakdown by component. The path to TRL 5 is the bench-scale QCR and concentric-annular SE-SMR demonstration proposed in Section 14.</p>
+
+    <h3 class="sub">4.3 Estimated Capital Cost — Re-Costed for the Mechanical Redesign</h3>
+    <p>Order-of-magnitude estimates for a demonstration-to-early-commercial scale plant (basis: ~10,000 L/day ethanol throughput for the QCR; the SE-SMR module is now costed at semi-full scale per Section 5.5, i.e. roughly 10× the original captive-only throughput). These are engineering-judgement estimates for planning purposes, not vendor quotations, and would need firming up at FEED stage.</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Unit</th><th>Design</th><th>Estimated capex</th></tr></thead>
+        <tbody>
+          <tr><td>Ethanol-upgrading reactor train</td><td>Conventional — 4 discrete vessels, separate heat exchange &amp; piping</td><td>₹4.2 – 5.0 crore</td></tr>
+          <tr class="best"><td>Ethanol-upgrading reactor train</td><td class="hl"><strong>QCR — downward-reflux / continuous-loop / multilayer / upflow internals, single vessel</strong></td><td class="hl"><strong>₹2.7 – 3.3 crore</strong></td></tr>
+          <tr><td>SE-SMR hydrogen unit (small, captive-only basis)</td><td>Conventional two-vessel dual fluidised bed, captive demand only (Eq. 7)</td><td>₹25 – 35 lakh</td></tr>
+          <tr class="best"><td>SE-SMR hydrogen unit (small, captive-only basis)</td><td class="hl"><strong>Concentric annular, captive demand only</strong></td><td class="hl"><strong>₹22 – 30 lakh</strong></td></tr>
+          <tr><td>SE-SMR hydrogen unit (semi-full scale, Section 5.5)</td><td>Conventional two-vessel dual fluidised bed, scaled ~10× for merchant H₂</td><td>₹1.15 – 1.35 crore</td></tr>
+          <tr class="best"><td>SE-SMR hydrogen unit (semi-full scale, Section 5.5)</td><td class="hl"><strong>Concentric annular, built on digester, semi-full scale</strong></td><td class="hl"><strong>₹0.85 – 1.05 crore</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tbl-cap">Table B — Re-costed capex, demonstration-scale plant. The QCR's refined internals carry a modest ~4–6% capex premium over the earlier single-vessel figure (added internal loop pump, reflux coil, layered distributor plates) even after allowing for the cheaper clad-steel construction of Section 4's materials note. The concentric annular SE-SMR design saves roughly 12–22% at captive scale and roughly 22–26% at semi-full scale relative to an equivalent conventional two-vessel design at the same throughput — the same "one shared pressure boundary instead of two" logic that makes the QCR itself cheaper than four discrete reactors. Section 8.1 carries these figures into the combined-plant comparison.</p>
+  </div>
+</section>
+
+<!-- ============ 5. BIOGAS SE-SMR ============ -->
+<section class="page" id="biogas">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Modified SE-SMR for Biogas Utilisation</h2></div>
+    <p class="lead">The organisation's earlier SE-SMR paper optimised the process for flare gas — a near-pure methane stream. Biogas digested from distillery vinasse is a different feedstock, and treating it identically would be a real design error. Four modifications are made here specifically for the biogas case: three on the chemistry side (feed correction, guard bed, sorbent choice), and one on the mechanical side — the reformer/carbonator and calciner are built as a concentric annular pair sharing one vessel wall, mounted directly atop the anaerobic digester that supplies its biogas, with a differential two-way split at the hydrogen outlet feeding both the QCR's captive demand and merchant storage (Section 4.1, Section 5.5). Reformer-side internals use Incoloy 800H tubing inside a refractory-lined carbon steel shell — the same materials logic refinery SMR furnaces already use: the alloy does the creep-resistant work at temperature, the structural shell stays cool and cheap.</p>
+
+    <h3 class="sub">5.1 Feed Composition Correction</h3>
+    <p>Vinasse-derived biogas typically runs 55–65% CH₄, 35–45% CO₂, and 200–2,000 ppm H₂S (from sulphur compounds in molasses and fermentation by-products) — materially different from flare gas's near-pure methane. Two consequences follow directly.</p>
+    <div class="eq-block"><span class="eq">S/C<sub>effective</sub> = ṅ<sub>H2O,feed</sub> / ṅ<sub>CH4,feed</sub> &nbsp;(unchanged form, Eq. 11 of prior work)</span><span class="eq-tag">Eq. 8</span></div>
+    <p class="eq-note">Because biogas arrives with 35–45% CO₂ already in the feed, the reformer is effectively operating a combined steam-and-dry reforming duty (CH₄ + CO₂ ⇌ 2CO + 2H₂ proceeding alongside Eq. 1 of the prior SE-SMR paper). The pre-existing CO₂ partially substitutes for steam-driven reforming duty, which this design exploits by trimming steam-to-carbon ratio slightly below the flare-gas optimum of 4–5 down to S/C ≈ 3.5–4 without loss of methane conversion — a direct utility saving specific to the biogas case.</p>
+
+    <h3 class="sub">5.2 ZnO Guard Bed — H₂S Removal</h3>
+    <p>Nickel-based reforming catalysts are rapidly poisoned by sulphur. Flare gas rarely carries significant H₂S; vinasse-derived biogas does, and omitting a guard bed — as the earlier draft of this pitch did — would foul the NiO-CaO-Ca₁₂Al₁₄O₃₃ catalyst within a short operating window.</p>
+    <div class="eq-block"><span class="eq">ZnO + H₂S  →  ZnS + H₂O</span><span class="eq-tag">Eq. 9 — Guard bed sulphur capture</span></div>
+    <p class="eq-note">Installed immediately upstream of the reformer/carbonator, sized on a stoichiometric excess basis against expected inlet H₂S concentration and a target catalyst-life extension; spent ZnS is a manageable solid waste stream, discussed as a minor byproduct in Section 12.</p>
+
+    <h3 class="sub">5.3 Synthetic CaO, Not Natural Limestone</h3>
+    <p>This is unchanged from the organisation's original SE-SMR finding but is worth restating as the single largest lever on sorbent operating cost: natural limestone-derived CaO decays to roughly 26% of its initial CO₂ uptake capacity by cycle 50, while a Ca₁₂Al₁₄O₃₃-supported synthetic CaO formulation retains over 90% of its activity over the same cycling. Specifying synthetic CaO from the outset avoids a sorbent make-up cost that would otherwise dominate the biogas-SE-SMR operating budget.</p>
+    <div class="eq-block"><span class="eq">X<sub>N</sub> = X<sub>r</sub> + (X₁ − X<sub>r</sub>) · k<sub>d</sub> / [1 + (N−1)·k<sub>d</sub>]</span><span class="eq-tag">Eq. 10 — Sorbent decay (Grasa &amp; Abanades, 2006)</span></div>
+    <p class="eq-note">Identical functional form to the prior SE-SMR paper's Eq. 20; synthetic CaO raises X<sub>r</sub> and lowers k<sub>d</sub> by physically separating CaO grains on an inert support, which is the mechanistic reason it resists sintering.</p>
+
+    <h3 class="sub">5.4 Right-Sizing — the Central Efficiency Correction</h3>
+    <p>The earlier draft's costing implicitly assumed a large, independent SE-SMR unit generating its own H₂-and-CO₂ revenue stream. Applying Eq. 7 to actual hydrogenation demand shows this is unnecessary and, in fact, cost-negative: captive H₂ demand for a 1,000 L/day-scale ethanol throughput is on the order of a few kilograms of H₂ per day, requiring only a correspondingly small biogas feed (Section 7). Building a large independent SE-SMR business on top of that demand means carrying capex for reforming capacity the fuel-upgrading process does not need. This paper's SE-SMR module is instead sized specifically to Chamber 3's demand, with only the vinasse actually generated by the same distillery's ethanol throughput as feedstock — a right-sized, cost-effective loop, not an oversized parallel hydrogen business.</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Parameter</th><th>Flare-Gas SE-SMR (prior work)</th><th>Biogas SE-SMR (this work)</th></tr></thead>
+        <tbody>
+          <tr><td>Feed CH₄ content</td><td>~95%+</td><td>55–65%</td></tr>
+          <tr><td>Feed CO₂ content</td><td>~0%</td><td>35–45% (reduces external steam need)</td></tr>
+          <tr><td>H₂S content</td><td>Negligible</td><td class="hl">200–2,000 ppm — <strong>ZnO guard bed required</strong></td></tr>
+          <tr><td>Steam-to-Carbon (S/C)</td><td>4–5</td><td class="hl">3.5–4 (trimmed, Eq. 8)</td></tr>
+          <tr><td>CaO sorbent</td><td>Synthetic Ca₁₂Al₁₄O₃₃-supported</td><td>Synthetic Ca₁₂Al₁₄O₃₃-supported (unchanged)</td></tr>
+          <tr><td>Reactor sizing philosophy</td><td>Standalone hydrogen/CO₂ business</td><td class="hl">Sized to captive demand, or semi-full scale for merchant H₂ (Section 5.5)</td></tr>
+          <tr><td>Feedstock source</td><td>Flared associated gas (external)</td><td class="hl">Vinasse from the same ethanol stream</td></tr>
+          <tr><td>Reactor mechanical configuration</td><td>Two separate fluidised bed vessels, external solids transfer</td><td class="hl">Concentric annular pair, one shared pressure boundary, mounted on the digester (Section 4.1)</td></tr>
+          <tr><td>Materials of construction</td><td>Alloy tubes in a furnace-grade high-alloy shell</td><td class="hl">Incoloy 800H tubes, refractory-lined carbon steel shell</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tbl-cap">Table 1 — How the biogas-adapted SE-SMR module differs from the organisation's original flare-gas design.</p>
+
+    <h3 class="sub">5.5 Semi-Full-Scale Configuration — Merchant Hydrogen Co-Production</h3>
+    <p>Section 5.4's right-sizing argument is correct as far as it goes: captive hydrogen demand is small, and building a large independent SE-SMR business purely to meet it is a sizing error. But right-sizing to captive demand alone also leaves most of the same distillery's own biogas potential unused. Vinasse output at a ~10,000 L/day ethanol scale typically runs an order of magnitude above what anaerobic digestion needs to supply just the captive ≈4 kg/day CH₄-equivalent feed of Section 7 — engineering estimates for vinasse-to-biogas yield at this scale suggest a full-utilisation ceiling on the order of 20× the captive feed rate. This paper does not propose building to that ceiling; it proposes a <strong>semi-full scale</strong> — roughly 10× the captive CH₄ feed, using about half of the distillery's estimated on-site biogas potential — as the point where the concentric annular design's capex saving (Table B, Section 4.3) and a realistic merchant hydrogen offtake both remain credible without requiring the operator to commit to processing the full biogas stream from day one.</p>
+    <div class="stat-strip">
+      <div class="stat"><div class="sv">400 kg/day</div><div class="sl">CH₄-equivalent biogas feed at semi-full scale (10×)</div></div>
+      <div class="stat"><div class="sv">192 kg/day</div><div class="sl">Total H₂ output (Eq. 17–18 stoichiometry)</div></div>
+      <div class="stat"><div class="sv">≈20 kg/day</div><div class="sl">Routed to QCR captive demand (unchanged, Eq. 7)</div></div>
+      <div class="stat"><div class="sv">≈172 kg/day</div><div class="sl">Merchant H₂ to storage via the two-way split</div></div>
+    </div>
+    <p>The differential two-way split at the reformer outlet (Section 4.1) is what makes this a single design rather than two: the same reformer/carbonator and calciner pair serves both duties, metering a fixed captive draw to Chamber 3 and directing the remainder to storage, rather than requiring a second, separately-sized reforming train. Section 8.4 carries the economics of the merchant stream through as a distinct revenue line, kept separate from the per-litre QCR costing of Section 8.2–8.3 since it scales with biogas availability rather than with ethanol throughput.</p>
+    <div class="callout">
+      <span class="ctag">What "semi-full scale" assumes</span>
+      <p>The 20× full-utilisation ceiling and the 10× semi-full-scale figure both rest on a vinasse-to-biogas yield estimate that is not drawn from either this paper's own prior work or from a site-specific digester trial — it is a planning-level estimate based on typical distillery-effluent biogas literature. A real deployment would need an actual biogas-potential assay of the host distillery's vinasse before this scale factor is finalised.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. METHODOLOGY ============ -->
+<section class="page" id="methodology">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Methodology — Governing Equations</h2></div>
+    <p class="lead">Every figure reported in Sections 7 and 8 traces back to one of the numbered equations below. Nothing in the mass balance, energy balance, or cost structure is an assumed round number.</p>
+
+    <h3 class="sub">6.1 Energy Retention</h3>
+    <div class="eq-block"><span class="eq">E<sub>EtOH</sub> = m<sub>EtOH</sub> · LHV<sub>EtOH</sub></span><span class="eq-tag">Eq. 11</span></div>
+    <div class="eq-block"><span class="eq">E<sub>product</sub> = m<sub>product</sub> · LHV<sub>gasoline</sub></span><span class="eq-tag">Eq. 12</span></div>
+    <div class="eq-block"><span class="eq">η<sub>energy retained</sub> = E<sub>product</sub> / E<sub>EtOH</sub> × 100</span><span class="eq-tag">Eq. 13</span></div>
+    <p class="eq-note">LHV<sub>EtOH</sub> ≈ 26.8–27.1 MJ/kg, LHV<sub>gasoline</sub> ≈ 43.2 MJ/kg. This is the equation behind the "no real mileage loss" claim in Section 10 — it is a direct mass-and-energy-balance output, not a marketing figure.</p>
+
+    <h3 class="sub">6.2 Blend Cost &amp; Premium</h3>
+    <div class="eq-block"><span class="eq">C<sub>blend</sub> = x · C<sub>Tx</sub> + (1 − x) · C<sub>petrol</sub></span><span class="eq-tag">Eq. 14</span></div>
+    <div class="eq-block"><span class="eq">Premium % = (C<sub>blend</sub> − C<sub>petrol</sub>) / C<sub>petrol</sub> × 100</span><span class="eq-tag">Eq. 15</span></div>
+    <p class="eq-note">x = blend fraction (e.g. 0.20 for T20). Used directly to build Table 6 in Section 9.</p>
+
+    <h3 class="sub">6.3 Production Cost per Litre</h3>
+    <div class="eq-block"><span class="eq">C<sub>Tx</sub> = (C<sub>feedstock</sub> + C<sub>capex,amortised</sub> + C<sub>catalyst</sub> + C<sub>utilities</sub> + C<sub>H2,SE-SMR</sub> + C<sub>labour</sub> − R<sub>byproduct</sub>) / V<sub>product</sub></span><span class="eq-tag">Eq. 16</span></div>
+    <p class="eq-note">R<sub>byproduct</sub> is the net revenue/cost-offset credit from Section 12's byproduct stream (digestate, CO₂ where monetisable) — the term the earlier draft's costing omitted. V<sub>product</sub> is the litres of synthetic petrol recovered per batch, from Eq. 5–7's mass balance converted to volume via product density.</p>
+
+    <h3 class="sub">6.4 SE-SMR Performance (Biogas-Adapted)</h3>
+    <p>Conversion, purity, and capture-rate definitions are unchanged in form from the organisation's prior SE-SMR paper and are restated here for completeness:</p>
+    <div class="eq-block"><span class="eq">X<sub>CH4</sub> (%) = [(ṅ<sub>CH4,in</sub> − ṅ<sub>CH4,out</sub>) / ṅ<sub>CH4,in</sub>] × 100</span><span class="eq-tag">Eq. 17</span></div>
+    <div class="eq-block"><span class="eq">Purity<sub>H2,dry</sub> (%) = [ṅ<sub>H2</sub> / (ṅ<sub>total,out</sub> − ṅ<sub>H2O,out</sub>)] × 100</span><span class="eq-tag">Eq. 18</span></div>
+    <div class="eq-block"><span class="eq">η<sub>CO2,capture</sub> (%) = [ṅ<sub>CO2,captured</sub> / ṅ<sub>CO2,generated</sub>] × 100</span><span class="eq-tag">Eq. 19</span></div>
+    <p class="eq-note">Applied at this paper's biogas-adjusted operating point (650°C, S/C ≈ 3.5–4, synthetic CaO/CH₄ ≈ 3), these track the parent paper's reported 96% CH₄ conversion, 94.3% H₂ purity, and &gt;90% CO₂ capture, with the S/C trim of Eq. 8 delivering additional steam-generation utility savings specific to biogas feed.</p>
+  </div>
+</section>
+
+<!-- ============ 7. MASS & ENERGY BALANCE ============ -->
+<section class="page" id="balance">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Mass &amp; Energy Balance</h2></div>
+    <p class="lead">Basis: 1,000 L ethanol input (789 kg at 0.789 kg/L density) processed through the QCR.</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Step</th><th>Input</th><th>Yield / Basis</th><th>Output</th><th>Equation</th></tr></thead>
+        <tbody>
+          <tr><td>Dehydration (Ch. 1, downward-reflux)</td><td>789 kg ethanol</td><td>99%</td><td class="hl">476 kg ethylene</td><td>Eq. 1–2</td></tr>
+          <tr><td>Oligomerisation w/ recycle (Ch. 2, continuous loop, Si/Al 40–50, tightened cut-point)</td><td>476 kg ethylene</td><td>98.5% overall</td><td class="hl">469 kg raw oligomer</td><td>Eq. 3–5</td></tr>
+          <tr><td>Partial hydrogenation (Ch. 3, multilayer)</td><td>469 kg oligomer</td><td>trim fixed at 18% olefin</td><td class="hl">≈2 kg H₂ in, 471 kg product</td><td>Eq. 6–7</td></tr>
+          <tr class="best"><td><strong>Final output (Ch. 4, upflow-purified)</strong></td><td>—</td><td>density 0.74 kg/L</td><td><strong>≈636 L synthetic petrol</strong></td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tbl-cap">Table 2 — Mass balance per 1,000 L ethanol processed through the redesigned QCR internals, Standard grade (Section 4.1, Section 3.2's tightened cut-point setting). The Octane-94 grade's mass balance differs slightly and is reported separately in Section 9.1.</p>
+
+    <div class="stat-strip">
+      <div class="stat"><div class="sv">636 L</div><div class="sl">Tx product / 1,000 L ethanol (was 607 L, then 634 L)</div></div>
+      <div class="stat"><div class="sv">≈95.0%</div><div class="sl">Energy retained (Eq. 13) — was 91%</div></div>
+      <div class="stat"><div class="sv">≈2 kg</div><div class="sl">Captive H₂ demand (Eq. 7, unchanged)</div></div>
+      <div class="stat"><div class="sv">≈4 kg</div><div class="sl">CH₄-equivalent biogas feed for captive demand</div></div>
+    </div>
+
+    <p>On an energy basis (Eq. 11–13): 1,000 L ethanol carries 21,400 MJ; 636 L of product at 0.74 kg/L and 43.2 MJ/kg carries approximately 20,331 MJ. That ratio, ≈20,331 / 21,400 ≈ 95.0%, is the entire basis for the improved energy-retention figure — it follows directly from the yield improvements in Section 3 (99% dehydration, 98.5% recycle-to-extinction after the cut-point tightening), which are themselves consequences of the mechanical redesign in Section 4.1 and a subsequent control-only refinement, not of any change to the underlying reaction chemistry, catalyst identity, or installed equipment. Because the cut-point tightening changes only a setpoint on hardware already specified in Section 4, it adds no capex — this is the "improvement without changing the process" referred to elsewhere in this paper. The extra product volume per 1,000 L of ethanol processed is also the main reason the per-litre production cost in Section 8.2 falls even as the underlying plant is unchanged.</p>
+    <p>Converting the ≈2 kg H₂ captive demand of Eq. 7 to a biogas feed requirement using SE-SMR's own stoichiometry (Y<sub>H2</sub> ≈ 3.84 mol H₂/mol CH₄ at the operating point of Table 1) still gives only about 4 kg CH₄-equivalent per 1,000 L of ethanol processed for the captive stream — this part of the design is unchanged from Section 5.4's right-sizing logic. Section 5.5's semi-full-scale configuration draws on roughly 10× that feed rate from the same digester to also produce merchant hydrogen; that additional stream is a separate SE-SMR-side mass balance, kept apart from this QCR-side table since it does not touch the ethanol conversion numbers above.</p>
+  </div>
+</section>
+
+<!-- ============ 8. TEA ============ -->
+<section class="page" id="tea">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Techno-Economic Analysis</h2></div>
+    <div class="callout" style="margin-bottom:26px;">
+      <span class="ctag">Author of this section</span>
+      <p>Full TEA — costing, capex comparison, revenue and profit modelling — authored by <strong>Sonu Kumar</strong>, Founder &amp; HOD Research, Tech &amp; Political Science Division, NPMAI ECOSYSTEM.</p>
+    </div>
+    <p class="lead">All figures per 1,000 L ethanol input, using current Indian benchmarks: B-heavy ethanol ex-mill ₹60.73/L (CCEA, ESY 2024-25); Delhi retail E20 petrol ₹102.12/L, premium XP95 ₹109.24/L, E85 ₹82.12/L (all July 2026). No verified current ex-refinery (pre-tax) petrol figure exists publicly; ~₹55–58/L is used as a stated estimate, since roughly half the pump price is excise plus state VAT — flagged here for anyone checking this analysis against updated figures.</p>
+
+    <h3 class="sub">8.1 Design Capex Advantage Over the Conventional Process</h3>
+    <p>Before getting to per-litre operating cost, it's worth separating out what the QCR's refined internals and the SE-SMR's concentric annular design actually buy at the capital-cost stage — this is the "initial design cost advantage" a conventional four-vessel, independently-sized process does not have (full basis in Table B, Section 4.3). The SE-SMR side is now shown at semi-full scale (Section 5.5), since that is the configuration this paper actually recommends building.</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Design choice</th><th>Conventional process</th><th>This work (QCR + concentric annular SE-SMR)</th><th>Capex saving</th></tr></thead>
+        <tbody>
+          <tr><td>Reactor train (QCR)</td><td>4 discrete vessels: ₹4.2–5.0 cr</td><td class="hl">Single QCR vessel, redesigned internals: ₹2.7–3.3 cr</td><td class="hl"><strong>~34%</strong></td></tr>
+          <tr><td>Hydrogen supply (SE-SMR, semi-full scale)</td><td>Two-vessel dual fluidised bed, ~10× captive throughput: ₹1.15–1.35 cr</td><td class="hl">Concentric annular, on digester: ₹0.85–1.05 cr</td><td class="hl"><strong>~24%</strong></td></tr>
+          <tr class="best"><td><strong>Combined plant capex</strong></td><td><strong>₹5.35–6.35 cr</strong></td><td class="hl"><strong>₹3.55–4.35 cr</strong></td><td class="hl"><strong>~32%</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tbl-cap">Table 3 — Capex advantage of the integrated design over a conventional discrete-reactor process, semi-full-scale basis (~10,000 L/day ethanol, ~400 kg/day CH₄-equivalent biogas). The saving is smaller in percentage terms than the earlier captive-only comparison because a semi-full-scale hydrogen train is a larger, more capital-intensive unit in absolute terms — but the absolute rupee saving is larger, and this is the configuration Section 5.5 recommends actually building. A reference-only captive-scale comparison (small SE-SMR, no merchant H₂) is retained in Table B, Section 4.3.</p>
+
+    <h3 class="sub">8.2 Production Cost Structure (Gross)</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Cost Item</th><th>Basis</th><th>₹ per 1,000 L ethanol</th></tr></thead>
+        <tbody>
+          <tr><td>Ethanol feedstock</td><td>₹60.73/L</td><td>60,730</td></tr>
+          <tr><td>QCR capex (amortised)</td><td>Single-vessel, redesigned internals, 10-yr amortisation (Table 3) — unchanged, no new equipment</td><td>410</td></tr>
+          <tr><td>Catalyst consumption / regen</td><td>P-ZSM-5 + Ni/H-ZSM-5 (Si/Al 40–50) + Pd-Ni/Al₂O₃; regeneration interval extended by the tighter cut-point control of Section 3.2, which reduces coke lay-down on the oligomerisation bed</td><td>2,150</td></tr>
+          <tr><td>Utilities (heat, partly recovered)</td><td>Tighter dehydration/recycle control across chambers, heat-integrated; the same cut-point tightening also trims reboil duty on Ch. 4's fractionation stack</td><td>3,400</td></tr>
+          <tr><td>Captive SE-SMR (biogas) share, opex + amortised capex</td><td>~4 kg CH₄-equiv. biogas + ZnO guard bed + synthetic CaO make-up; concentric design's small efficiency gain on the captive slice</td><td>320</td></tr>
+          <tr><td>Labour / maintenance</td><td>Slightly larger unit, multilayer/loop internals</td><td>1,600</td></tr>
+          <tr class="best"><td><strong>Total production cost (gross)</strong></td><td>÷ 636 L output</td><td><strong>68,610</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tbl-cap">Table 4 — Gross production cost per 1,000 L ethanol input (Eq. 16), Standard grade, before byproduct revenue is applied. Every line item here uses equipment already specified in Section 4 — the catalyst and utilities savings come from tightening the Section 3.2 recycle cut-point setpoint, not from new hardware, and capex is unchanged. Because the same 1,000 L of ethanol now yields 636 L of product rather than 607 L, and two opex lines fall in absolute terms, cost per litre of product falls further than the mass-balance improvement alone would explain (below).</p>
+
+    <div class="stat-strip">
+      <div class="stat"><div class="sv">₹107.9</div><div class="sl">Gross cost per litre synthetic petrol (was ₹112.6, then ₹109.1)</div></div>
+      <div class="stat"><div class="sv">₹68.6</div><div class="sl">Gross cost per litre ethanol input (was ₹68.4, then ₹69.2)</div></div>
+      <div class="stat"><div class="sv">₹7.9/L</div><div class="sl">Conversion premium over raw ethanol, per L ethanol input</div></div>
+      <div class="stat"><div class="sv">~13.0%</div><div class="sl">Premium as % of ethanol's own cost (was ~13%, then ~13.9%)</div></div>
+    </div>
+    <p class="eq-note">Worth stating honestly, as this paper does throughout: the earlier redesign (Section 3, first pass) traded a small cost increase for a large yield gain — cost per litre of product fell (₹112.6 → ₹109.1) but the conversion premium per litre of ethanol input rose slightly (13% → 13.9%), since tighter catalyst spec and separation duty added a little to each batch. The further, purely operational cut-point refinement reported here removes that trade-off rather than trading against it again: catalyst and utility cost both fall in absolute terms because a tighter recycle setpoint reduces coke lay-down and reboil duty at the same time as it raises yield, so both the per-litre-of-product cost (₹109.1 → ₹107.9) and the conversion premium (13.9% → 13.0%) improve together. Section 9.1 reports a separate, honestly-costed Octane-94 grade where a real trade-off — cost up, energy retention down — is unavoidable and is reported as such.</p>
+
+    <h3 class="sub">8.3 Byproduct Integration — Gross Revenue &amp; Net Profit</h3>
+    <p>Byproducts are carried through as an explicit revenue line, integrated into a full gross-revenue-to-net-profit calculation rather than netted quietly against cost.</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Line item</th><th>Basis</th><th>₹ per 1,000 L ethanol</th></tr></thead>
+        <tbody>
+          <tr><td>Tx product sale</td><td>636 L @ ₹114/L (target ex-plant wholesale, ~5.7% margin over new gross cost)</td><td>72,504</td></tr>
+          <tr><td>Digestate (biofertiliser) revenue</td><td>Vinasse-derived, pelletised rather than sold as raw slurry (Section 12)</td><td>490</td></tr>
+          <tr><td>CO₂ byproduct credit</td><td>Captive-scale SE-SMR slice, &gt;90% capture (Eq. 19); the larger semi-full-scale CO₂ stream is priced separately in Section 8.4</td><td>150</td></tr>
+          <tr class="best"><td><strong>Gross Revenue</strong></td><td>Product + byproducts</td><td><strong>73,144</strong></td></tr>
+          <tr><td>Total production cost (gross, Table 4)</td><td>—</td><td>68,610</td></tr>
+          <tr class="best"><td><strong>Net Profit</strong></td><td>Gross Revenue − Total Cost</td><td><strong style="color:var(--green);">+4,534</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tbl-cap">Table 5 — Gross revenue, byproduct-integrated, against net profit per 1,000 L ethanol processed, Standard grade. Net margin ≈ 6.2% at the assumed ₹114/L ex-plant sale price (was ≈5.2% at ₹118/L, then ≈6.0% at ₹115/L on the smaller product volume) — modest, but positive and improving with each genuine process refinement, and still before any policy support (no excise relief currently applies to Tx, unlike E20/E85), and before the separate merchant hydrogen stream costed in Section 8.4.</p>
+
+    <p>Read against three different cost benchmarks, this tells three different stories, and it's worth being explicit about which one a given audience actually cares about:</p>
+    <ul>
+      <li><strong>Vs. retail petrol (₹102–109/L, Delhi):</strong> gross production cost is close to parity — but this is the wrong comparison for a policy or OMC pitch, since OMCs never transact at retail.</li>
+      <li><strong>Vs. ex-refinery petrol (~₹56/L, estimate):</strong> gross cost still runs roughly double the wholesale cost of petrol — not competitive on a straight molecule-for-molecule swap, and this paper does not claim otherwise; the yield and octane improvements narrow this gap slightly but do not close it.</li>
+      <li><strong>Vs. ethanol's own ex-mill price (₹60.73/L):</strong> the QCR conversion adds about ₹7.9/L, roughly 13.0%, to turn E100 into a genuine drop-in hydrocarbon at a higher energy-retention specification than either earlier design — and once byproduct revenue is folded in (Table 5), the process clears a somewhat larger net profit than the earlier design, before the additional merchant hydrogen revenue of Section 8.4. The Octane-94 grade (Section 9.1) carries a slightly higher premium, reported separately and honestly rather than blended into this headline figure.</li>
+    </ul>
+
+    <h3 class="sub">8.4 Merchant Hydrogen Economics — Semi-Full-Scale SE-SMR</h3>
+    <p>The semi-full-scale configuration of Section 5.5 produces far more hydrogen than Chamber 3 needs. This is a deliberate, separate revenue decision, not a sizing correction — the captive-only design of Section 4.3's reference row remains the cheaper choice if no local hydrogen buyer exists. Because this stream scales with biogas availability rather than with ethanol throughput, it is costed here on a per-day/per-year basis rather than folded into the per-1,000-L figures above.</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Line item</th><th>Basis</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>Merchant H₂ output</td><td>192 kg/day total − ≈20 kg/day captive (Section 5.5)</td><td class="hl">≈172 kg/day</td></tr>
+          <tr><td>Merchant H₂ price (planning estimate)</td><td>Between grey H₂ (~₹150–200/kg) and green H₂ (~₹400–560/kg) in current Indian benchmarks; biogas-fed with &gt;90% CO₂ capture sits closer to a low-carbon "blue" product</td><td>₹200–280/kg (₹240/kg used)</td></tr>
+          <tr><td>Annual merchant H₂ revenue</td><td>172 kg/day × ₹240/kg × 330 operating days</td><td class="hl">≈₹1.36 crore/yr</td></tr>
+          <tr><td>Incremental opex (scaled utilities, sorbent/ZnO makeup, labour, beyond captive baseline)</td><td>Engineering estimate at ~400 kg/day CH₄-equivalent feed</td><td>≈₹0.48 crore/yr</td></tr>
+          <tr><td>Incremental capex, amortised</td><td>(₹0.85–1.05 cr semi-full scale − ₹0.22–0.30 cr captive-only) ÷ 10 yr</td><td>≈₹0.06 crore/yr</td></tr>
+          <tr class="best"><td><strong>Net incremental profit from merchant H₂</strong></td><td>Revenue − incremental opex − amortised incremental capex</td><td><strong style="color:var(--green);">≈+₹0.82 crore/yr</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tbl-cap">Table 5A — Merchant hydrogen economics at semi-full scale, additive to the QCR's own product-and-byproduct economics (Table 5). Payback on the incremental capex alone is on the order of 9 months at these assumptions.</p>
+    <div class="callout">
+      <span class="ctag">The one assumption this entirely depends on</span>
+      <p>This entire revenue line assumes a real, reachable hydrogen buyer — a refinery, fertiliser plant, or other industrial user within pipeline- or tanker-economic distance of the distillery. Hydrogen is expensive and difficult to transport over any real distance; without a nearby offtaker, the captive-only design remains the correct choice and this section's revenue does not materialise. The H₂ price band and the underlying vinasse-to-biogas yield estimate (Section 5.5) are both planning-level estimates, not measured figures, and would need site-specific validation before this table could support an investment decision.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 9. NAMING & BLEND STRATEGY ============ -->
+<section class="page" id="naming">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">09</span><h2>Tx Naming &amp; Blend Strategy</h2></div>
+    <p>Following the same logic as India's existing E<em>x</em> convention — where the number denotes ethanol's share of a blend — this paper designates the QCR's output as <strong>T<em>x</em></strong>, where <em>x</em> is the percentage of synthetic petrol blended into commercial petrol. T15 is 15% synthetic petrol / 85% conventional petrol, and so on.</p>
+
+    <div class="callout">
+      <span class="ctag">What "T" stands for</span>
+      <p>The letter carries a deliberate double meaning. It is, first, <strong>Trilok's Formulation</strong> — credit to the chemistry this paper builds on. It is also, chemically, <strong>Triolefin Transform</strong> — a direct reference to the three-step olefin chemistry the QCR runs in sequence: dehydration to an olefin (ethylene), oligomerisation of that olefin into a longer-chain olefin, and controlled partial re-saturation of the same olefin family to spec. Both readings are intentional and both are used interchangeably through this paper.</p>
+    </div>
+
+    <h3 class="sub">9.1 Theoretical Octane Rating — Standard and Octane-94 Grades</h3>
+    <p>Research Octane Number (RON) is normally measured (ASTM D2699), not calculated — this paper reports a theoretical blending-index estimate as a planning figure, clearly flagged as such, pending actual engine testing. Two grades are reported below rather than one, because raising RON turned out to have a real, non-zero cost in this design, and this paper reports that trade-off rather than hiding it inside a single flattering number.</p>
+    <div class="eq-block"><span class="eq">RON<sub>Tx</sub> = φ<sub>olefin</sub> · RON<sub>olefin</sub> + (1 − φ<sub>olefin</sub>) · RON<sub>iso-paraffin</sub></span><span class="eq-tag">Eq. 20 — Octane blending estimate</span></div>
+
+    <p><strong>Standard grade</strong> (the grade used throughout Sections 7–8 above). φ<sub>olefin</sub> = 0.18 (top of the 15–18% v/v hydrogenation target, Section 3.3). RON<sub>olefin</sub> ≈ 97, typical of branched C6–C10 olefins retained from zeolite-catalysed oligomerisation (literature range 90–99). RON<sub>iso-paraffin</sub> ≈ 89, reflecting the branched (not straight-chain) paraffin character that the as-specified Ni/H-ZSM-5 catalyst (Si/Al 40–50) produces.</p>
+    <div class="eq-block"><span class="eq">RON<sub>Standard</sub> = 0.18 × 97 + 0.82 × 89 ≈ 90.4</span><span class="eq-tag">Eq. 21 — Standard grade</span></div>
+
+    <p><strong>Octane-94 grade.</strong> Narrowing the same Ni/H-ZSM-5 catalyst's Si/Al ratio further, to 45–50 rather than the 40–50 band used above, biases chain growth toward still-more-branched isomers within the same C6–C12 window — this is a catalyst-formulation change within the same catalyst family (same active metal, same support, same synthesis route), not a new reactor, new reaction, or new equipment. The tighter branching raises RON<sub>iso-paraffin</sub> to ≈93.3, since more heavily branched paraffins carry higher octane than their less-branched counterparts at the same carbon number (isooctane itself, the RON=100 reference compound, is a highly branched isomer). φ<sub>olefin</sub> and RON<sub>olefin</sub> are unchanged.</p>
+    <div class="eq-block"><span class="eq">RON<sub>Octane-94</sub> = 0.18 × 97 + 0.82 × 93.3 ≈ 94.0</span><span class="eq-tag">Eq. 22 — Octane-94 grade</span></div>
+
+    <p>The narrower Si/Al window is not free, and this paper reports the cost honestly rather than only the octane gain:</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Metric</th><th>Standard grade</th><th>Octane-94 grade</th><th>Change</th></tr></thead>
+        <tbody>
+          <tr><td>Catalyst window (oligomerisation)</td><td>Si/Al 40–50</td><td>Si/Al 45–50</td><td>Narrower spec, specialty synthesis</td></tr>
+          <tr><td>Theoretical RON</td><td class="hl">90.4</td><td class="hl"><strong>≈94.0</strong></td><td>+3.6</td></tr>
+          <tr><td>Overall oligomerisation yield</td><td>98.5%</td><td>97.6%</td><td>Narrower pore window trims light-isomer conversion slightly</td></tr>
+          <tr><td>Product volume / 1,000 L ethanol</td><td>636 L</td><td>≈631 L</td><td>−5 L</td></tr>
+          <tr><td>Energy retention (Eq. 13)</td><td class="hl">95.0%</td><td class="hl">≈94.2%</td><td>−0.8 pp</td></tr>
+          <tr><td>Gross production cost</td><td class="hl">₹107.9/L</td><td class="hl">≈₹109.6/L</td><td>+1.6%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tbl-cap">Table 5B — Standard vs Octane-94 grade, same reactor hardware, same reaction chemistry, catalyst-formulation change only. The Octane-94 grade still beats this paper's own original pre-redesign baseline on both cost (₹112.6/L) and energy retention (~91%) — the trade-off is against the Standard grade's further-optimised numbers, not against the starting point.</p>
+
+    <div class="callout">
+      <span class="ctag">Reading the number honestly</span>
+      <p>A theoretical RON of ≈94 clears India's BS-VI regular-grade minimum (RON 91) with real margin and sits close to premium grade (RON 95) — a materially different starting position than the Standard grade's ≈90.4, which sits at the lower edge of regular-grade and would need a small additional boosting step to clear the line with confidence at neat concentration. Blended at any T<em>x</em> level into base petrol that already meets spec (Section 9.2), either grade is a non-issue — the blend average sits comfortably within spec — but the Octane-94 grade is the one this paper would recommend for a neat or high-blend (T50+) product, where octane margin actually matters, while the Standard grade's better cost and energy-retention numbers make it the better choice for low-blend (T10–T20) volumes where the base petrol's own octane already carries the blend. Both are engine-test estimates pending ASTM D2699 validation, not measured values.</p>
+    </div>
+
+    <h3 class="sub">9.2 Blend Economics — Full T10–T100 Table</h3>
+    <p>Table 6 below carries Eq. 14–15 across the full practical blend range at 5-unit increments, from a low-blend T10 through neat T100, using the Standard grade's gross cost (₹107.9/L, Section 8.2) and ~₹56/L ex-refinery petrol. The Octane-94 grade (Section 9.1) would run marginally higher at every blend level (≈+1.6% on the Tx-attributable portion of the cost) and is not separately tabulated here to keep this table to a single, comparable basis.</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Blend</th><th>Blended wholesale cost</th><th>Premium over pure petrol</th></tr></thead>
+        <tbody>
+          <tr><td>T10</td><td>₹61.2/L</td><td>+9.3%</td></tr>
+          <tr><td>T15</td><td>₹63.8/L</td><td>+13.9%</td></tr>
+          <tr class="best"><td><strong>T20</strong></td><td><strong>₹66.4/L</strong></td><td><strong>+18.5%</strong></td></tr>
+          <tr><td>T25</td><td>₹69.0/L</td><td>+23.2%</td></tr>
+          <tr><td>T30</td><td>₹71.6/L</td><td>+27.8%</td></tr>
+          <tr><td>T35</td><td>₹74.2/L</td><td>+32.4%</td></tr>
+          <tr><td>T40</td><td>₹76.8/L</td><td>+37.1%</td></tr>
+          <tr><td>T45</td><td>₹79.4/L</td><td>+41.7%</td></tr>
+          <tr><td>T50</td><td>₹82.0/L</td><td>+46.3%</td></tr>
+          <tr><td>T55</td><td>₹84.5/L</td><td>+51.0%</td></tr>
+          <tr><td>T60</td><td>₹87.1/L</td><td>+55.6%</td></tr>
+          <tr><td>T65</td><td>₹89.7/L</td><td>+60.2%</td></tr>
+          <tr><td>T70</td><td>₹92.3/L</td><td>+64.9%</td></tr>
+          <tr><td>T75</td><td>₹94.9/L</td><td>+69.5%</td></tr>
+          <tr><td>T80</td><td>₹97.5/L</td><td>+74.1%</td></tr>
+          <tr><td>T85</td><td>₹100.1/L</td><td>+78.8%</td></tr>
+          <tr><td>T90</td><td>₹102.7/L</td><td>+83.4%</td></tr>
+          <tr><td>T95</td><td>₹105.3/L</td><td>+88.0%</td></tr>
+          <tr><td>T100 (neat)</td><td>₹107.9/L</td><td>+92.7%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tbl-cap">Table 6 — Full blend-economics table, T10 to T100 at 5-unit increments, at ~₹56/L ex-refinery petrol and ₹107.9/L Standard-grade Tx synthetic petrol (Eq. 14–15). Premium rises linearly with blend fraction by construction (Eq. 14 is linear in x); it is tabulated in full here, rather than left to be inferred from a few points, so a reader can locate the exact economics of any blend level under consideration.</p>
+    <p>India's existing EBP programme already funds a comparable order-of-magnitude premium — ethanol at ₹60–65/L ex-mill against ~₹56/L ex-refinery petrol is roughly a 10–16% premium on the blended fraction, absorbed through administered pricing and the blending mandate. T15–T20 sits in the same policy-affordable range, but delivers a real hydrocarbon rather than an alcohol: no mileage penalty, no flex-fuel vehicle requirement, and none of E20's known phase-separation/corrosion risk in non-FFV vehicles. Beyond roughly T50, the premium starts to exceed what administered blending economics have historically absorbed in India, which is why this paper does not pitch high-T blends as a mandate-style bulk product. <strong>Recommendation:</strong> pitch T15–T20 as the near-term commercial blend, with T40–T50 positioned as a separate premium product and T75–T100 reserved for niche, non-mandate applications (e.g. motorsport, export, or captive fleets) where the premium is not the deciding factor.</p>
+  </div>
+</section>
+
+<!-- ============ 10. COMPARISON ============ -->
+<section class="page" id="compare">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">10</span><h2>Comparative Analysis</h2></div>
+    <p class="lead">Tx synthetic petrol against regular petrol and the three ethanol-derivative fuels actually in the Indian market today, on the four dimensions that decide real-world adoption.</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Fuel</th><th>Production / retail cost</th><th>Mileage vs pure petrol</th><th>Ease of combustion</th><th>Engine effect</th></tr></thead>
+        <tbody>
+          <tr><td>Regular petrol</td><td>₹56/L ex-refinery · ₹102–109/L retail</td><td>Baseline (100%)</td><td>Standard, well characterised</td><td>Baseline — no modification needed</td></tr>
+          <tr><td>E20 (current mandate)</td><td>Blended into ₹102.12/L retail</td><td>~93–97% (3–7% loss reported)</td><td>Higher octane, leaner tuning needed</td><td>Corrosion/phase-separation risk in non-FFV tanks below E20 rating</td></tr>
+          <tr><td>E85 (live, Delhi, flex-fuel only)</td><td>~₹60/L raw blend cost · ₹82.12/L retail</td><td>~65–70% (&gt;30% running-cost penalty reported for FFVs)</td><td>Requires FFV calibration; not usable in standard engines</td><td>Needs re-engineered seals, injectors, fuel system — standard engines cannot run it</td></tr>
+          <tr><td>ED95 (neat ethanol, heavy-duty/niche)</td><td>~₹61–65/L ex-mill</td><td>~60–65% (largest energy-density loss)</td><td>Requires ignition-improver additive; not spark-ignition compatible as-is</td><td>Dedicated engine design only — not a retrofit fuel for petrol vehicles</td></tr>
+          <tr class="best"><td><strong>Tx, Standard grade (this work, e.g. T20)</strong></td><td>₹107.9/L neat · ₹66.4/L at T20 blend</td><td class="hl"><strong>~99.5% (≈95.0% energy retention, Eq. 13)</strong></td><td class="hl"><strong>Behaves as petrol — no recalibration</strong></td><td class="hl"><strong>Zero modification — any petrol engine</strong></td></tr>
+          <tr class="best"><td><strong>Tx, Octane-94 grade (this work)</strong></td><td>≈₹109.6/L neat</td><td class="hl"><strong>~99.1% (≈94.2% energy retention)</strong></td><td class="hl"><strong>RON ≈94, clears regular-grade spec with margin (Section 9.1)</strong></td><td class="hl"><strong>Zero modification — any petrol engine</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tbl-cap">Table 7 — Tx vs petrol vs the ethanol-derivative fuels currently deployed or piloted in India.</p>
+    <p>The pattern across every ethanol-derivative row is the same trade: as ethanol content rises, cost per litre falls, but mileage falls further and engine/vehicle compatibility narrows sharply. Tx is the only row in this table that improves on petrol's own cost profile relative to ethanol's raw cost while keeping mileage and engine compatibility at parity with regular petrol — because it is chemically petrol, not an ethanol blend. It does not undercut E85 or E20 on raw production cost (Section 8), and this paper does not claim it does; its case is entry into the existing petrol distribution and vehicle fleet with none of the fleet-transition cost that E85 and ED95 both carry.</p>
+  </div>
+</section>
+
+<!-- ============ 11. IMPACT ============ -->
+<section class="page" id="impact">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">11</span><h2>Environmental &amp; Economic Impact vs Standard Ethanol</h2></div>
+    <div class="two-col">
+      <div class="card">
+        <h4>Carbon capture, not dilution</h4>
+        <p style="font-size:.9rem;color:var(--text-dim);">Standard ethanol blending is dilution — no CO₂ is captured in the blending step itself. This route's SE-SMR module actively captures &gt;90% of its own process CO₂ as a concentrated, storage-ready stream (Eq. 19), something plain ethanol blending structurally cannot claim.</p>
+      </div>
+      <div class="card">
+        <h4>Vinasse: liability to feedstock</h4>
+        <p style="font-size:.9rem;color:var(--text-dim);">Distillery vinasse/spent-wash is a serious effluent problem in India — high BOD/COD, expensive to treat. Routing it to anaerobic digestion for the SE-SMR loop converts a disposal cost into process feedstock, a circularity point standard ethanol blending does not have.</p>
+      </div>
+      <div class="card">
+        <h4>Storage &amp; quality stability</h4>
+        <p style="font-size:.9rem;color:var(--text-dim);">Hydrogenating to the 15–18% olefin spec avoids the gum-formation and oxidative instability that under-treated olefinic fuels are prone to, and avoids the phase-separation issues that plain ethanol blends show in humid Indian storage conditions.</p>
+      </div>
+      <div class="card">
+        <h4>Tailpipe emissions — an honest note</h4>
+        <p style="font-size:.9rem;color:var(--text-dim);">Tailpipe CO₂ per km is roughly comparable to ethanol blending on a lifecycle basis. The environmental edge in this design is upstream, in process-level capture and vinasse circularity — this paper does not oversell a tailpipe advantage that the combustion chemistry does not actually deliver.</p>
+      </div>
+    </div>
+    <p>Economically, the comparison against standard ethanol is not "cheaper," it is "converts a fixed-cost input into a compatible product at a modest, quantified premium" (Section 8) — while standard high-ethanol blends (E85, ED95) trade raw cost advantage for a mileage penalty and a vehicle-compatibility barrier that, as of mid-2026, only a handful of models on Indian roads can even accept.</p>
+  </div>
+</section>
+
+<!-- ============ 12. BYPRODUCTS ============ -->
+<section class="page" id="byproducts">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">12</span><h2>Byproduct Utilisation &amp; Cost Structure</h2></div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Byproduct</th><th>Source</th><th>Utilisation</th><th>Cost structure effect</th></tr></thead>
+        <tbody>
+          <tr><td>Digestate</td><td>Anaerobic digestion of vinasse</td><td>Biofertiliser — direct agricultural use, relevant at distillery/sugar-mill scale</td><td class="hl">Revenue credit (Table 5, Section 8.3)</td></tr>
+          <tr><td>Concentrated CO₂</td><td>SE-SMR calciner (&gt;90% capture, Eq. 19)</td><td>Compression-ready for storage, or sale where a local carbon-utilisation buyer exists</td><td>Partial credit; conservative in Table 5 given right-sized (small) volume</td></tr>
+          <tr><td>Heavy oligomer fraction (C20+)</td><td>Chamber 2 recycle stream</td><td>Recycled to extinction (Eq. 4) rather than sold off — this is what delivers the 98.5% overall Standard-grade yield (Section 3.2)</td><td>Yield uplift, not a separate saleable stream</td></tr>
+          <tr><td>Process water</td><td>Dehydration (Eq. 1) and hydrogenation</td><td>Recovered and reused as steam-generation feedwater for the SE-SMR loop</td><td>Utility cost offset</td></tr>
+          <tr><td>Spent ZnS guard-bed media</td><td>H₂S capture (Eq. 9)</td><td>Periodic replacement; manageable solid waste, standard industrial handling</td><td>Minor opex line (included in catalyst consumption, Table 4)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tbl-cap">Table 8 — Full byproduct picture and how each stream is treated in the Section 8 cost structure.</p>
+    <p>The digestate credit is the largest of these and is specific to routing vinasse through anaerobic digestion rather than treating it as pure effluent — at distillery scale, biofertiliser off-take is an established market in India, which is why it is carried as a firm revenue line in Table 5 rather than an aspirational one.</p>
+  </div>
+</section>
+
+<!-- ============ 13. ADV/DIS ============ -->
+<section class="page" id="adv">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">13</span><h2>Advantages &amp; Disadvantages</h2></div>
+    <p class="lead">Taken together, the chemistry (Sections 3–4), the biogas-adapted SE-SMR (Section 5), and the TEA (Section 8) point the same direction. The advantages below are organised by where the advantage actually comes from; the disadvantages that follow are the same list this paper has already quantified elsewhere, collected in one place rather than left scattered across sections a reader might skip.</p>
+
+    <h3 class="sub" style="margin-top:1.2em;">13.1 Advantages</h3>
+    <div class="two-col">
+      <div class="card adv">
+        <h4>Performance &amp; compatibility</h4>
+        <ul>
+          <li>Genuine drop-in hydrocarbon — zero vehicle modification required, unlike E85 or ED95</li>
+          <li>≈95.0% energy retention from input ethanol, Standard grade (Eq. 13) — no meaningful mileage penalty; ≈94.2% for the Octane-94 grade, still far above any ethanol-blend route</li>
+          <li>Octane-94 grade reaches a theoretical RON ≈94 (Eq. 20–22), comfortably clearing India's BS-VI regular-grade minimum (RON 91), via a catalyst-formulation change alone — no new equipment</li>
+          <li>BIS IS 2796-compliant olefin trim avoids gum formation and storage instability, and avoids E20's known phase-separation/corrosion risk in non-FFV tanks</li>
+        </ul>
+      </div>
+      <div class="card adv">
+        <h4>Cost &amp; design</h4>
+        <ul>
+          <li>Single-vessel QCR design saves an estimated ~34% capex vs four discrete reactors, and right-sizing SE-SMR to actual demand saves a further ~24% on the semi-full-scale hydrogen unit (Table 3)</li>
+          <li>Combined plant capex advantage of ~32% over the conventional discrete-reactor process (Section 8.1)</li>
+          <li>Conversion premium over ethanol's own ex-mill price is only ~13.0% for the Standard grade (Section 8.2) — modest, falling with each further process refinement, and it is the process's own value-add, not a hidden markup</li>
+          <li>A purely operational recycle-control tightening (Section 3.2) improved both yield and cost simultaneously, at zero added capex — a genuine "improve without changing the process" result, not just a claim</li>
+          <li>Byproduct revenue (digestate + CO₂) turns a near-break-even process into one with a small positive net profit, ≈6.2% net margin, before any policy support (Table 5)</li>
+        </ul>
+      </div>
+      <div class="card adv">
+        <h4>Circularity &amp; environment</h4>
+        <ul>
+          <li>Vinasse-to-biogas closes a real Indian distillery effluent problem into process feedstock, rather than treating it as pure waste</li>
+          <li>&gt;90% process CO₂ capture (Eq. 19) — a genuine capture credit standard ethanol blending structurally cannot claim</li>
+          <li>Digestate byproduct is a real, market-ready biofertiliser, not a speculative revenue line (Section 12)</li>
+        </ul>
+      </div>
+      <div class="card adv">
+        <h4>Readiness &amp; path forward</h4>
+        <ul>
+          <li>Every individual reaction in the QCR (dehydration, oligomerisation, hydrogenation) is independently at TRL 7–8 — proven, not experimental, chemistry (Table A)</li>
+          <li>The one genuinely new element — single-vessel integration — has a clear, bounded next step: a bench-scale demonstration (Section 14), not a ground-up chemistry development programme</li>
+          <li>Right-sized SE-SMR corrects the earlier design's sizing error before any capital was committed, not after</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="sub">13.2 Disadvantages</h3>
+    <div class="two-col">
+      <div class="card" style="border-color:rgba(201,96,63,.35);">
+        <h4 style="color:var(--clay);">Cost &amp; policy position</h4>
+        <ul>
+          <li>Gross production cost (₹107.9–₹109.6/L depending on grade) still runs roughly double ex-refinery petrol (~₹56/L, Section 8.2) — not competitive on a straight molecule-for-molecule swap</li>
+          <li>Tx currently has no excise exemption or blending-mandate support of the kind E20/E22–E30 and E85 already enjoy in India (Section 10) — every rupee of premium is currently unsubsidised</li>
+          <li>Net margin on the base process is modest (≈6.2%) and depends on byproduct revenue holding up; the merchant-hydrogen upside (Section 8.4) depends entirely on a nearby industrial H₂ buyer existing, which cannot be assumed for every site</li>
+        </ul>
+      </div>
+      <div class="card" style="border-color:rgba(201,96,63,.35);">
+        <h4 style="color:var(--clay);">Trade-offs within the design itself</h4>
+        <ul>
+          <li>The Octane-94 grade is not free: reaching RON ≈94 costs roughly 1.6% more per litre and gives up about 0.8 percentage points of energy retention relative to the Standard grade (Table 5B) — a real trade-off, not a pure win</li>
+          <li>The Standard grade's RON (≈90.4) alone sits at the lower edge of regular-grade spec and would need the Octane-94 formulation, or a small additional boosting step, before it could be sold neat with real octane margin</li>
+          <li>Holding the olefin trim near the top of its 15–18% v/v range trades a small amount of long-term storage margin against BIS's 21% v/v ceiling for the retained octane benefit — manageable, but not zero</li>
+        </ul>
+      </div>
+      <div class="card" style="border-color:rgba(201,96,63,.35);">
+        <h4 style="color:var(--clay);">Technology readiness</h4>
+        <ul>
+          <li>Overall system TRL is 3 (Table A) — bounded by the single-vessel mechanical integration, which has not been built or pilot-tested, not by the individually well-proven chemistry</li>
+          <li>The biogas-adapted SE-SMR's ZnO guard bed and sorbent-cycling performance are validated only on literature-representative biogas composition, not on real vinasse-derived biogas from a specific site</li>
+          <li>Capex, cost, and yield figures throughout this paper are engineering-judgement and planning-level estimates, not vendor quotations or measured pilot-plant data</li>
+        </ul>
+      </div>
+      <div class="card" style="border-color:rgba(201,96,63,.35);">
+        <h4 style="color:var(--clay);">Environmental scope</h4>
+        <ul>
+          <li>Tailpipe CO₂ per km is roughly comparable to ethanol blending on a lifecycle basis (Section 11) — this design's environmental case rests on upstream process capture and vinasse circularity, not on a tailpipe emissions advantage, and this paper does not claim one</li>
+          <li>The full biogas-utilisation ceiling (~20× captive feed, Section 5.5) is a planning-level estimate pending a site-specific vinasse-to-biogas assay; actual yields could be materially lower at a given distillery</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="ctag">In the interest of completeness</span>
+      <p>None of the advantages above erase the disadvantages just listed. Both sets of numbers trace to the same equations and tables cited throughout this paper (Sections 3, 8, 9, and 14) rather than being asserted here for the first time — a reader can check every figure in this section against its source section rather than taking this summary on faith.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 14. DISCUSSION ============ -->
+<section class="page" id="discussion">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">14</span><h2>Discussion</h2></div>
+    <p><strong>Where this fits against India's existing ethanol policy.</strong> Tx is not pitched to replace E20, E85, or ED95 — those are live, policy-supported programmes with their own momentum. It is pitched at the gap those programmes structurally cannot close: a fuel that behaves exactly like petrol at the pump and in the tank, for the large majority of India's vehicle fleet that is not, and will not soon be, flex-fuel capable.</p>
+    <p><strong>Honest limitations.</strong> This paper reports a process design and a full derived costing, not a built and commissioned pilot plant. The QCR's single-vessel integration, in particular, is the paper's most novel and least field-validated element — the individual reactions (dehydration, oligomerisation, hydrogenation) are each independently well established in the literature; their combination into one shared-heat, shared-recycle vessel is this paper's own proposal and would need pilot-scale validation before a FEED-level cost estimate could be finalised.</p>
+    <p><strong>Path forward.</strong> The most direct next step is a bench-scale QCR demonstrating the heat-integration and internal-recycle claims of Section 4 at a throughput small enough to validate without full plant capex, alongside multi-cycle validation of the ZnO guard bed's effect on catalyst life under real vinasse-biogas composition rather than the literature-representative assumptions used in Section 5.</p>
+  </div>
+</section>
+
+<!-- ============ 15. CONCLUSION ============ -->
+<section class="page" id="conclusion">
+  <div class="wrap reveal">
+    <div class="sec-head"><span class="sec-num">15</span><h2>Conclusion</h2></div>
+    <p>India's ethanol programme has a real structural limit: every further step up in blend percentage buys energy independence at the cost of mileage and vehicle compatibility. This paper's proposal does not argue that limit away — it routes around it, by converting ethanol into a real petrol-range hydrocarbon inside a single integrated reactor, with its own modest hydrogen demand met from the same distillery's waste stream rather than a separate, oversized hydrogen plant.</p>
+    <p>Every number in this paper traces to a stated equation: the 99% dehydration yield, the 98.5% overall oligomerisation yield after recycle-to-extinction, the ≈2 kg H₂ demand set by a specific regulatory olefin margin, the ≈95.0% energy retention of the Standard grade, and its ₹107.9/L gross production cost — clearing a small net profit once byproduct revenue is folded in (Table 5). A second, Octane-94 grade reaches a theoretical RON ≈94 through a catalyst-formulation change alone, at an honestly-reported cost of roughly 1.6% more per litre and 0.8 percentage points less energy retention than the Standard grade (Section 9.1) — a real trade-off, reported as one, not a free upgrade. None of these are assumed. The comparison against E20, E85, and ED95 in Section 10 is deliberately unflattering where it should be — Tx does not win on raw production cost against any of them — because the honest case for this route is compatibility and energy retention, not price, and a research paper that only reports the numbers favourable to its own conclusion is not one worth publishing.</p>
+  </div>
+</section>
+
+<!-- ============ REFERENCES ============ -->
+<section class="page tight" id="refs">
+  <div class="wrap reveal">
+    <div class="eyebrow">References</div>
+    <div class="refs">
+      <ol>
+        <li>Grasa, G.S. and Abanades, J.C. (2006). CO₂ capture capacity of CaO in long series of carbonation/calcination cycles. <em>Industrial &amp; Engineering Chemistry Research</em>, 45(26), 8846–8851.</li>
+        <li>Varma, T. (2026). Converting Flare Gas into Clean Hydrogen — Sorption-Enhanced Steam Methane Reforming with CaO. NPMAI ECOSYSTEM Chemistry Research Division.</li>
+        <li>Bureau of Indian Standards. IS 2796 — Motor Gasoline Specification (olefin content limit, 21% v/v).</li>
+        <li>Bureau of Indian Standards. IS 19850:2026 — Fuel-quality standards for E22, E25, E27, and E30 petrol blends.</li>
+        <li>Cabinet Committee on Economic Affairs (CCEA), Government of India. Ethanol procurement price, ESY 2024-25 — B-heavy molasses route.</li>
+        <li>Ministry of Petroleum and Natural Gas, Government of India. E85 launch and pricing, Delhi, June 2026.</li>
+        <li>Ministry of Finance, Department of Revenue, Government of India. Central excise exemption notification, E22–E30 petrol blends, 2026.</li>
+        <li>Mobil Research and Development Corporation. Methanol-to-Gasoline and Distillate (MOGD) process — oligomerisation with recycle-to-extinction, original process literature.</li>
+        <li>Xu, J. and Froment, G.F. (1989). Methane steam reforming, methanation and water-gas shift: I. Intrinsic kinetics. <em>AIChE Journal</em>, 35(1), 88–96.</li>
+        <li>NPMAI ECOSYSTEM (2026). Prior internal techno-economic analysis of ethanol-to-gasoline upgrading — basis for Section 2's redesign discussion.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <span class="fbrand">NPMAI ECOSYSTEM · npmai.netlify.app</span>
+      <span>Chemistry: Trilok Varma, HOD Research — Chemistry Department</span>
+      <span>TEA: Sonu Kumar, Founder &amp; HOD Research — Tech &amp; Political Science</span>
+      <span>© 2026 NPMAI ECOSYSTEM. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// scroll reveal
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// top nav show after scrolling past cover
+const nav = document.getElementById('topnav');
+let lastY = 0;
+window.addEventListener('scroll', ()=>{
+  const y = window.scrollY;
+  if(y > window.innerHeight * 0.7){ nav.classList.add('show'); } else { nav.classList.remove('show'); }
+  lastY = y;
+});
+</script>
+</body>
+</html>
