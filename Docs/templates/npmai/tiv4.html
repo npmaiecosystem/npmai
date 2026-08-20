@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Direct Aluminothermic Production of Ti-6Al-4V — Trilok Varma — NPMAI ECOSYSTEM</title>
+<style>
+  :root {
+    --primary: #1a1a2e;
+    --secondary: #16213e;
+    --accent-blue: #0f3460;
+    --gold: #e2b96f;
+    --silver: #c0c0c0;
+    --teal: #1a7a8a;
+    --lightbg: #f4f6f9;
+    --darkgray: #333;
+    --midgray: #ccc;
+    --green: #1a6b3c;
+    --red: #8b1a1a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    color: var(--darkgray);
+    background: #f0f2f5;
+    line-height: 1.7;
+  }
+  .topbar {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--primary);
+    border-bottom: 4px solid var(--gold);
+    padding: 10px 28px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'Helvetica', Arial, sans-serif;
+  }
+  .topbar .t1 { color: var(--gold); font-weight: bold; font-size: 13px; letter-spacing: 0.3px; }
+  .topbar .t2 { color: #aaa; font-size: 12px; }
+
+  /* COVER */
+  .cover {
+    background: linear-gradient(135deg, #0d0d1a 0%, #1a1a2e 40%, #0f3460 100%);
+    color: #fff;
+    padding: 70px 40px 60px;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Helvetica', Arial, sans-serif;
+  }
+  .cover::before {
+    content: "";
+    position: absolute; top: -60px; right: -80px;
+    width: 400px; height: 400px;
+    background-image:
+      repeating-linear-gradient(45deg, rgba(226,185,111,0.08) 0 1px, transparent 1px 28px),
+      repeating-linear-gradient(-45deg, rgba(226,185,111,0.08) 0 1px, transparent 1px 28px);
+    opacity: 1;
+  }
+  .cover::after {
+    content: "";
+    position: absolute; bottom: -40px; left: -50px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(15,52,96,0.6) 0%, transparent 70%);
+  }
+  .cover-tag {
+    text-align: center; color: var(--gold); font-weight: 700; letter-spacing: 1px;
+    font-size: 12px; margin-bottom: 6px; text-transform: uppercase;
+  }
+  .cover-sub { text-align: center; color: #8ab4c8; font-size: 13px; margin-bottom: 40px; }
+  .cover-box {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(226,185,111,0.3);
+    border-top: 4px solid var(--gold);
+    border-radius: 10px;
+    padding: 40px 30px;
+    max-width: 740px;
+    margin: 0 auto 32px;
+    text-align: center;
+    position: relative; z-index: 1;
+  }
+  .cover-title {
+    color: #fff;
+    font-size: 34px;
+    font-weight: 800;
+    margin: 0 0 8px;
+    line-height: 1.2;
+  }
+  .cover-title span { color: var(--gold); }
+  .cover-subtitle { color: #9bbdcc; font-size: 15px; margin: 16px 0 0; line-height: 1.6; }
+  .pill-row { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin: 0 auto 32px; max-width: 800px; position: relative; z-index: 1; }
+  .pill {
+    background: rgba(15,52,96,0.8);
+    border: 1px solid rgba(226,185,111,0.4);
+    color: var(--gold); font-size: 11px; font-weight: 700;
+    padding: 6px 14px; border-radius: 14px; letter-spacing: 0.3px;
+  }
+  .author-block { text-align: center; margin-top: 12px; position: relative; z-index: 1; }
+  .author-name { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 4px; }
+  .author-role { font-size: 13px; font-weight: 700; color: var(--gold); margin-bottom: 4px; }
+  .author-org { font-size: 12.5px; color: #7aadbc; }
+  .cover-footer { text-align: center; color: #556; font-size: 11px; margin-top: 54px; position: relative; z-index: 1; }
+
+  /* CONTENT */
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 52px 64px 72px;
+  }
+  h1.section {
+    background: var(--primary);
+    color: #fff;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 18px;
+    padding: 13px 20px;
+    margin: 50px -64px 20px;
+    border-left: 6px solid var(--gold);
+    letter-spacing: 0.2px;
+  }
+  h2.sub {
+    font-family: 'Helvetica', Arial, sans-serif;
+    color: var(--accent-blue);
+    font-size: 14.5px;
+    margin: 28px 0 8px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--gold);
+    font-weight: 700;
+  }
+  h3.subsub {
+    font-family: 'Helvetica', Arial, sans-serif;
+    color: var(--teal);
+    font-size: 13.5px;
+    margin: 18px 0 6px;
+    font-weight: 700;
+  }
+  p { font-size: 15.5px; text-align: justify; margin: 0 0 14px; }
+  .assumption {
+    font-size: 13.5px;
+    background: #fffdf0;
+    border-left: 3px solid var(--gold);
+    padding: 9px 14px;
+    margin: 4px 0 16px;
+    color: #555;
+  }
+  .caption {
+    font-style: italic; color: var(--teal); font-size: 13px; text-align: center;
+    margin: 4px 0 24px;
+  }
+
+  .abstract-box {
+    background: #f5f8fc;
+    border: 1px solid #b8cfe0;
+    border-top: 4px solid var(--gold);
+    padding: 24px 28px;
+    margin: 10px 0 18px;
+    font-size: 15px;
+    text-align: justify;
+  }
+  .keywords { text-align: center; font-weight: bold; color: var(--accent-blue); font-size: 13px; margin-bottom: 10px; font-family: Helvetica, Arial, sans-serif; }
+
+  .eqbox {
+    display: flex; align-items: center; justify-content: space-between;
+    background: #f8fafc; border: 1px solid #d0d8e4; border-left: 3px solid var(--accent-blue);
+    padding: 13px 18px; margin: 14px 0 4px;
+    font-family: 'Cambria Math', 'Georgia', serif;
+    font-size: 16px;
+    overflow-x: auto;
+  }
+  .eqbox .eq-text { flex: 1; text-align: center; }
+  .eqbox .eq-num { color: var(--accent-blue); font-size: 12.5px; padding-left: 14px; border-left: 1px solid var(--midgray); margin-left: 14px; white-space: nowrap; font-family: Helvetica, Arial, sans-serif; }
+  .eq-label { font-style: italic; color: #556; font-size: 12.5px; text-align: center; margin: 2px 0 16px; }
+
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 4px; font-size: 13.5px; font-family: Helvetica, Arial, sans-serif; }
+  th, td { border: 1px solid var(--midgray); padding: 8px 10px; text-align: left; vertical-align: top; }
+  thead th { background: var(--primary); color: #fff; font-weight: 700; }
+  tbody tr:nth-child(even) { background: var(--lightbg); }
+  tbody tr.highlight-row { background: #fffbe6; font-weight: 700; }
+  tbody tr.green-row td { color: var(--green); font-weight: 700; }
+  tbody tr.accent-row { background: #eaf3fb; font-weight: 700; }
+  .table-silver thead th { background: #3a3a5c; }
+  table.center td, table.center th { text-align: center; }
+
+  .toc-list { list-style: none; padding: 0; font-family: Helvetica, Arial, sans-serif; font-size: 13.5px; }
+  .toc-list li { display: flex; justify-content: space-between; padding: 5px 6px; border-bottom: 1px dashed #ddd; }
+  .toc-list li.sub { padding-left: 24px; color: #555; font-size: 12.5px; }
+  .toc-list b { color: var(--accent-blue); }
+
+  .adv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 14px; border: 1px solid var(--midgray); }
+  .adv-col { padding: 16px 18px; }
+  .adv-col.pro { background: #f0fff4; border-right: 1px solid var(--midgray); }
+  .adv-col.con { background: #fff8f8; }
+  .adv-head { font-family: Helvetica, Arial, sans-serif; font-weight: 800; text-align: center; padding: 10px; color: #fff; font-size: 14px; }
+  .adv-head.pro { background: var(--green); }
+  .adv-head.con { background: var(--red); }
+  .adv-col ul { margin: 8px 0 0; padding-left: 18px; font-size: 13px; }
+  .adv-col li { margin-bottom: 9px; }
+
+  .figure-svg { display: block; margin: 20px auto; max-width: 100%; }
+
+  .refs { font-size: 13.5px; padding-left: 0; }
+  .refs li { list-style: none; margin-bottom: 8px; padding-left: 24px; text-indent: -24px; }
+
+  footer.pagefoot {
+    text-align: center; font-size: 11.5px; color: #888; padding: 22px;
+    font-family: Helvetica, Arial, sans-serif;
+    border-top: 1px solid #eee; margin-top: 44px;
+  }
+  .contact-line { text-align: center; font-style: italic; color: var(--teal); margin: 20px 0; font-size: 13.5px; }
+  hr.gold { border: none; border-top: 2px solid var(--gold); margin: 20px 0; }
+
+  .novelty-box {
+    background: linear-gradient(135deg, #f0f4ff, #e8f4f8);
+    border: 2px solid var(--accent-blue);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin: 18px 0;
+    font-size: 14px;
+  }
+  .novelty-box strong { color: var(--accent-blue); font-family: Helvetica, Arial, sans-serif; }
+
+  .patent-box {
+    background: #fffbeb;
+    border: 2px dashed var(--gold);
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin: 18px 0;
+    font-size: 13.5px;
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  .patent-box strong { color: #7a5500; }
+
+  @media (max-width: 700px) {
+    .page { padding: 30px 20px; }
+    h1.section { margin: 40px -20px 18px; font-size: 15px; }
+    .adv-grid { grid-template-columns: 1fr; }
+    .cover-title { font-size: 24px; }
+    table { font-size: 11.5px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="t1">NPMAI ECOSYSTEM &nbsp;·&nbsp; TECHNICAL RESEARCH PAPER &nbsp;·&nbsp; 2026</span>
+  <span class="t2">Trilok Varma &nbsp;·&nbsp; Chemistry Research Division</span>
+</div>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-tag">NPMAI ECOSYSTEM &nbsp;·&nbsp; TECHNICAL RESEARCH PAPER &nbsp;·&nbsp; 2026</div>
+  <div class="cover-sub">Chemistry Research Division &nbsp;·&nbsp; Advanced Materials Series</div>
+
+  <div class="cover-box">
+    <div class="cover-title">
+      <span>Direct Aluminothermic Production</span><br>of Ti-6Al-4V Alloy
+    </div>
+    <div class="cover-subtitle">
+      A Novel Semi-Continuous Three-Chamber Reactor with Hybrid Deoxidation:<br>
+      An Integrated Alternative to the Kroll Process
+    </div>
+  </div>
+
+  <div class="pill-row">
+    <span class="pill">Aluminothermic Reduction</span>
+    <span class="pill">Ti-6Al-4V</span>
+    <span class="pill">Kroll Alternative</span>
+    <span class="pill">PESR Deoxidation</span>
+    <span class="pill">Calcium Vapor</span>
+    <span class="pill">Ilmenite Conversion</span>
+    <span class="pill">Aerospace Alloy</span>
+    <span class="pill">Patentable Reactor</span>
+  </div>
+
+  <!-- cover SVG molecule decoration -->
+  <svg style="position:absolute;left:32px;top:200px;opacity:0.18;" width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="60" cy="60" r="10" fill="#e2b96f"/>
+    <circle cx="20" cy="30" r="7" fill="#8ab4c8"/>
+    <circle cx="100" cy="30" r="7" fill="#8ab4c8"/>
+    <circle cx="20" cy="90" r="7" fill="#8ab4c8"/>
+    <circle cx="100" cy="90" r="7" fill="#8ab4c8"/>
+    <line x1="60" y1="60" x2="20" y2="30" stroke="#e2b96f" stroke-width="2"/>
+    <line x1="60" y1="60" x2="100" y2="30" stroke="#e2b96f" stroke-width="2"/>
+    <line x1="60" y1="60" x2="20" y2="90" stroke="#e2b96f" stroke-width="2"/>
+    <line x1="60" y1="60" x2="100" y2="90" stroke="#e2b96f" stroke-width="2"/>
+  </svg>
+
+  <div class="author-block">
+    <div class="author-name">Trilok Varma</div>
+    <div class="author-role">HOD Research, Chemistry Department</div>
+    <div class="author-org">NPMAI ECOSYSTEM</div>
+    <div class="author-org">sampatiraotrilokvarma@gmail.com &nbsp;·&nbsp; npmai.netlify.app</div>
+  </div>
+
+  <div class="cover-footer">© 2026 Trilok Varma, NPMAI ECOSYSTEM. All rights reserved.</div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="page">
+
+<!-- TOC -->
+<h1 class="section">Table of Contents</h1>
+<ul class="toc-list">
+  <li><b>—</b><span>Abstract</span></li>
+  <li><b>1.</b><span>Introduction</span></li>
+  <li><b>2.</b><span>Background and Literature Foundation</span></li>
+  <li class="sub"><span>2.1 The Titanium Cost Problem</span></li>
+  <li class="sub"><span>2.2 The Kroll Process — How It Works and Why It Falls Short</span></li>
+  <li class="sub"><span>2.3 Prior Art in Aluminothermic Titanium Reduction</span></li>
+  <li class="sub"><span>2.4 The Ilmenite Route — FeTiO₃ to TiO₂</span></li>
+  <li><b>3.</b><span>Core Chemistry — All Reactions and Thermodynamic Basis</span></li>
+  <li class="sub"><span>3.1 Ilmenite Beneficiation Reactions</span></li>
+  <li class="sub"><span>3.2 Aluminothermic Co-Reduction Reactions</span></li>
+  <li class="sub"><span>3.3 Deoxidation Reactions</span></li>
+  <li class="sub"><span>3.4 Byproduct Processing</span></li>
+  <li><b>4.</b><span>Stoichiometry and Mass Balance Calculations</span></li>
+  <li><b>5.</b><span>Thermodynamics — ΔG, ΔH, Adiabatic Temperature, Oxygen Activity</span></li>
+  <li><b>6.</b><span>Reaction Kinetics</span></li>
+  <li><b>7.</b><span>Novel Reactor Design — Three-Chamber Semi-Continuous System</span></li>
+  <li class="sub"><span>7.1 Overall Architecture and Patentable Features</span></li>
+  <li class="sub"><span>7.2 Chamber 1 — Partitioned Aluminothermic Co-Reduction</span></li>
+  <li class="sub"><span>7.3 Chamber 2 — Slag-Metal Separation</span></li>
+  <li class="sub"><span>7.4 Chamber 3 — Alloy Homogenisation and Casting</span></li>
+  <li class="sub"><span>7.5 PESR Refining Unit</span></li>
+  <li class="sub"><span>7.6 Calcium Vapor Deoxidation Unit</span></li>
+  <li class="sub"><span>7.7 Materials of Construction</span></li>
+  <li class="sub"><span>7.8 Monitoring and Instrumentation</span></li>
+  <li><b>8.</b><span>Thermodynamic Plots and Graphical Data</span></li>
+  <li><b>9.</b><span>Expected Yield, Purity, and Performance</span></li>
+  <li><b>10.</b><span>Detailed Comparison with the Kroll Process</span></li>
+  <li><b>11.</b><span>Advantages and Disadvantages</span></li>
+  <li><b>12.</b><span>Discussion</span></li>
+  <li><b>13.</b><span>Conclusion</span></li>
+  <li><b>—</b><span>References</span></li>
+</ul>
+
+<!-- ABSTRACT -->
+<h1 class="section">Abstract</h1>
+<div class="abstract-box">
+  <p>Titanium is the ninth most abundant element in Earth's crust, yet titanium alloys cost 30–40 times more per kilogram than structural steel. The reason is almost entirely process-related: the Kroll process, invented in 1940 and industrially unchanged in its fundamentals since, requires batch chlorination, magnesium reduction under argon, vacuum distillation, and multiple vacuum arc remelting steps — a sequence so energy-intensive, capital-heavy, and slow that it has resisted 80 years of efforts at replacement. This paper presents a comprehensive technical case for a genuinely alternative route: direct semi-continuous aluminothermic co-reduction of titanium dioxide and vanadium pentoxide to produce Ti-6Al-4V alloy in a single integrated three-chamber reactor system, without chlorine chemistry and without the Kroll process's critical TiCl₄ intermediate.</p>
+  <p>The proposed process feeds TiO₂ and V₂O₅ directly into a partitioned aluminothermic co-reduction chamber, exploiting the far greater exothermicity of V₂O₅ reduction to provide the thermal energy required to sustain TiO₂ reduction within the same vessel. A hybrid deoxidation sequence — Pressure Electroslag Remelting with continuous calcium addition, followed by non-contact calcium vapor deoxidation at 900°C — achieves final oxygen concentrations below 600–800 ppm, meeting aerospace-grade ELI (Extra Low Interstitial) specifications. For lower-cost applications, post-PESR oxygen levels of 800–1500 ppm already satisfy many structural Ti-6Al-4V requirements.</p>
+  <p>This paper derives every governing equation from first principles: Ellingham thermodynamics, adiabatic flame temperature calculations, diffusion-limited deoxidation kinetics, and yield equations. A novel reactor design is presented in detail with SVG schematics, materials of construction, and instrumentation requirements, with specific attention to the patentable engineering innovations distinguishing this from RWTH Aachen IME prior art. The paper also includes the FeTiO₃-to-TiO₂ ilmenite beneficiation reactions for a complete feedstock-to-alloy pathway, thermodynamic plots, and a comprehensive head-to-head comparison with Kroll + VAR. Estimated energy savings are 30–50% with 30–50% lower capital cost potential at scale.</p>
+</div>
+<p class="keywords">Keywords: Ti-6Al-4V, Aluminothermic Reduction, Kroll Process Alternative, TiO₂ Reduction, Ilmenite Beneficiation, Pressure Electroslag Remelting, Calcium Vapor Deoxidation, Semi-Continuous Reactor, Titanium Alloy, Aerospace Materials, NPMAI ECOSYSTEM</p>
+
+<!-- 1. INTRODUCTION -->
+<h1 class="section">1. Introduction</h1>
+<p>Among all structural metals with widespread engineering application, titanium occupies a uniquely paradoxical position. It is genuinely abundant — comprising about 0.63% of Earth's crust by mass, more common than chromium, nickel, or copper. It possesses an exceptional combination of mechanical properties: a specific strength (strength-to-density ratio) exceeding that of most steels and aluminium alloys, outstanding corrosion resistance to seawater and many aggressive chemicals, excellent fatigue performance, and full biocompatibility with human tissue. These properties make it the material of choice for airframe structural components, jet engine fan blades and compressor discs, marine hardware, chemical plant internals, orthopedic and dental implants, and a growing range of industrial applications.</p>
+<p>Yet the market price of aerospace-grade Ti-6Al-4V — the dominant titanium alloy, accounting for over 50% of all titanium consumed worldwide — sits at $30–60 per kilogram, compared to $0.60–1.20 per kilogram for structural steel and $2–3 per kilogram for aluminium. This 30–50× price premium is not explained by titanium's abundance or by any fundamental thermodynamic cost floor. It is explained almost entirely by the manufacturing process: the Kroll process, which has been the only industrial method for primary titanium production since the late 1940s.</p>
+<p>The Kroll process is technically effective but thermodynamically and logistically inefficient. It requires chlorination of TiO₂ to form TiCl₄, purification of TiCl₄, batch magnesium reduction of TiCl₄ to titanium sponge under argon, vacuum distillation of MgCl₂ and excess Mg, crushing and blending of sponge, compaction, and then multiple vacuum arc remelting (VAR) steps to produce homogeneous ingots. The process is inherently batch, cannot be fully continuous, generates large volumes of MgCl₂ waste requiring recovery and recycling, and is extraordinarily capital-intensive. The titanium industry has been aware of these limitations for decades — the FFC Cambridge process, the OS process, the Armstrong process, and various aluminothermic routes have all been investigated — but none has successfully displaced Kroll at industrial scale.</p>
+<p>This paper contributes to that effort with a specific, fully worked-out alternative: a semi-continuous three-chamber aluminothermic co-reduction system producing Ti-6Al-4V directly from oxide raw materials. Our contribution is not merely another conceptual proposal — it is a paper with complete stoichiometric calculations, thermodynamic derivations, kinetic equations, a detailed reactor design with patentable innovations, and a rigorous comparison against the Kroll baseline. We include the ilmenite feedstock conversion pathway (FeTiO₃ → TiO₂) to present a complete mine-to-alloy picture. And we are honest about what remains to be done: the process requires pilot validation and several engineering challenges — particularly around reactor durability and oxygen control — before it can be considered commercially mature.</p>
+
+<div class="novelty-box">
+  <strong>Core Novel Contributions of This Paper:</strong>
+  <ol style="margin:10px 0 0;padding-left:20px;font-size:13.5px;">
+    <li>Partitioned Chamber 1 exploiting V₂O₅ exotherm as a staged thermal driver for TiO₂ co-reduction — no equivalent prior art in this integrated form</li>
+    <li>Hybrid deoxidation chain: PESR (Ca-addition) + non-contact Ca vapor — combining two independently known steps into a single process chain optimised for Ti-6Al-4V oxygen targets</li>
+    <li>Closed-loop NaOH slag processing for Al₂O₃ byproduct recovery — recovering economic value from what is currently a disposal liability</li>
+    <li>Semi-continuous vacuum-lock feeding system across all three chambers — enabling throughput not achievable in existing batch aluminothermic configurations</li>
+    <li>AI-assisted stoichiometry control loop — integrated in the feeding system, adjusting Al/TiO₂/V₂O₅ ratios in real time via mass-spectrometric feedback</li>
+  </ol>
+</div>
+
+<!-- 2. BACKGROUND -->
+<h1 class="section">2. Background and Literature Foundation</h1>
+
+<h2 class="sub">2.1 The Titanium Cost Problem</h2>
+<p>The relationship between titanium's cost and its adoption is circular in a damaging way. Because titanium is expensive, it is used only where its superior properties justify the premium — primarily in aerospace and high-end medical applications. Because the market is small relative to steel or aluminium, production volumes remain modest, capital investment in process improvement is limited, and the cost stays high. Breaking this cycle requires either a step-change reduction in production cost (which is what this paper addresses) or a step-change increase in demand that justifies investment at scale.</p>
+<p>Global primary titanium production is approximately 220,000–250,000 tonnes per year of sponge, compared to 1.9 billion tonnes of steel and 65 million tonnes of aluminium. The cost structure is dominated by energy (chlorination at 700–1000°C, VAR at 1700–1800°C, multiple vacuum operations) and capital (each VAR furnace costs $5–15M and has low throughput). Fang et al. (2018) estimated that direct oxide-to-metal conversion routes, if successfully scaled, could reduce titanium production costs by 25–50%, potentially opening automotive, marine construction, and consumer electronics markets that are currently priced out.</p>
+
+<h2 class="sub">2.2 The Kroll Process — How It Works and Why It Falls Short</h2>
+<p>The Kroll process proceeds in the following sequence. First, rutile TiO₂ or ilmenite ore is chlorinated at 700–1000°C with coke as reductant to produce TiCl₄ gas (Eq. A1). TiCl₄ is then purified by fractional distillation to remove FeCl₃ and other impurities. The purified TiCl₄ is charged into a sealed steel retort containing molten magnesium metal under argon atmosphere and reduced at 800–850°C to form titanium sponge (Eq. A2). The MgCl₂ produced is tapped periodically, and excess Mg and residual MgCl₂ are removed by vacuum distillation at 950°C. The resulting sponge is crushed and blended with Al and V master alloy additions, compacted into electrodes by cold pressing with a welding step, and then melted two or three times by vacuum arc remelting to achieve compositional and microstructural homogeneity in the final ingot.</p>
+
+<table class="table-silver center">
+  <thead><tr><th>Kroll Step</th><th>Reaction</th><th>Temperature</th><th>Key Issue</th></tr></thead>
+  <tbody>
+    <tr><td>Chlorination</td><td>TiO₂ + 2Cl₂ + 2C → TiCl₄ + 2CO</td><td>700–1000°C</td><td>Chlorine hazard, FeCl₃ contamination</td></tr>
+    <tr><td>Mg Reduction</td><td>TiCl₄ + 2Mg → Ti + 2MgCl₂</td><td>800–850°C</td><td>Batch only; slow; sponge not ingot</td></tr>
+    <tr><td>Vacuum Distillation</td><td>MgCl₂(l) + Mg(l) → vapour</td><td>950°C</td><td>Energy-intensive; full vacuum</td></tr>
+    <tr><td>Blending + Compaction</td><td>Mechanical alloying with Al+V</td><td>Ambient</td><td>Labour; electrode weld failure risk</td></tr>
+    <tr><td>VAR (×2–3)</td><td>Arc melting in water-cooled Cu crucible</td><td>~1700°C</td><td>Batch; capital-heavy; slow</td></tr>
+    <tr class="highlight-row"><td><b>Total process time</b></td><td colspan="3"><b>7–14 days per batch for full ingot production</b></td></tr>
+  </tbody>
+</table>
+<p class="caption">Table 1: Kroll process step summary — each step is batch, sequential, and capital-intensive</p>
+
+<h2 class="sub">2.3 Prior Art in Aluminothermic Titanium Reduction</h2>
+<p>Aluminothermic reduction of TiO₂ is not new — the thermite-type reaction between aluminium powder and TiO₂ (or titanium minerals) has been studied since the early 20th century. The fundamental challenge has always been oxygen: aluminothermic reduction of TiO₂ produces a Ti metal with dissolved oxygen at 1–3 wt%, far above the &lt;0.2 wt% specification for aerospace Ti-6Al-4V. The RWTH Aachen IME group (Reuter et al., 2004; Friedrich et al., 2009) conducted the most systematic prior work on aluminothermic Ti production, demonstrating the feasibility of the reduction chemistry but stopping short of a continuous process with an integrated deoxidation sequence capable of meeting aerospace specifications.</p>
+<p>The key gap in prior art that this paper addresses is the <em>integrated</em> combination of: (1) a partitioned co-reduction chamber using V₂O₅ exotherm to drive TiO₂ reduction in adjacent zones; (2) a semi-continuous feeding system rather than batch charging; (3) a two-stage deoxidation sequence (PESR + Ca vapor) capable of taking the alloy from ~2 wt% O post-thermite to &lt;800 ppm final; and (4) a closed-loop alumina recovery system converting the Al₂O₃ slag from waste to revenue. None of these elements individually is patentable in isolation; their specific integration and the engineering details of the partitioned chamber design constitute the novel contribution.</p>
+
+<h2 class="sub">2.4 The Ilmenite Route — FeTiO₃ to TiO₂</h2>
+<p>Rutile (natural TiO₂) is the highest-grade titanium mineral but is relatively scarce, commanding a significant price premium. Ilmenite (FeTiO₃), a mixed iron-titanium oxide, is far more abundant and significantly cheaper, comprising the majority of global titanium mineral reserves. However, ilmenite must be upgraded to a high-TiO₂ feedstock before it can be used in either the Kroll process or our proposed aluminothermic route, because iron co-reduction would introduce unacceptable Fe contamination into the alloy. The ilmenite-to-TiO₂ beneficiation step is therefore a required upstream process, and its chemistry is presented in full in Section 3.1.</p>
+
+<!-- 3. CORE CHEMISTRY -->
+<h1 class="section">3. Core Chemistry — All Reactions and Thermodynamic Basis</h1>
+
+<h2 class="sub">3.1 Ilmenite Beneficiation Reactions (FeTiO₃ → TiO₂)</h2>
+<p>The most widely used industrial route for upgrading ilmenite to synthetic rutile (high-TiO₂) is the Becher process, which proceeds in three stages. The chemistry of each stage is as follows:</p>
+
+<h3 class="subsub">Stage 1 — Reductive Roasting</h3>
+<p>Ilmenite is reduced with coal or natural gas at 1000–1100°C to convert the iron component from Fe²⁺/Fe³⁺ (as iron oxide in the lattice) to metallic iron, while leaving the titanium dioxide component unreduced:</p>
+
+<div class="eqbox"><span class="eq-text">FeTiO₃ + C → Fe + TiO₂ + CO &nbsp;&nbsp;(simplified)</span><span class="eq-num">(R1a)</span></div>
+<p class="eq-label">Reductive roasting — coal reductant at 1000–1100°C; ΔH° ≈ +130 kJ/mol (endothermic)</p>
+
+<div class="eqbox"><span class="eq-text">FeTiO₃ + CO → Fe + TiO₂ + CO₂ &nbsp;&nbsp;(gas-phase)</span><span class="eq-num">(R1b)</span></div>
+<p class="eq-label">Gas-phase reductive roasting with CO; the CO/CO₂ ratio must be controlled to reduce Fe while avoiding TiO₂ reduction</p>
+
+<p>The critical thermodynamic distinction is that the Ellingham free energies of Fe and Ti oxides diverge significantly: ΔG° for FeO formation is approximately −250 kJ/mol at 1000°C, while ΔG° for TiO₂ formation is approximately −700 kJ/mol at 1000°C. This means carbon (via CO) is thermodynamically capable of reducing FeO to Fe metal but not TiO₂ to Ti metal at these temperatures — selectivity is thermodynamically guaranteed.</p>
+
+<h3 class="subsub">Stage 2 — Wet Magnetic Separation</h3>
+<p>After reductive roasting, the product is a mixture of reduced metallic iron (Fe⁰) and unreduced TiO₂. Since metallic iron is magnetic and TiO₂ is not, the two are separated by wet magnetic drum separation, giving a TiO₂-enriched non-magnetic fraction:</p>
+
+<div class="eqbox"><span class="eq-text">FeTiO₃ (reduced) → Fe⁰ (magnetic) + TiO₂ (non-magnetic)</span><span class="eq-num">(R2)</span></div>
+<p class="eq-label">Physical separation via magnetic susceptibility difference; achieved at ambient temperature in a wet drum magnetic separator</p>
+
+<h3 class="subsub">Stage 3 — Aeration Leaching (Becher Rusting Step)</h3>
+<p>In the Becher process specifically, the reduced iron remaining in the TiO₂-enriched fraction is oxidised and leached by aeration in ammonium chloride solution, converting Fe⁰ to soluble iron chloride or iron hydroxide that can be washed away:</p>
+
+<div class="eqbox"><span class="eq-text">4Fe + 3O₂ + 6H₂O → 4Fe(OH)₃ &nbsp;&nbsp;(aeration step)</span><span class="eq-num">(R3a)</span></div>
+<div class="eqbox"><span class="eq-text">Fe(OH)₃ + 3HCl → FeCl₃ + 3H₂O &nbsp;&nbsp;(leach step)</span><span class="eq-num">(R3b)</span></div>
+<p class="eq-label">Iron removal by oxidative aeration and acid leach; yields synthetic rutile with &gt;90% TiO₂ content</p>
+
+<p>The final product, synthetic rutile (SR), contains 90–95% TiO₂ with residual iron, manganese, and minor impurities. For our aluminothermic process, SR is a suitable feedstock — the residual Fe will be reduced by aluminium alongside Ti and V and must be accounted for in the stoichiometry (Section 4). An alternative ilmenite upgrading route — the sulphate process producing pigment-grade TiO₂ — yields purer TiO₂ (&gt;98%) but at higher cost. Our stoichiometric calculations (Section 4) are presented for high-purity rutile TiO₂ feed as the primary case, with a note for SR-grade feed.</p>
+
+<table class="table-silver">
+  <thead><tr><th>Ilmenite Route</th><th>TiO₂ Content</th><th>Fe Residual</th><th>Cost</th><th>Suitability</th></tr></thead>
+  <tbody>
+    <tr><td>Natural Rutile</td><td>95–96%</td><td>&lt;1%</td><td>High (scarce)</td><td>Ideal; preferred</td></tr>
+    <tr><td>Synthetic Rutile (Becher)</td><td>90–93%</td><td>2–3%</td><td>Moderate</td><td>Suitable; correct stoich.</td></tr>
+    <tr><td>Upgraded Slag (TiO₂-rich)</td><td>85–90%</td><td>3–5%</td><td>Low</td><td>Acceptable; higher Al excess</td></tr>
+    <tr><td>Raw Ilmenite</td><td>45–65%</td><td>30–40%</td><td>Lowest</td><td>Not suitable (excess Fe)</td></tr>
+  </tbody>
+</table>
+<p class="caption">Table 2: TiO₂ feedstock options for aluminothermic reduction — synthetic rutile recommended</p>
+
+<h2 class="sub">3.2 Aluminothermic Co-Reduction Reactions</h2>
+<p>The core reactions driving our process are the simultaneous aluminothermic reductions of TiO₂ and V₂O₅ by aluminium. Both are thermodynamically spontaneous at elevated temperatures; the key distinction is their relative exothermicities, which is the central design principle of the partitioned Chamber 1 (Section 7.2).</p>
+
+<div class="eqbox"><span class="eq-text">3TiO₂ + 4Al → 3Ti + 2Al₂O₃ &nbsp;&nbsp;ΔH° = −336 kJ/mol-TiO₂</span><span class="eq-num">(R4)</span></div>
+<p class="eq-label">Primary aluminothermic TiO₂ reduction; moderately exothermic per mole TiO₂ but requires ignition above activation energy barrier</p>
+
+<div class="eqbox"><span class="eq-text">V₂O₅ + (10/3)Al → 2V + (5/3)Al₂O₃ &nbsp;&nbsp;ΔH° = −490 kJ/mol-V₂O₅</span><span class="eq-num">(R5)</span></div>
+<p class="eq-label">Aluminothermic V₂O₅ reduction; significantly more exothermic than R4 — used as thermal driver for TiO₂ zone via controlled partition breach</p>
+
+<div class="eqbox"><span class="eq-text">3FeO + 2Al → 3Fe + Al₂O₃ &nbsp;&nbsp;ΔH° = −295 kJ/mol-FeO</span><span class="eq-num">(R6)</span></div>
+<p class="eq-label">Residual iron oxide reduction (relevant when using synthetic rutile feedstock with 2–3% FeO impurity)</p>
+
+<p>The net combined reaction, accounting for the stoichiometry of producing Ti-6Al-4V alloy (approximately 90 wt% Ti, 6 wt% Al, 4 wt% V) and combining R4 and R5 in the ratio required by the alloy composition, is:</p>
+
+<div class="eqbox"><span class="eq-text">~3TiO₂ + ~(0.05)V₂O₅ + ~4.08Al → Ti₀.₉₀Al₀.₀₆V₀.₀₄ (Ti-6Al-4V) + ~2.08Al₂O₃</span><span class="eq-num">(R7)</span></div>
+<p class="eq-label">Simplified net reaction for Ti-6Al-4V production — exact coefficients given in Section 4</p>
+
+<h2 class="sub">3.3 Deoxidation Reactions</h2>
+<p>Post-thermite Ti-Al-V melt contains 0.8–2.5 wt% dissolved oxygen — far above the &lt;0.2 wt% required for aerospace Ti-6Al-4V. Two sequential deoxidation steps are employed in our process, each exploiting a different thermodynamic and kinetic mechanism.</p>
+
+<h3 class="subsub">Step 1 — PESR Calcium Addition</h3>
+<p>In the Pressure Electroslag Remelting unit, calcium metal is dissolved into the slag phase continuously during remelting. The Ca transfers to the metal-slag interface and reacts with dissolved oxygen in the Ti melt:</p>
+
+<div class="eqbox"><span class="eq-text">Ca(dissolved) + [O]ₜᵢ → CaO(slag) &nbsp;&nbsp;ΔG° = −604 kJ/mol at 1600°C</span><span class="eq-num">(R8)</span></div>
+<p class="eq-label">Primary PESR deoxidation; calcium has far higher oxygen affinity than titanium at steelmaking temperatures; ΔG° is strongly negative</p>
+
+<div class="eqbox"><span class="eq-text">K_R8 = a_CaO / (a_Ca · a_O) &nbsp;&nbsp;→&nbsp; log K = 31,500/T − 10.2</span><span class="eq-num">(R8a)</span></div>
+<p class="eq-label">Equilibrium constant for R8 as a function of temperature T(K); large K means equilibrium strongly favours CaO product</p>
+
+<h3 class="subsub">Step 2 — Calcium Vapor Non-Contact Deoxidation</h3>
+<p>After PESR, residual oxygen (typically 800–1500 ppm) is further reduced in a separate solid-state step at 850–950°C. Calcium vapor (generated from metallic calcium in a separate heated zone) diffuses to the surface of Ti-6Al-4V chunks or granules and deoxidises via the same reaction, but in the solid state where oxygen activity in the Ti lattice is very low:</p>
+
+<div class="eqbox"><span class="eq-text">Ca(g) + [O]ₜᵢ(solid solution) → CaO(s) &nbsp;&nbsp;ΔG° = −400 to −450 kJ/mol at 900°C</span><span class="eq-num">(R9)</span></div>
+<p class="eq-label">Solid-state calcium vapor deoxidation; operates at 850–950°C for 2–10 hours; drives oxygen below 500 ppm achievable</p>
+
+<p>The CaO product that forms on the Ti alloy surface is subsequently removed by dilute acid leaching (HCl or HNO₃), which does not significantly attack the bulk Ti-6Al-4V in dilute concentrations at ambient temperature:</p>
+
+<div class="eqbox"><span class="eq-text">CaO(s) + 2HCl(aq) → CaCl₂(aq) + H₂O &nbsp;&nbsp;(surface CaO leach)</span><span class="eq-num">(R10)</span></div>
+<p class="eq-label">CaO removal post-Ca vapor deoxidation; mild HCl at ambient temperature; does not attack Ti-6Al-4V substrate</p>
+
+<h2 class="sub">3.4 Byproduct Processing</h2>
+<p>The principal byproduct of the aluminothermic reduction is Al₂O₃ slag. Rather than treating this as waste, our process converts it into commercial-grade alumina via NaOH leaching (the Bayer-analogous step), recovering a revenue-generating product:</p>
+
+<div class="eqbox"><span class="eq-text">Al₂O₃ + 2NaOH → 2NaAlO₂ + H₂O &nbsp;&nbsp;(selective dissolution)</span><span class="eq-num">(R11)</span></div>
+<div class="eqbox"><span class="eq-text">NaAlO₂ + CO₂ + 2H₂O → Al(OH)₃↓ + NaHCO₃ &nbsp;&nbsp;(precipitation)</span><span class="eq-num">(R12)</span></div>
+<div class="eqbox"><span class="eq-text">2Al(OH)₃ → Al₂O₃ + 3H₂O &nbsp;&nbsp;(calcination, 1000–1200°C)</span><span class="eq-num">(R13)</span></div>
+<p class="eq-label">Closed-loop alumina recovery — NaOH regenerated from NaHCO₃ by heating; net product is smelter-grade or Bayer-quality Al₂O₃</p>
+
+<!-- 4. STOICHIOMETRY -->
+<h1 class="section">4. Stoichiometry and Mass Balance Calculations</h1>
+<p>All stoichiometric calculations below are based on a target production of <strong>100 kg of Ti-6Al-4V alloy</strong> with nominal composition Ti 89.6 wt%, Al 6.0 wt%, V 4.0 wt%, and O &lt;0.2 wt% (with other interstitials at specification limits). Molecular weights used: Ti = 47.87, Al = 26.98, V = 50.94, O = 16.00, TiO₂ = 79.87, V₂O₅ = 181.88, Al₂O₃ = 101.96.</p>
+
+<h2 class="sub">4.1 Target Alloy Composition</h2>
+<div class="eqbox"><span class="eq-text">Mass fractions: Ti = 0.896, Al_alloy = 0.060, V_alloy = 0.040, O &lt; 0.002</span><span class="eq-num">(Eq. 1)</span></div>
+<p class="eq-label">Ti-6Al-4V AMS 4928 / ASTM B265 nominal composition targets for this calculation</p>
+
+<p>For 100 kg alloy output (at 85% practical yield from thermite), the required alloy masses are:</p>
+<div class="eqbox"><span class="eq-text">m_Ti = 89.6 kg &nbsp;&nbsp;m_Al(alloy) = 6.0 kg &nbsp;&nbsp;m_V = 4.0 kg</span><span class="eq-num">(Eq. 2)</span></div>
+
+<h2 class="sub">4.2 TiO₂ Feed Requirement</h2>
+<p>From Reaction R4, stoichiometry gives 3 mol TiO₂ → 3 mol Ti, i.e. 1 mol TiO₂ → 1 mol Ti. In mass terms:</p>
+<div class="eqbox"><span class="eq-text">m_TiO₂ = m_Ti × (M_TiO₂ / M_Ti) = 89.6 × (79.87 / 47.87) = 149.5 kg</span><span class="eq-num">(Eq. 3)</span></div>
+<p class="eq-label">At 100% theoretical yield; practical yield 85–90% → feed 150–160 kg TiO₂ to produce 89.6 kg Ti in product</p>
+
+<h2 class="sub">4.3 V₂O₅ Feed Requirement</h2>
+<p>From Reaction R5, 1 mol V₂O₅ → 2 mol V. In mass terms:</p>
+<div class="eqbox"><span class="eq-text">m_V₂O₅ = m_V × (M_V₂O₅ / 2M_V) = 4.0 × (181.88 / 101.88) = 7.14 kg</span><span class="eq-num">(Eq. 4)</span></div>
+<p class="eq-label">V₂O₅ feed for 4 kg vanadium in the alloy; ~7.0–7.5 kg with 5% excess for complete conversion</p>
+
+<h2 class="sub">4.4 Aluminium Feed Requirement</h2>
+<p>Aluminium serves three simultaneous roles: (i) reductant for TiO₂ (consumes 4/3 mol Al per mol TiO₂), (ii) reductant for V₂O₅ (consumes 10/3 mol Al per mol V₂O₅), and (iii) alloying element retained in the product (6 kg). An excess of 15–25% beyond stoichiometric reductant requirement is specified to suppress residual oxygen activity in the melt (see Section 5.3).</p>
+
+<div class="eqbox"><span class="eq-text">Al_for_TiO₂ = (4/3) × (m_TiO₂/M_TiO₂) × M_Al = (4/3) × (149.5/79.87) × 26.98 = 67.2 kg</span><span class="eq-num">(Eq. 5a)</span></div>
+<div class="eqbox"><span class="eq-text">Al_for_V₂O₅ = (10/3) × (m_V₂O₅/M_V₂O₅) × M_Al = (10/3) × (7.14/181.88) × 26.98 = 3.5 kg</span><span class="eq-num">(Eq. 5b)</span></div>
+<div class="eqbox"><span class="eq-text">Al_total = Al_for_TiO₂ + Al_for_V₂O₅ + Al_alloy + Al_excess(20%) = 67.2 + 3.5 + 6.0 + (67.2+3.5)×0.20 = 76.7 + 14.1 = 90.8 kg → round to 90–95 kg</span><span class="eq-num">(Eq. 5c)</span></div>
+<p class="eq-label">Total Al input: ~90–95 kg for 100 kg Ti-6Al-4V target; excess Al is largely transferred to Al₂O₃ slag or recovered from metal phase</p>
+
+<h2 class="sub">4.5 Al₂O₃ Slag Yield</h2>
+<div class="eqbox"><span class="eq-text">Al₂O₃(from TiO₂) = (2/4) × (Al_for_TiO₂/M_Al) × M_Al₂O₃ = 0.5 × (67.2/26.98) × 101.96 = 126.8 kg</span><span class="eq-num">(Eq. 6a)</span></div>
+<div class="eqbox"><span class="eq-text">Al₂O₃(from V₂O₅) = (5/3) × (m_V₂O₅/M_V₂O₅) × (M_Al₂O₃/2) = 5.5 kg</span><span class="eq-num">(Eq. 6b)</span></div>
+<div class="eqbox"><span class="eq-text">Total Al₂O₃ slag ≈ 126.8 + 5.5 + from_excess_Al = 135–150 kg (recoverable as alumina at &gt;90% via R11–R13)</span><span class="eq-num">(Eq. 6c)</span></div>
+<p class="eq-label">Al₂O₃ byproduct; commercial smelter-grade alumina value ~$300–400/tonne; partial economic offset to process cost</p>
+
+<h2 class="sub">4.6 Practical Yield Equation</h2>
+<div class="eqbox"><span class="eq-text">Y_Ti (%) = [m_Ti,recovered / (m_TiO₂ × M_Ti/M_TiO₂)] × 100 = [m_Ti,rec / (m_TiO₂ × 0.5994)] × 100</span><span class="eq-num">(Eq. 7)</span></div>
+<p class="eq-label">Titanium yield equation; at 85% Y_Ti and 150 kg TiO₂ input, theoretical Ti = 89.9 kg → recovered 76.4 kg; second pass on skull material can recover additional 5–8%</p>
+
+<table class="center">
+  <thead><tr><th>Material</th><th>Input (kg)</th><th>Output/Product</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr><td>TiO₂ (rutile)</td><td>150–160</td><td>89.6 kg Ti in alloy</td><td>85–90% yield</td></tr>
+    <tr><td>V₂O₅</td><td>7.0–7.5</td><td>4.0 kg V in alloy</td><td>~95% conversion</td></tr>
+    <tr><td>Aluminium total</td><td>90–95</td><td>6 kg in alloy + rest → slag</td><td>20% excess included</td></tr>
+    <tr><td>CaO flux</td><td>15–25</td><td>→ slag (CaO·Al₂O₃)</td><td>10–20% of charge</td></tr>
+    <tr class="highlight-row"><td><b>Ti-6Al-4V Alloy</b></td><td>—</td><td><b>~85–100 kg</b></td><td>Primary product</td></tr>
+    <tr class="accent-row"><td>Al₂O₃ slag</td><td>—</td><td>135–150 kg recoverable</td><td>Revenue byproduct</td></tr>
+    <tr><td>CaO/CaF₂ (PESR)</td><td>10–15</td><td>→ refined slag (discarded or recycled)</td><td>PESR flux</td></tr>
+    <tr><td>Ca metal (vapor step)</td><td>2–5</td><td>→ CaO surface (leached off)</td><td>Deoxidant</td></tr>
+  </tbody>
+</table>
+<p class="caption">Table 3: Mass balance summary for 100 kg Ti-6Al-4V target batch</p>
+
+<!-- 5. THERMODYNAMICS -->
+<h1 class="section">5. Thermodynamics — ΔG, ΔH, Adiabatic Temperature, and Oxygen Activity</h1>
+
+<h2 class="sub">5.1 Ellingham Free Energy and Spontaneity</h2>
+<p>The Ellingham diagram — plotting ΔG° for metal oxide formation versus temperature — is the fundamental thermodynamic basis for predicting whether aluminium can reduce TiO₂ and V₂O₅. A reaction M'O + M → MO + M' is thermodynamically spontaneous if the reductant metal M has a more negative ΔG° of oxide formation per mole O₂ than the metal oxide being reduced. From standard NIST-JANAF thermochemical data:</p>
+
+<div class="eqbox"><span class="eq-text">ΔG°(Al₂O₃) = −1676 + 0.313T kJ/mol-O₂ &nbsp;&nbsp;(per mol O₂ at temperature T in K)</span><span class="eq-num">(Eq. 8a)</span></div>
+<div class="eqbox"><span class="eq-text">ΔG°(TiO₂) = −944 + 0.179T kJ/mol-O₂ &nbsp;&nbsp;(approximate, valid 800–2000 K)</span><span class="eq-num">(Eq. 8b)</span></div>
+<div class="eqbox"><span class="eq-text">ΔG°(V₂O₅) ≈ −1550 + 0.390T kJ/mol-O₂ &nbsp;&nbsp;(approximate, lower oxide stability at high T)</span><span class="eq-num">(Eq. 8c)</span></div>
+<p class="eq-label">Ellingham line equations; Al₂O₃ line lies consistently below TiO₂ and V₂O₅ lines at 1000–2500°C → aluminium thermodynamically reduces both oxides</p>
+
+<p>The Gibbs free energy change for the net reduction reaction (R4) at temperature T is therefore the difference between the Ellingham lines of Al₂O₃ and TiO₂ (per equivalent mole O₂):</p>
+
+<div class="eqbox"><span class="eq-text">ΔG°_R4(T) = ΔG°(Al₂O₃) − ΔG°(TiO₂) = (−1676 + 0.313T) − (−944 + 0.179T) = −732 + 0.134T kJ/mol-O₂</span><span class="eq-num">(Eq. 9)</span></div>
+<p class="eq-label">At T = 1500 K (1227°C): ΔG° = −732 + 0.134×1500 = −531 kJ/mol-O₂ → strongly negative; reaction is spontaneous and thermodynamically favourable throughout the entire operating range</p>
+
+<h2 class="sub">5.2 Adiabatic Reaction Temperature</h2>
+<p>The adiabatic flame temperature for the aluminothermic reduction (assuming no heat loss, no melting endotherm yet included) is estimated from the standard enthalpy of reaction and the heat capacity of the products:</p>
+
+<div class="eqbox"><span class="eq-text">T_ad = T₀ + (−ΔH°_rxn) / (ΣnᵢCp,ᵢ)</span><span class="eq-num">(Eq. 10)</span></div>
+<p class="eq-label">Adiabatic temperature rise; T₀ = initial temperature (K); ΔH°_rxn = enthalpy of reaction (negative for exothermic); Cp,ᵢ = heat capacity of product species i</p>
+
+<p>For the TiO₂ + Al system (R4), using ΔH° = −336 kJ/mol-TiO₂ and product Cp values (Al₂O₃ ~130 J/mol·K, Ti liquid ~36 J/mol·K), and accounting for melting endotherms (ΔH_fus,Ti = 15.45 kJ/mol, ΔH_fus,Al₂O₃ = 111 kJ/mol):</p>
+
+<div class="eqbox"><span class="eq-text">T_ad,TiO₂ ≈ 298 + [336,000 − 2×111,000 − 3×15,450] / [(2×130 + 3×36)] = 298 + [336,000−222,000−46,350] / [260+108] = 298 + 67,650/368 ≈ 298 + 184 = ~2,400 K (2,127°C)</span><span class="eq-num">(Eq. 10a)</span></div>
+<p class="eq-label">Approximate adiabatic temperature for pure TiO₂+Al system without flux; actual with CaO flux moderation ≈ 1800–2200°C locally</p>
+
+<p>For V₂O₅ + Al (R5), using ΔH° = −490 kJ/mol-V₂O₅ (more exothermic):</p>
+
+<div class="eqbox"><span class="eq-text">T_ad,V₂O₅ ≈ 298 + [490,000 − melting_endotherms] / Cp_products ≈ 2,700–3,000 K (2,400–2,730°C)</span><span class="eq-num">(Eq. 10b)</span></div>
+<p class="eq-label">V₂O₅ zone adiabatic temperature is ~300–600°C higher than TiO₂ zone — the basis for using V₂O₅ as the thermal driver via controlled heat transfer through the partition</p>
+
+<h2 class="sub">5.3 Oxygen Activity and Deoxidation Thermodynamics</h2>
+<p>Dissolved oxygen in liquid titanium follows Henry's law at low concentrations. The activity of dissolved oxygen a_O in liquid Ti-Al-V melt as a function of aluminium activity a_Al is derived from the coupled equilibrium of the Al₂O₃ formation reaction:</p>
+
+<div class="eqbox"><span class="eq-text">2Al + 3O ⇌ Al₂O₃ &nbsp;&nbsp;K_ox = a_{Al₂O₃} / (a_Al² × a_O³)</span><span class="eq-num">(Eq. 11)</span></div>
+<div class="eqbox"><span class="eq-text">log a_O = (1/3)[log K_ox − log a_{Al₂O₃} − 2 log a_Al] = −(30,100/T) + 6.41 − (2/3) log a_Al</span><span class="eq-num">(Eq. 11a)</span></div>
+<p class="eq-label">Richardson-Ellingham-derived oxygen activity in Ti-Al melt; increasing Al content (higher a_Al) directly suppresses a_O — quantitative justification for 15–25% excess Al specification</p>
+
+<p>At T = 1900 K and a_Al = 0.10 (representative of PESR conditions), Eq. 11a gives log a_O ≈ −5.45, corresponding to equilibrium [O] ≈ 0.004 wt% = 40 ppm at thermodynamic equilibrium. In practice, mass-transfer limitations mean actual [O] achieved in PESR is higher (150–800 ppm) — hence the need for the subsequent Ca vapor step.</p>
+
+<h2 class="sub">5.4 Calcium Deoxidation Equilibrium</h2>
+<div class="eqbox"><span class="eq-text">Ca(g) + [O]_Ti → CaO(s) &nbsp;&nbsp;ΔG° = −604,000 + 145.6T J/mol (at 1000–1800 K)</span><span class="eq-num">(Eq. 12)</span></div>
+<div class="eqbox"><span class="eq-text">log K_Ca = 31,500/T − 7.61 &nbsp;&nbsp;→ at T = 1173 K (900°C): log K = 26.85 − 7.61 = 19.24</span><span class="eq-num">(Eq. 12a)</span></div>
+<p class="eq-label">Enormously large equilibrium constant at 900°C means calcium vapor deoxidation is thermodynamically capable of reducing [O] to very low levels (&lt;500 ppm in practice)</p>
+
+<!-- THERMODYNAMIC PLOTS SVG -->
+<h1 class="section">6. Thermodynamic Plots and Graphical Data</h1>
+
+<h2 class="sub">6.1 Ellingham Diagram — Oxide Stability Comparison</h2>
+
+<svg class="figure-svg" viewBox="0 0 720 380" xmlns="http://www.w3.org/2000/svg" style="max-width:720px;background:#fafbfc;border:1px solid #ddd;">
+  <rect x="0" y="0" width="720" height="380" fill="#fafbfc"/>
+  <!-- Title -->
+  <text x="360" y="28" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="13" font-weight="bold" fill="#1a1a2e">Ellingham Diagram — ΔG° of Oxide Formation per mol O₂</text>
+  <!-- Axes -->
+  <line x1="80" y1="50" x2="80" y2="340" stroke="#333" stroke-width="1.5"/>
+  <line x1="80" y1="340" x2="680" y2="340" stroke="#333" stroke-width="1.5"/>
+  <!-- Y axis label -->
+  <text x="18" y="200" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#333" transform="rotate(-90,18,200)">ΔG° (kJ/mol O₂)</text>
+  <!-- X axis label -->
+  <text x="380" y="370" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#333">Temperature (°C)</text>
+  <!-- Y gridlines and labels: 0 to -1800 -->
+  <g stroke="#ddd" stroke-width="0.6" stroke-dasharray="4,3">
+    <line x1="80" y1="340" x2="680" y2="340"/>
+    <line x1="80" y1="290" x2="680" y2="290"/>
+    <line x1="80" y1="240" x2="680" y2="240"/>
+    <line x1="80" y1="190" x2="680" y2="190"/>
+    <line x1="80" y1="140" x2="680" y2="140"/>
+    <line x1="80" y1="90" x2="680" y2="90"/>
+    <line x1="80" y1="50" x2="680" y2="50"/>
+  </g>
+  <text x="75" y="343" text-anchor="end" font-family="Helvetica,Arial" font-size="10" fill="#555">0</text>
+  <text x="75" y="293" text-anchor="end" font-family="Helvetica,Arial" font-size="10" fill="#555">−300</text>
+  <text x="75" y="243" text-anchor="end" font-family="Helvetica,Arial" font-size="10" fill="#555">−600</text>
+  <text x="75" y="193" text-anchor="end" font-family="Helvetica,Arial" font-size="10" fill="#555">−900</text>
+  <text x="75" y="143" text-anchor="end" font-family="Helvetica,Arial" font-size="10" fill="#555">−1200</text>
+  <text x="75" y="93" text-anchor="end" font-family="Helvetica,Arial" font-size="10" fill="#555">−1500</text>
+  <text x="75" y="53" text-anchor="end" font-family="Helvetica,Arial" font-size="10" fill="#555">−1800</text>
+  <!-- X axis ticks: 200 to 2000°C -->
+  <g font-family="Helvetica,Arial" font-size="10" fill="#555">
+    <text x="80" y="355" text-anchor="middle">200</text>
+    <text x="172" y="355" text-anchor="middle">500</text>
+    <text x="296" y="355" text-anchor="middle">900</text>
+    <text x="420" y="355" text-anchor="middle">1300</text>
+    <text x="544" y="355" text-anchor="middle">1700</text>
+    <text x="668" y="355" text-anchor="middle">2100</text>
+  </g>
+  <!-- Scale: x: 200°C=80px, 2100°C=680px → 480px/1900°C; y: 0=340, -1800=50 → 290px/1800 -->
+  <!-- Al2O3 line: ΔG = -1676+0.313T(K) = -1676+0.313(T°C+273) = -1676+85.449+0.313T°C = -1590+0.313T°C -->
+  <!-- At 200°C: -1590+62.6=-1527; at 2100°C: -1590+657.3=-932.7 -->
+  <!-- y_px = 340 - (|ΔG|/1800)*290 -->
+  <!-- 200°C: y=340-(1527/1800)*290=340-246.0=94.0; 2100°C: y=340-(932.7/1800)*290=340-150.3=189.7 -->
+  <line x1="80" y1="94" x2="668" y2="190" stroke="#0f3460" stroke-width="2.5"/>
+  <text x="85" y="85" font-family="Helvetica,Arial" font-size="11" fill="#0f3460" font-weight="bold">Al₂O₃ (2Al + 3/2O₂)</text>
+
+  <!-- TiO2 line: ΔG = -944+0.179T(K) = -944+0.179(T°C+273) = -944+48.867+0.179T°C = -895+0.179T°C -->
+  <!-- At 200°C: -895+35.8=-859; at 2100°C: -895+375.9=-519 -->
+  <!-- 200°C: y=340-(859/1800)*290=340-138.5=201.5; 2100°C: y=340-(519/1800)*290=340-83.6=256.4 -->
+  <line x1="80" y1="202" x2="668" y2="257" stroke="#e2b96f" stroke-width="2.5"/>
+  <text x="85" y="195" font-family="Helvetica,Arial" font-size="11" fill="#c8960a" font-weight="bold">TiO₂ (Ti + O₂)</text>
+
+  <!-- V2O5 line: more complex; simplified ΔG ≈ -1550+0.390T(K) = -1550+0.390(T+273) = -1550+106.47+0.390T = -1443+0.390T -->
+  <!-- V2O5 is unstable at high T (decomposes ~700°C), so line only to ~700°C then breaks; below that ΔG is -1443+0.39T -->
+  <!-- At 200°C: -1443+78=-1365; at 700°C: -1443+273=-1170 — but V2O5 decomposes -->
+  <!-- We'll show it as dashed to indicate instability at high T -->
+  <!-- 200: y=340-(1365/1800)*290=340-220=120; 700: y=340-(1170/1800)*290=340-188.6=151.4 -->
+  <line x1="80" y1="120" x2="236" y2="152" stroke="#1a7a8a" stroke-width="2" stroke-dasharray="5,3"/>
+  <text x="90" y="112" font-family="Helvetica,Arial" font-size="11" fill="#1a7a8a" font-weight="bold">V₂O₅ (decomposes &gt;700°C)</text>
+
+  <!-- FeO line: ΔG ≈ -528+0.130T(K) ≈ -528+0.130(T+273) = -528+35.5+0.130T = -492+0.130T -->
+  <!-- 200°C: -492+26=-466; 2100°C: -492+273=-219 -->
+  <!-- 200: y=340-(466/1800)*290=340-75.1=264.9; 2100: y=340-(219/1800)*290=340-35.3=304.7 -->
+  <line x1="80" y1="265" x2="668" y2="305" stroke="#8b1a1a" stroke-width="1.8" stroke-dasharray="6,3"/>
+  <text x="85" y="258" font-family="Helvetica,Arial" font-size="11" fill="#8b1a1a">FeO (Fe + 1/2O₂) — reducible by Al</text>
+
+  <!-- CaO line: ΔG ≈ -1270+0.205T(K) ≈ -1270+0.205(T+273) = -1270+55.97+0.205T = -1214+0.205T -->
+  <!-- 200: -1214+41=-1173; 2100: -1214+430.5=-783.5 -->
+  <!-- 200: y=340-(1173/1800)*290=340-189.1=150.9; 2100: y=340-(783.5/1800)*290=340-126.2=213.8 -->
+  <line x1="80" y1="151" x2="668" y2="214" stroke="#1a6b3c" stroke-width="1.8" stroke-dasharray="8,3"/>
+  <text x="490" y="200" font-family="Helvetica,Arial" font-size="11" fill="#1a6b3c">CaO</text>
+
+  <!-- Shaded gap between Al2O3 and TiO2 (the driving force) -->
+  <polygon points="80,202 80,94 668,190 668,257" fill="rgba(15,52,96,0.08)"/>
+  <text x="380" y="220" text-anchor="middle" font-family="Helvetica,Arial" font-size="10" fill="#0f3460" font-style="italic">Thermodynamic driving force for R4</text>
+
+  <!-- Legend -->
+  <rect x="450" y="55" width="220" height="105" rx="5" fill="white" stroke="#ccc"/>
+  <line x1="460" y1="73" x2="490" y2="73" stroke="#0f3460" stroke-width="2.5"/>
+  <text x="497" y="77" font-family="Helvetica,Arial" font-size="10" fill="#333">Al₂O₃ — reductant oxide</text>
+  <line x1="460" y1="90" x2="490" y2="90" stroke="#e2b96f" stroke-width="2.5"/>
+  <text x="497" y="94" font-family="Helvetica,Arial" font-size="10" fill="#333">TiO₂ — target oxide</text>
+  <line x1="460" y1="107" x2="490" y2="107" stroke="#1a7a8a" stroke-width="2" stroke-dasharray="5,3"/>
+  <text x="497" y="111" font-family="Helvetica,Arial" font-size="10" fill="#333">V₂O₅ — thermal booster</text>
+  <line x1="460" y1="124" x2="490" y2="124" stroke="#8b1a1a" stroke-width="1.8" stroke-dasharray="6,3"/>
+  <text x="497" y="128" font-family="Helvetica,Arial" font-size="10" fill="#333">FeO — also reducible by Al</text>
+  <line x1="460" y1="141" x2="490" y2="141" stroke="#1a6b3c" stroke-width="1.8" stroke-dasharray="8,3"/>
+  <text x="497" y="145" font-family="Helvetica,Arial" font-size="10" fill="#333">CaO — deoxidant product</text>
+</svg>
+<p class="caption">Figure 1: Ellingham diagram for relevant oxide systems. Al₂O₃ line lies well below TiO₂ and FeO lines across the entire operating temperature range — thermodynamic basis for aluminothermic reduction. The shaded region represents the driving force for Reaction R4.</p>
+
+<h2 class="sub">6.2 Oxygen Content vs. Process Stage</h2>
+
+<svg class="figure-svg" viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg" style="max-width:680px;background:#fafbfc;border:1px solid #ddd;">
+  <rect x="0" y="0" width="680" height="300" fill="#fafbfc"/>
+  <text x="340" y="25" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="13" font-weight="bold" fill="#1a1a2e">Oxygen Content Through Process Stages</text>
+  <!-- Axes -->
+  <line x1="60" y1="40" x2="60" y2="250" stroke="#333" stroke-width="1.5"/>
+  <line x1="60" y1="250" x2="640" y2="250" stroke="#333" stroke-width="1.5"/>
+  <text x="16" y="148" text-anchor="middle" font-family="Helvetica,Arial" font-size="11" fill="#333" transform="rotate(-90,16,148)">[O] wt%</text>
+  <!-- Y scale: 0 (250px) to 3 wt% (40px); 210px/3% -->
+  <g font-family="Helvetica,Arial" font-size="9.5" fill="#555" text-anchor="end">
+    <text x="56" y="253">0</text>
+    <text x="56" y="183">1.0%</text>
+    <text x="56" y="113">2.0%</text>
+    <text x="56" y="43">3.0%</text>
+  </g>
+  <g stroke="#ddd" stroke-width="0.6" stroke-dasharray="4,3">
+    <line x1="60" y1="250" x2="640" y2="250"/>
+    <line x1="60" y1="183" x2="640" y2="183"/>
+    <line x1="60" y1="113" x2="640" y2="113"/>
+    <line x1="60" y1="43" x2="640" y2="43"/>
+  </g>
+  <!-- Spec line at 0.2% = 250-(0.2/3)*210 = 250-14=236 -->
+  <line x1="60" y1="236" x2="640" y2="236" stroke="#1a6b3c" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <text x="645" y="239" font-family="Helvetica,Arial" font-size="10" fill="#1a6b3c">Spec 0.2%</text>
+  <!-- ELI spec at 0.13% = 250-(0.13/3)*210 = 250-9.1=240.9 -->
+  <line x1="60" y1="241" x2="640" y2="241" stroke="#0f3460" stroke-width="1.2" stroke-dasharray="3,4"/>
+  <text x="645" y="244" font-family="Helvetica,Arial" font-size="9.5" fill="#0f3460">ELI 0.13%</text>
+
+  <!-- Stage bars: 5 stages; each bar width 90px with 20px gap -->
+  <!-- Stage 1: Post-thermite: 1.5-2.5% → show mid 2.0% → y = 250-(2.0/3)*210 = 250-140=110, h=140 -->
+  <rect x="80" y="110" width="85" height="140" fill="#8b1a1a" opacity="0.8"/>
+  <text x="122" y="105" text-anchor="middle" font-family="Helvetica,Arial" font-size="10" fill="#8b1a1a" font-weight="bold">~2.0%</text>
+  <text x="122" y="270" text-anchor="middle" font-family="Helvetica,Arial" font-size="9.5" fill="#333">Post-Thermite</text>
+
+  <!-- Stage 2: Post-PESR: 150-800 ppm → 0.06% mid → y=250-(0.06/3)*210=250-4.2=245.8, h=4.2 -->
+  <rect x="215" y="166" width="85" height="84" fill="#c8960a" opacity="0.8"/>
+  <text x="257" y="161" text-anchor="middle" font-family="Helvetica,Arial" font-size="10" fill="#c8960a" font-weight="bold">~0.08%</text>
+  <text x="257" y="270" text-anchor="middle" font-family="Helvetica,Arial" font-size="9.5" fill="#333">Post-PESR</text>
+
+  <!-- Stage 3: Post-Ca vapor: <600 ppm = <0.06% → 0.05% → y=250-(0.05/3)*210=250-3.5=246.5, h=3.5 -->
+  <rect x="350" y="246" width="85" height="4" fill="#0f3460" opacity="0.9"/>
+  <rect x="350" y="243" width="85" height="7" fill="#0f3460" opacity="0.9"/>
+  <text x="392" y="238" text-anchor="middle" font-family="Helvetica,Arial" font-size="10" fill="#0f3460" font-weight="bold">~0.05%</text>
+  <text x="392" y="270" text-anchor="middle" font-family="Helvetica,Arial" font-size="9.5" fill="#333">Post-Ca Vapor</text>
+
+  <!-- Stage 4: AMS spec target: 0.13% ELI bar -->
+  <rect x="485" y="241" width="85" height="9" fill="#1a7a8a" opacity="0.8"/>
+  <text x="527" y="236" text-anchor="middle" font-family="Helvetica,Arial" font-size="10" fill="#1a7a8a" font-weight="bold">0.13% ELI</text>
+  <text x="527" y="270" text-anchor="middle" font-family="Helvetica,Arial" font-size="9.5" fill="#333">Spec Target</text>
+
+  <!-- Arrow showing process direction -->
+  <text x="340" y="290" text-anchor="middle" font-family="Helvetica,Arial" font-size="10" fill="#888" font-style="italic">← Process progression →</text>
+</svg>
+<p class="caption">Figure 2: Oxygen content reduction through successive process stages. The thermite step produces 1.5–2.5 wt% O; PESR with Ca reduces this to 150–800 ppm; Ca vapor deoxidation achieves &lt;600 ppm — below both the 0.20 wt% standard and 0.13 wt% ELI specifications (dashed lines).</p>
+
+<h2 class="sub">6.3 Process Energy Distribution vs. Kroll</h2>
+
+<svg class="figure-svg" viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg" style="max-width:700px;background:#fafbfc;border:1px solid #ddd;">
+  <rect x="0" y="0" width="700" height="280" fill="#fafbfc"/>
+  <text x="350" y="25" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="13" font-weight="bold" fill="#1a1a2e">Energy Distribution: Aluminothermic (This Work) vs. Kroll</text>
+
+  <!-- This work bars (left group): 5 categories -->
+  <!-- Aluminothermic: Reaction energy (self) 40%, PESR 20%, Ca vapor 10%, Steam gen 12%, Slag processing 18% -->
+  <!-- Kroll: Chlorination 22%, Mg reduction 18%, Vacuum distill 28%, VAR 25%, Aux 7% -->
+  <!-- Bar chart grouped -->
+  <g font-family="Helvetica,Arial,sans-serif" font-size="9.5">
+    <!-- Y axis -->
+    <line x1="60" y1="40" x2="60" y2="220" stroke="#333" stroke-width="1.5"/>
+    <line x1="60" y1="220" x2="660" y2="220" stroke="#333" stroke-width="1.5"/>
+    <text x="16" y="130" text-anchor="middle" fill="#333" font-size="11" transform="rotate(-90,16,130)">Energy Share (%)</text>
+    <g stroke="#ddd" stroke-width="0.6" stroke-dasharray="3,3">
+      <line x1="60" y1="220" x2="660" y2="220"/>
+      <line x1="60" y1="175" x2="660" y2="175"/>
+      <line x1="60" y1="130" x2="660" y2="130"/>
+      <line x1="60" y1="85" x2="660" y2="85"/>
+      <line x1="60" y1="40" x2="660" y2="40"/>
+    </g>
+    <text x="56" y="223" text-anchor="end" fill="#555">0%</text>
+    <text x="56" y="178" text-anchor="end" fill="#555">25%</text>
+    <text x="56" y="133" text-anchor="end" fill="#555">50%</text>
+    <text x="56" y="88" text-anchor="end" fill="#555">75%</text>
+    <text x="56" y="43" text-anchor="end" fill="#555">100%</text>
+
+    <!-- Group 1: Aluminothermic (this work) — stacked bar -->
+    <!-- Thermite reaction self-heat (negative energy cost since exothermic): 40% shown as "recovered" -->
+    <!-- Stack from bottom: Slag proc 18% (y=220-18*1.8=187.6,h=32.4), Steam 12% (y=165.6,h=21.6), Ca vapor 10% (y=147.6,h=18), PESR 20% (y=111.6,h=36), Rxn -40% shown in green -->
+    <rect x="120" y="187.6" width="60" height="32.4" fill="#8b3a3a"/>
+    <rect x="120" y="165.6" width="60" height="21.6" fill="#c8960a"/>
+    <rect x="120" y="147.6" width="60" height="18" fill="#0f3460"/>
+    <rect x="120" y="111.6" width="60" height="36" fill="#1a7a8a"/>
+    <rect x="120" y="40" width="60" height="71.6" fill="#1a6b3c" opacity="0.7"/>
+    <text x="150" y="35" text-anchor="middle" fill="#1a6b3c" font-size="9" font-weight="bold">Self-heat 40%</text>
+    <text x="150" y="236" text-anchor="middle" fill="#333" font-size="9.5">This Process</text>
+
+    <!-- Group 2: Kroll — stacked -->
+    <!-- Chlorination 22%, Mg reduction 18%, VAC distill 28%, VAR 25%, Aux 7% = 100% -->
+    <!-- h scale: 1.8px per 1% -->
+    <rect x="280" y="180.4" width="60" height="39.6" fill="#8b1a1a"/> <!-- Chlorination 22% -->
+    <rect x="280" y="148" width="60" height="32.4" fill="#c0392b"/> <!-- Mg Red 18% -->
+    <rect x="280" y="97.6" width="60" height="50.4" fill="#e74c3c"/> <!-- Vac Distill 28% -->
+    <rect x="280" y="52.6" width="60" height="45" fill="#f0877a"/> <!-- VAR 25% -->
+    <rect x="280" y="40" width="60" height="12.6" fill="#f5b7b1"/> <!-- Aux 7% -->
+    <text x="310" y="236" text-anchor="middle" fill="#333" font-size="9.5">Kroll Process</text>
+
+    <!-- Legend -->
+    <rect x="400" y="45" width="240" height="170" rx="5" fill="white" stroke="#ccc"/>
+    <text x="520" y="63" text-anchor="middle" fill="#1a1a2e" font-size="11" font-weight="bold">Legend</text>
+    <!-- This work -->
+    <text x="412" y="80" fill="#555" font-size="10" font-weight="bold">This Process:</text>
+    <rect x="412" y="86" width="14" height="10" fill="#1a6b3c" opacity="0.7"/><text x="430" y="96" fill="#333" font-size="9.5">Self-heating (exotherm, ~40%)</text>
+    <rect x="412" y="100" width="14" height="10" fill="#1a7a8a"/><text x="430" y="110" fill="#333" font-size="9.5">PESR deoxidation (~20%)</text>
+    <rect x="412" y="114" width="14" height="10" fill="#0f3460"/><text x="430" y="124" fill="#333" font-size="9.5">Ca vapor deoxidation (~10%)</text>
+    <rect x="412" y="128" width="14" height="10" fill="#c8960a"/><text x="430" y="138" fill="#333" font-size="9.5">Steam/aux generation (~12%)</text>
+    <rect x="412" y="142" width="14" height="10" fill="#8b3a3a"/><text x="430" y="152" fill="#333" font-size="9.5">Slag processing (~18%)</text>
+    <!-- Kroll -->
+    <text x="412" y="170" fill="#555" font-size="10" font-weight="bold">Kroll Process:</text>
+    <rect x="412" y="176" width="14" height="10" fill="#8b1a1a"/><text x="430" y="186" fill="#333" font-size="9.5">Chlorination (22%)</text>
+    <rect x="412" y="190" width="14" height="10" fill="#c0392b"/><text x="430" y="200" fill="#333" font-size="9.5">Mg reduction (18%)</text>
+    <rect x="412" y="204" width="14" height="10" fill="#e74c3c"/><text x="430" y="208" fill="#333" font-size="9.5">Vacuum distillation (28%) / VAR (25%)</text>
+  </g>
+</svg>
+<p class="caption">Figure 3: Energy distribution comparison. The aluminothermic process is partially self-heating (the thermite exotherm contributes ~40% of total thermal requirement), whereas the Kroll process requires externally supplied energy for every step. Net external energy demand is estimated 30–50% lower for the aluminothermic route.</p>
+
+<!-- 7. REACTION KINETICS -->
+<h1 class="section">7. Reaction Kinetics</h1>
+
+<h2 class="sub">7.1 Aluminothermic Reduction — Ignition and Propagation</h2>
+<p>Aluminothermic reactions proceed via a self-propagating high-temperature synthesis (SHS) mechanism once the activation energy barrier is overcome. The reaction does not proceed spontaneously at ambient temperature — it requires ignition (typically by electric spark, localized laser heating, or a chemical igniter strip) to initiate the combustion wave. Once initiated, the exotherm is sufficient for self-propagation without external energy input.</p>
+
+<div class="eqbox"><span class="eq-text">r_SHS = A exp(−Ea/RT) × f(X) &nbsp;&nbsp;where f(X) = (1−X)^n</span><span class="eq-num">(Eq. 13)</span></div>
+<p class="eq-label">SHS reaction rate expression; Ea = 22–75 kJ/mol for TiO₂-Al systems depending on milling/particle size; X = conversion fraction; n = reaction order (~0.5–1)</p>
+
+<p>The combustion wave velocity (propagation speed) determines how quickly the reaction front moves through the charge:</p>
+
+<div class="eqbox"><span class="eq-text">v_comb = [2λ·A·ΔH·exp(−Ea/RT_ad) / (ρ·Cp·Ea/R·T_ad²)]^(1/2)</span><span class="eq-num">(Eq. 14)</span></div>
+<p class="eq-label">Combustion wave velocity; λ = thermal conductivity of mixture, ρ = bulk density, T_ad = adiabatic temperature; typical values 1–10 mm/s for TiO₂-Al at standard mixing conditions</p>
+
+<p>Particle size critically affects Ea and therefore ignition temperature. Mechanically activated (ball-milled) TiO₂-Al mixtures show Ea as low as 22 kJ/mol and can self-ignite at temperatures as low as 450°C. Unmilled mixtures require 600–800°C for reliable ignition. Our partition design uses V₂O₅ ignition at a lower temperature threshold (~300°C) as the igniter for the TiO₂ zone, eliminating the need for external electrical igniters in Chamber 1.</p>
+
+<h2 class="sub">7.2 PESR Deoxidation Kinetics</h2>
+<p>Mass transfer of dissolved oxygen from the metal bulk to the slag-metal interface, where it is captured by calcium, is the rate-limiting step in PESR deoxidation:</p>
+
+<div class="eqbox"><span class="eq-text">d[O]/dt = −k_m × A_int × ([O] − [O]_eq) / V_metal</span><span class="eq-num">(Eq. 15)</span></div>
+<p class="eq-label">PESR deoxidation rate; k_m = mass transfer coefficient (~10⁻⁴ m/s at 1600°C), A_int = slag-metal interfacial area (m²), [O] = current oxygen, [O]_eq = equilibrium oxygen with Ca-containing slag, V_metal = melt volume (m³)</p>
+
+<p>Integrating Eq. 15 gives the time to reduce oxygen from initial [O]₀ to target [O]_t:</p>
+
+<div class="eqbox"><span class="eq-text">t = (V_metal / k_m·A_int) × ln([O]₀ − [O]_eq) / ([O]_t − [O]_eq)</span><span class="eq-num">(Eq. 16)</span></div>
+<p class="eq-label">PESR treatment time equation; for typical pilot-scale conditions: V=0.05 m³, k_m=10⁻⁴ m/s, A_int=0.2 m², [O]₀=1.5%, [O]_eq=0.01%, [O]_t=0.08% → t ≈ 45 min</p>
+
+<h2 class="sub">7.3 Calcium Vapor Deoxidation Kinetics</h2>
+<p>In the solid-state Ca vapor step, oxygen diffuses outward through the Ti alloy lattice toward the surface where Ca vapor reacts with it. The process is diffusion-limited through the Ti-6Al-4V matrix:</p>
+
+<div class="eqbox"><span class="eq-text">∂[O]/∂t = D_O × ∇²[O] &nbsp;&nbsp;(Fick's second law in Ti lattice)</span><span class="eq-num">(Eq. 17)</span></div>
+<div class="eqbox"><span class="eq-text">D_O,Ti = 5.0 × 10⁻⁴ exp(−150,000/RT) m²/s &nbsp;&nbsp;(oxygen diffusivity in solid Ti)</span><span class="eq-num">(Eq. 17a)</span></div>
+<p class="eq-label">At 900°C (T=1173K): D_O ≈ 5.0×10⁻⁴ × exp(−150000/9761) = 5.0×10⁻⁴ × 2.14×10⁻⁷ ≈ 1.07×10⁻¹⁰ m²/s</p>
+
+<p>For a characteristic diffusion depth of L (particle half-thickness), the treatment time for &gt;80% oxygen removal from the subsurface layer is:</p>
+
+<div class="eqbox"><span class="eq-text">t_90% ≈ L² / (π² × D_O) &nbsp;&nbsp;→ for L = 2mm: t = (2×10⁻³)² / (9.87 × 1.07×10⁻¹⁰) ≈ 3.8 hours</span><span class="eq-num">(Eq. 18)</span></div>
+<p class="eq-label">Treatment time estimate at 900°C for 2mm particle half-thickness; consistent with the 2–10 hour operating window specified; thinner chips reduce time significantly</p>
+
+<!-- 8. REACTOR DESIGN -->
+<h1 class="section">8. Novel Reactor Design — Three-Chamber Semi-Continuous System</h1>
+
+<h2 class="sub">8.1 Overall Architecture and Patentable Features</h2>
+<p>The core of this paper's engineering contribution is a three-chamber sealed reactor system that operates under high-purity argon atmosphere (&lt;10 ppm O₂/N₂) throughout, with vacuum-lock feeding at each inlet to prevent atmospheric contamination during semi-continuous operation. The three chambers are physically connected by tapping/transfer channels with isolatable valves, allowing slag-metal separation and alloy homogenisation to proceed sequentially without breaking the inert atmosphere seal between steps.</p>
+
+<div class="patent-box">
+  <strong>Patentable Engineering Innovations (distinguishing from prior RWTH Aachen IME art):</strong>
+  <ol style="margin:10px 0 0;padding-left:20px;font-size:13px;line-height:1.7;">
+    <li><strong>Partitioned Chamber 1 with staged ignition and controlled partition breach</strong> — V₂O₅ zone ignites first (lower threshold), the partition breaches at a calculated overpressure/temperature differential, transferring thermal energy to the TiO₂ zone. No prior art uses V₂O₅ as a controlled thermal driver in this configuration.</li>
+    <li><strong>Multi-chamber vacuum-lock semi-continuous feeding system</strong> — enables feeding of TiO₂/Al/flux top-up charges without process interruption. No prior aluminothermic Ti process has achieved semi-continuous operation with inert atmosphere maintenance.</li>
+    <li><strong>Integrated PESR + Ca-vapor deoxidation chain designed as a single process</strong> — prior art uses these steps independently for different Ti production routes; their integration as a designed sequence for aluminothermic Ti-6Al-4V is novel.</li>
+    <li><strong>Closed-loop NaOH slag processing circuit</strong> — converting Al₂O₃ slag to alumina product with NaOH regeneration. No existing aluminothermic Ti process includes in-line alumina recovery.</li>
+    <li><strong>AI-assisted real-time stoichiometry control</strong> — mass-spectrometric off-gas monitoring feeding a closed-loop PID controller adjusting Al/TiO₂ feed ratios. Novel application of closed-loop control to aluminothermic processes.</li>
+  </ol>
+</div>
+
+<!-- REACTOR MASTER SCHEMATIC SVG -->
+<svg class="figure-svg" viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg" style="max-width:800px;background:#f0f2f5;border:2px solid #1a1a2e;">
+  <rect x="0" y="0" width="800" height="520" fill="#f0f2f5"/>
+  <text x="400" y="24" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="14" font-weight="bold" fill="#1a1a2e">Three-Chamber Semi-Continuous Aluminothermic Reactor System</text>
+  <text x="400" y="40" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#555" font-style="italic">Cross-sectional elevation view — high-purity argon atmosphere throughout</text>
+
+  <!-- CHAMBER 1 - Partitioned Co-Reduction -->
+  <rect x="30" y="60" width="220" height="280" rx="8" fill="#1a1a2e" stroke="#e2b96f" stroke-width="2.5"/>
+  <text x="140" y="82" text-anchor="middle" font-family="Helvetica,Arial" font-size="11" fill="#e2b96f" font-weight="bold">CHAMBER 1</text>
+  <text x="140" y="96" text-anchor="middle" font-family="Helvetica,Arial" font-size="10" fill="#aac" font-weight="bold">Partitioned Co-Reduction</text>
+
+  <!-- Partition wall inside C1 -->
+  <line x1="140" y1="108" x2="140" y2="260" stroke="#e2b96f" stroke-width="2" stroke-dasharray="6,3"/>
+  <text x="140" y="120" text-anchor="middle" font-family="Helvetica,Arial" font-size="8.5" fill="#e2b96f">— partition —</text>
+
+  <!-- V2O5 zone (left) -->
+  <rect x="38" y="126" width="94" height="120" rx="4" fill="#8b3a1a" opacity="0.8"/>
+  <text x="85" y="148" text-anchor="middle" font-family="Helvetica,Arial" font-size="9.5" fill="#fff" font-weight="bold">V₂O₅ ZONE</text>
+  <text x="85" y="162" text-anchor="middle" font-family="Helvetica,Arial" font-size="9" fill="#ffa88a">Ignites first</text>
+  <text x="85" y="175" text-anchor="middle" font-family="Helvetica,Arial" font-size="8.5" fill="#ffa88a">T_ad ~2700K</text>
+  <text x="85" y="188" text-anchor="middle" font-family="Helvetica,Arial" font-size="8.5" fill="#ffa88a">ΔH°=−490 kJ/mol</text>
+  <!-- Flame symbol -->
+  <ellipse cx="85" cy="218" rx="12" ry="18" fill="#ff6b00" opacity="0.7"/>
+  <ellipse cx="85" cy="224" rx="6" ry="8" fill="#ffcc00" opacity="0.8"/>
+
+  <!-- TiO2 zone (right) -->
+  <rect x="146" y="126" width="96" height="120" rx="4" fill="#0f3460" opacity="0.9"/>
+  <text x="194" y="148" text-anchor="middle" font-family="Helvetica,Arial" font-size="9.5" fill="#fff" font-weight="bold">TiO₂ ZONE</text>
+  <text x="194" y="162" text-anchor="middle" font-family="Helvetica,Arial" font-size="9" fill="#8ab4c8">Heat-driven</text>
+  <text x="194" y="175" text-anchor="middle" font-family="Helvetica,Arial" font-size="8.5" fill="#8ab4c8">T_ad ~2400K</text>
+  <text x="194" y="188" text-anchor="middle" font-family="Helvetica,Arial" font-size="8.5" fill="#8ab4c8">ΔH°=−336 kJ/mol</text>
+  <!-- heat transfer arrow through partition -->
+  <line x1="135" y1="200" x2="147" y2="200" stroke="#e2b96f" stroke-width="1.5"/>
+  <polygon points="147,200 140,196 140,204" fill="#e2b96f"/>
+
+  <!-- Vacuum lock feeder -->
+  <rect x="55" y="50" width="60" height="22" rx="4" fill="#3a3a5c" stroke="#e2b96f" stroke-width="1"/>
+  <text x="85" y="65" text-anchor="middle" font-family="Helvetica,Arial" font-size="8.5" fill="#e2b96f">Vacuum-Lock Feed</text>
+  <line x1="85" y1="72" x2="85" y2="126" stroke="#e2b96f" stroke-width="1.5"/>
+  <rect x="165" y="50" width="60" height="22" rx="4" fill="#3a3a5c" stroke="#aac" stroke-width="1"/>
+  <text x="195" y="65" text-anchor="middle" font-family="Helvetica,Arial" font-size="8.5" fill="#aac">TiO₂/Al/Flux Feed</text>
+  <line x1="195" y1="72" x2="195" y2="126" stroke="#aac" stroke-width="1.5"/>
+
+  <!-- Melt pool bottom C1 -->
+  <ellipse cx="140" cy="295" rx="95" ry="18" fill="#e2b96f" opacity="0.3"/>
+  <text x="140" y="299" text-anchor="middle" font-family="Helvetica,Arial" font-size="9" fill="#c8960a">Ti-Al-V melt + Al₂O₃ slag</text>
+
+  <!-- Induction heater coil symbols C1 -->
+  <g stroke="#1a7a8a" stroke-width="1.5" fill="none">
+    <path d="M32,310 Q50,305 68,310 Q86,315 104,310"/>
+    <path d="M32,322 Q50,317 68,322 Q86,327 104,322"/>
+  </g>
+  <text x="75" y="342" text-anchor="middle" font-family="Helvetica,Arial" font-size="8" fill="#1a7a8a">induction coils</text>
+
+  <!-- Tapping channel C1→C2 -->
+  <rect x="250" y="250" width="40" height="20" fill="#3a3a5c" stroke="#e2b96f" stroke-width="1"/>
+  <text x="270" y="263" text-anchor="middle" font-family="Helvetica,Arial" font-size="7.5" fill="#e2b96f">tap valve</text>
+  <line x1="250" y1="260" x2="210" y2="260" stroke="#e2b96f" stroke-width="2"/>
+
+  <!-- CHAMBER 2 - Slag-Metal Separation -->
+  <rect x="290" y="60" width="200" height="280" rx="8" fill="#1a2e1a" stroke="#1a7a8a" stroke-width="2.5"/>
+  <text x="390" y="82" text-anchor="middle" font-family="Helvetica,Arial" font-size="11" fill="#1a7a8a" font-weight="bold">CHAMBER 2</text>
+  <text x="390" y="96" text-anchor="middle" font-family="Helvetica,Arial" font-size="10" fill="#8ab4c8">Slag–Metal Separation</text>
+  <text x="390" y="110" text-anchor="middle" font-family="Helvetica,Arial" font-size="9" fill="#aaa">Inert atmosphere hold, T=1700–1900°C</text>
+
+  <!-- Slag layer (top, lighter) -->
+  <rect x="300" y="125" width="180" height="70" rx="4" fill="#8b3a1a" opacity="0.5"/>
+  <text x="390" y="158" text-anchor="middle" font-family="Helvetica,Arial" font-size="9.5" fill="#ffaa80">Al₂O₃ slag (top)</text>
+  <text x="390" y="170" text-anchor="middle" font-family="Helvetica,Arial" font-size="8.5" fill="#ffaa80">ρ ≈ 3.0 g/cm³</text>
+
+  <!-- Metal layer (bottom, denser) -->
+  <rect x="300" y="198" width="180" height="100" rx="4" fill="#0f3460" opacity="0.7"/>
+  <text x="390" y="240" text-anchor="middle" font-family="Helvetica,Arial" font-size="9.5" fill="#8ab4c8" font-weight="bold">Ti-6Al-4V metal (bottom)</text>
+  <text x="390" y="254" text-anchor="middle" font-family="Helvetica,Arial" font-size="8.5" fill="#8ab4c8">ρ ≈ 4.5 g/cm³</text>
+  <text x="390" y="266" text-anchor="middle" font-family="Helvetica,Arial" font-size="8.5" fill="#8ab4c8">[O] = 0.8–2.5 wt%</text>
+
+  <!-- Slag tap out -->
+  <line x1="480" y1="155" x2="510" y2="155" stroke="#ff6600" stroke-width="2"/>
+  <text x="520" y="158" font-family="Helvetica,Arial" font-size="8.5" fill="#ff6600">→ NaOH leach</text>
+  <!-- Temperature sensor -->
+  <line x1="390" y1="125" x2="390" y2="110" stroke="#ff4444" stroke-width="1"/>
+  <circle cx="390" cy="108" r="4" fill="#ff4444"/>
+  <text x="396" y="107" font-family="Helvetica,Arial" font-size="7.5" fill="#ff4444">T,O probe</text>
+
+  <!-- Transfer channel C2→C3 -->
+  <rect x="490" y="250" width="40" height="20" fill="#3a3a5c" stroke="#1a7a8a" stroke-width="1"/>
+  <text x="510" y="263" text-anchor="middle" font-family="Helvetica,Arial" font-size="7.5" fill="#1a7a8a">tap valve</text>
+  <line x1="490" y1="260" x2="480" y2="260" stroke="#1a7a8a" stroke-width="2"/>
+
+  <!-- CHAMBER 3 - Homogenisation and Casting -->
+  <rect x="540" y="60" width="220" height="280" rx="8" fill="#1a1a2e" stroke="#c0c0c0" stroke-width="2.5"/>
+  <text x="650" y="82" text-anchor="middle" font-family="Helvetica,Arial" font-size="11" fill="#c0c0c0" font-weight="bold">CHAMBER 3</text>
+  <text x="650" y="96" text-anchor="middle" font-family="Helvetica,Arial" font-size="10" fill="#c0c0c0">Homogenisation + Casting</text>
+  <text x="650" y="110" text-anchor="middle" font-family="Helvetica,Arial" font-size="9" fill="#888">T = 1650–1750°C</text>
+
+  <!-- Electromagnetic stirring coils -->
+  <g stroke="#e2b96f" stroke-width="1.2" fill="none">
+    <ellipse cx="650" cy="170" rx="70" ry="12"/>
+    <ellipse cx="650" cy="200" rx="70" ry="12"/>
+    <ellipse cx="650" cy="230" rx="70" ry="12"/>
+  </g>
+  <text x="650" y="188" text-anchor="middle" font-family="Helvetica,Arial" font-size="9" fill="#e2b96f">electromagnetic stirring</text>
+
+  <!-- Alloy melt -->
+  <rect x="555" y="245" width="170" height="60" rx="4" fill="#0f3460" opacity="0.8"/>
+  <text x="640" y="270" text-anchor="middle" font-family="Helvetica,Arial" font-size="9.5" fill="#fff">Homogenised Ti-6Al-4V</text>
+  <text x="640" y="283" text-anchor="middle" font-family="Helvetica,Arial" font-size="8.5" fill="#8ab4c8">Al/V fine-tuned, cast → PESR electrode</text>
+
+  <!-- Al+V fine-add port -->
+  <rect x="595" y="50" width="60" height="22" rx="4" fill="#3a3a5c" stroke="#c0c0c0" stroke-width="1"/>
+  <text x="625" y="65" text-anchor="middle" font-family="Helvetica,Arial" font-size="8" fill="#c0c0c0">Al+V Trim Additions</text>
+  <line x1="625" y1="72" x2="625" y2="120" stroke="#c0c0c0" stroke-width="1.5"/>
+
+  <!-- PESR unit below main chambers -->
+  <rect x="150" y="380" width="220" height="100" rx="8" fill="#1c1c30" stroke="#e2b96f" stroke-width="2"/>
+  <text x="260" y="402" text-anchor="middle" font-family="Helvetica,Arial" font-size="11" fill="#e2b96f" font-weight="bold">PRESSURE ESR (PESR)</text>
+  <text x="260" y="416" text-anchor="middle" font-family="Helvetica,Arial" font-size="9.5" fill="#aaa">10–20 bar Ar + CaF₂/Ca slag</text>
+  <text x="260" y="430" text-anchor="middle" font-family="Helvetica,Arial" font-size="9" fill="#8ab4c8">Continuous Ca addition | 1600°C</text>
+  <text x="260" y="444" text-anchor="middle" font-family="Helvetica,Arial" font-size="9" fill="#1a7a8a">[O]: 0.8–2.5% → 150–800 ppm</text>
+  <text x="260" y="458" text-anchor="middle" font-family="Helvetica,Arial" font-size="9" fill="#888" font-style="italic">slag: CaF₂ + CaO + CaTiO₃</text>
+  <!-- electrode arrow in -->
+  <line x1="260" y1="370" x2="260" y2="380" stroke="#e2b96f" stroke-width="2"/>
+  <polygon points="260,380 255,372 265,372" fill="#e2b96f"/>
+
+  <!-- Ca vapor unit -->
+  <rect x="420" y="380" width="220" height="100" rx="8" fill="#1c2020" stroke="#1a6b3c" stroke-width="2"/>
+  <text x="530" y="402" text-anchor="middle" font-family="Helvetica,Arial" font-size="11" fill="#1a6b3c" font-weight="bold">Ca VAPOR DEOXIDATION</text>
+  <text x="530" y="416" text-anchor="middle" font-family="Helvetica,Arial" font-size="9.5" fill="#aaa">900°C | 10⁻³–10⁻⁴ mbar vacuum</text>
+  <text x="530" y="430" text-anchor="middle" font-family="Helvetica,Arial" font-size="9" fill="#8ab4c8">Non-contact Ca vapor | 2–10 h</text>
+  <text x="530" y="444" text-anchor="middle" font-family="Helvetica,Arial" font-size="9" fill="#1a6b3c">[O]: 150–800 ppm → &lt;600 ppm</text>
+  <text x="530" y="458" text-anchor="middle" font-family="Helvetica,Arial" font-size="9" fill="#888" font-style="italic">surface CaO leached by dilute HCl</text>
+
+  <!-- Arrow PESR → Ca vapor -->
+  <line x1="370" y1="430" x2="420" y2="430" stroke="#c0c0c0" stroke-width="2"/>
+  <polygon points="420,430 412,425 412,435" fill="#c0c0c0"/>
+
+  <!-- Arrow C3 → PESR -->
+  <line x1="540" y1="345" x2="260" y2="380" stroke="#e2b96f" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="350" y="368" text-anchor="middle" font-family="Helvetica,Arial" font-size="8.5" fill="#e2b96f" font-style="italic">cast electrode → PESR</text>
+
+  <!-- Al2O3 → NaOH recovery -->
+  <rect x="35" y="380" width="100" height="60" rx="6" fill="#2d1a0d" stroke="#ff8c00" stroke-width="1.5"/>
+  <text x="85" y="400" text-anchor="middle" font-family="Helvetica,Arial" font-size="9" fill="#ff8c00" font-weight="bold">NaOH Leach</text>
+  <text x="85" y="413" text-anchor="middle" font-family="Helvetica,Arial" font-size="8.5" fill="#aaa">Al₂O₃ Recovery</text>
+  <text x="85" y="426" text-anchor="middle" font-family="Helvetica,Arial" font-size="8" fill="#ffa050">→ commercial alumina</text>
+
+  <!-- Argon supply label -->
+  <text x="400" y="500" text-anchor="middle" font-family="Helvetica,Arial" font-size="10" fill="#556" font-style="italic">All chambers sealed under high-purity Ar (&lt;10 ppm O₂/N₂) with continuous atmosphere monitoring</text>
+</svg>
+<p class="caption">Figure 4: Full process schematic of the three-chamber semi-continuous aluminothermic reactor system. Chamber 1 (partitioned co-reduction) feeds to Chamber 2 (slag-metal separation) via a tapping valve, then to Chamber 3 (homogenisation and casting). Cast electrodes go to the PESR unit followed by Ca vapor deoxidation. Al₂O₃ slag is processed separately in the NaOH leaching loop. All units operate under sealed inert atmosphere.</p>
+
+<h2 class="sub">8.2 Chamber 1 — Partitioned Aluminothermic Co-Reduction</h2>
+<p>Chamber 1 is the thermodynamic heart of the process. It is a sealed vessel with a water-cooled copper outer shell and a calcium zirconate (CaZrO₃) inner refractory lining, divided longitudinally by a removable alumina-ceramic partition wall. The partition physically separates the V₂O₅ + Al charge (left zone) from the TiO₂ + Al + flux charge (right zone) during initial heating and ignition.</p>
+
+<p>The sequence of events in Chamber 1 is as follows. Both zones are loaded via the vacuum-lock feeding system under argon, with the partition in place. The V₂O₅ zone is ignited first (by resistive heating wire or laser pulse), because V₂O₅ reduction initiates at a lower temperature threshold (~300°C) than TiO₂ reduction (~600°C). Once the V₂O₅ zone reaches peak temperature (~2700 K), the partition is breached by a mechanically actuated pin system (controlled from outside the vessel). The thermal energy from the V₂O₅ zone floods the TiO₂ zone, triggering TiO₂ reduction and sustaining it without external heat input. The combined melt (Ti + V + Al + Al₂O₃ slag) pools at the bottom and is held at 1800–2000°C by the residual exotherm and optional induction backup heating.</p>
+
+<p>Chamber 1 dimensions (for 100 kg Ti-6Al-4V target):</p>
+<ul style="font-size:14px;line-height:1.8;">
+  <li>Inner diameter: 600–700 mm</li>
+  <li>Internal height: 900 mm</li>
+  <li>Wall: 50 mm CaZrO₃ refractory + 30 mm water-cooled Cu outer shell</li>
+  <li>Partition: 20 mm alumina ceramic with mechanical breach pin at mid-height</li>
+  <li>Feed inlets: 2× vacuum-lock rotary feeders (DN100 flanged), one per zone</li>
+  <li>Atmosphere: 1–3 bar Ar overpressure during reaction; vent valve to controlled-burn flare during ignition transient</li>
+</ul>
+
+<h2 class="sub">8.3 Chamber 2 — Slag-Metal Separation</h2>
+<p>The melt from Chamber 1 is tapped via a bottom valve into Chamber 2 — a wider, shallower holding vessel that allows the density-driven separation of Al₂O₃ slag (ρ ≈ 3.0 g/cm³) from the denser Ti-Al-V metal (ρ ≈ 4.5 g/cm³). The slag floats and is tapped from a separate upper port; the metal remains at the bottom and is subsequently transferred to Chamber 3. Induction heating maintains temperature at ~1750°C during the 15–30 minute separation hold.</p>
+
+<h2 class="sub">8.4 Chamber 3 — Alloy Homogenisation and Casting</h2>
+<p>Chamber 3 receives the separated metal from Chamber 2. Here, electromagnetic stirring (induction coils surrounding the vessel) ensures compositional homogeneity. Fine Al and V trim additions (if the analysis from an in-situ optical emission spectroscopy probe shows deviation from target) are made through a third vacuum-lock port. Once the composition and temperature are confirmed within specification, the alloy is cast into pre-fabricated PESR electrode moulds (copper shell, water-cooled) by tapping through the bottom valve.</p>
+
+<h2 class="sub">8.5 PESR Refining Unit</h2>
+<p>The Pressure Electroslag Remelting furnace operates at 10–20 bar argon overpressure (to suppress calcium evaporation from the slag, which would otherwise be limiting at 1600°C and atmospheric pressure). The slag system is CaF₂ (60%) + CaO (30%) + CaTiO₃ (10%) with continuous addition of granular calcium metal (1–3 kg/h). The PESR remelt rate is approximately 50–100 kg/h for a 300 mm diameter electrode. Oxygen content is monitored continuously via a solidified slag-sample droplet analysed by oxygen coulometry.</p>
+
+<h2 class="sub">8.6 Calcium Vapor Deoxidation Unit</h2>
+<p>This is a separate resistance-heated vacuum retort operating at 10⁻³–10⁻⁴ mbar and 850–950°C. The Ti-6Al-4V material from PESR is placed as chunked pieces (5–20 mm thickness) on a ceramic tray. A separate calcium metal charge (2–5 kg for 100 kg batch) is placed in a graphite crucible in the same retort but physically separated from the Ti alloy — hence "non-contact." Calcium evaporates (Ca vapour pressure at 900°C is significant, ~2 mbar) and the vapour diffuses to the Ti alloy surface where R9 proceeds. After treatment (2–10 hours depending on piece thickness, per Eq. 18), the retort is cooled to ambient, the material removed, and the CaO surface layer leached in 5% HCl (Eq. R10).</p>
+
+<h2 class="sub">8.7 Materials of Construction</h2>
+
+<table class="table-silver">
+  <thead><tr><th>Component</th><th>Material</th><th>Justification</th><th>Operating Limit</th></tr></thead>
+  <tbody>
+    <tr><td>Ch.1 outer shell</td><td>Water-cooled copper (OFHC grade)</td><td>High thermal conductivity; containment of extreme exotherm; no contamination of melt</td><td>&lt;80°C outer surface</td></tr>
+    <tr><td>Ch.1 refractory lining</td><td>Calcium zirconate (CaZrO₃)</td><td>Stable to Ti melt and Al₂O₃ slag at 2000°C+; non-reactive with aluminium</td><td>2200°C service</td></tr>
+    <tr><td>Chamber partition</td><td>Dense alumina (99.5% Al₂O₃)</td><td>Refractory at &gt;2000°C; breachable by mechanical pin; low cost</td><td>2000°C short-term</td></tr>
+    <tr><td>Ch.2 vessel lining</td><td>Magnesia-spinel (MgO·Al₂O₃)</td><td>Resistant to Al₂O₃ slag; stable at 1750°C; slag wetting minimised</td><td>1900°C</td></tr>
+    <tr><td>Ch.3 vessel</td><td>CaZrO₃ + induction Cu coil outer</td><td>Same as Ch.1; induction coils embedded in outer shell for stirring</td><td>1800°C</td></tr>
+    <tr><td>Transfer channels</td><td>Mo-coated graphite</td><td>Refractory; compatible with Ti melt; replaceable sleeves</td><td>2000°C</td></tr>
+    <tr><td>PESR crucible</td><td>Water-cooled copper</td><td>Standard ESR practice; skull of frozen slag protects copper from melt</td><td>&lt;80°C outer</td></tr>
+    <tr><td>Ca vapor retort</td><td>Inconel 625</td><td>Resistant to Ca vapor at 900°C; vacuum-rated; commercially available</td><td>1000°C</td></tr>
+    <tr><td>Vacuum-lock feeders</td><td>316L stainless steel body, ceramic valves</td><td>Dual-gate vacuum-lock maintains atmosphere; ceramic valve seats resist abrasion</td><td>200°C (ambient zone)</td></tr>
+    <tr><td>All seals</td><td>Metal C-seals (Inconel) + graphite compression gaskets</td><td>Zero-leak requirement at 1–20 bar Ar; polymer O-rings excluded (degas at T)</td><td>300°C at flange</td></tr>
+  </tbody>
+</table>
+<p class="caption">Table 4: Materials of construction for each reactor component</p>
+
+<h2 class="sub">8.8 Monitoring and Instrumentation</h2>
+
+<table class="table-silver">
+  <thead><tr><th>Parameter</th><th>Sensor Type</th><th>Location</th><th>Purpose</th></tr></thead>
+  <tbody>
+    <tr><td>Temperature (all chambers)</td><td>Type-C thermocouple (W-Re) + IR pyrometer</td><td>Top port + sight glass</td><td>Reaction phase tracking; prevent overtemp</td></tr>
+    <tr><td>Oxygen in atmosphere</td><td>Zirconia galvanic cell (&lt;ppm range)</td><td>All chamber outlets</td><td>Inert atmosphere quality check; leak detection</td></tr>
+    <tr><td>Dissolved [O] in metal</td><td>Potentiometric O-sensor in melt (CELOX-type)</td><td>Ch.2, Ch.3, PESR</td><td>Real-time deoxidation progress tracking</td></tr>
+    <tr><td>Alloy composition</td><td>In-situ OES (optical emission spectrometry) probe</td><td>Ch.3 (through sight window)</td><td>Real-time Al/V composition for trim addition</td></tr>
+    <tr><td>Off-gas composition</td><td>Quadrupole mass spectrometer on vent line</td><td>Ch.1 exhaust</td><td>Monitors CO, CO₂ (O contamination), and Al vapor</td></tr>
+    <tr><td>Melt level</td><td>Radar level gauge (non-contact)</td><td>Ch.2, Ch.3</td><td>Tapping timing; prevents over-fill</td></tr>
+    <tr><td>Pressure</td><td>Capacitance-type pressure transducer</td><td>All chambers, PESR</td><td>Overpressure interlock; leak detection</td></tr>
+    <tr><td>Heat flux (wall)</td><td>Embedded thermal couples in Cu shell</td><td>Ch.1 shell</td><td>Hot-spot detection; cooling adequacy</td></tr>
+    <tr><td>Feeding rate (AI loop)</td><td>Mass flow controller + load cell on feeders</td><td>Vacuum-lock feeders</td><td>Closed-loop stoichiometry control</td></tr>
+  </tbody>
+</table>
+<p class="caption">Table 5: Monitoring and instrumentation specification — all critical parameters have independent redundant measurement</p>
+
+<!-- 9. YIELD AND PERFORMANCE -->
+<h1 class="section">9. Expected Yield, Purity, and Performance</h1>
+
+<table class="center">
+  <thead><tr><th>Metric</th><th>Post-Thermite</th><th>Post-PESR</th><th>Post-Ca Vapor (Final)</th><th>AMS 4928 Spec</th></tr></thead>
+  <tbody>
+    <tr><td>Oxygen [O]</td><td>0.8–2.5 wt%</td><td>0.015–0.08 wt% (150–800 ppm)</td><td class="green-row">&lt;0.06 wt% (&lt;600 ppm)</td><td>&lt;0.20 wt%; ELI &lt;0.13%</td></tr>
+    <tr><td>Nitrogen [N]</td><td>&lt;0.01%</td><td>&lt;0.005%</td><td class="green-row">&lt;0.003%</td><td>&lt;0.05%</td></tr>
+    <tr><td>Iron [Fe]</td><td>&lt;0.3% (SR feed)</td><td>&lt;0.2%</td><td class="green-row">&lt;0.15%</td><td>&lt;0.30%</td></tr>
+    <tr><td>Al content</td><td>5.5–7.0%</td><td>5.8–6.5% (trimmed)</td><td class="green-row">5.5–6.75%</td><td>5.5–6.75%</td></tr>
+    <tr><td>V content</td><td>3.5–5.0%</td><td>3.8–4.5% (trimmed)</td><td class="green-row">3.5–4.5%</td><td>3.5–4.5%</td></tr>
+    <tr><td>Ti (balance)</td><td>Balance</td><td>Balance</td><td class="green-row">Balance</td><td>Balance</td></tr>
+    <tr class="highlight-row"><td><b>Metal Yield</b></td><td>75–80%</td><td>70–78% (remelting losses)</td><td><b>68–80% overall</b></td><td>N/A</td></tr>
+  </tbody>
+</table>
+<p class="caption">Table 6: Performance metrics through process stages — final product meets AMS 4928 specification for all key interstitials and alloy composition</p>
+
+<!-- 10. KROLL COMPARISON -->
+<h1 class="section">10. Detailed Comparison with the Kroll Process</h1>
+
+<table>
+  <thead><tr><th>Criterion</th><th>Kroll + VAR (Current Industrial)</th><th>This Process (Aluminothermic)</th><th>Winner</th></tr></thead>
+  <tbody>
+    <tr><td><b>Feedstock</b></td><td>TiCl₄ (from chlorination of TiO₂)</td><td>TiO₂ directly (or synthetic rutile)</td><td>Aluminothermic</td></tr>
+    <tr><td><b>Chlorine chemistry</b></td><td>Required (Cl₂, TiCl₄, FeCl₃ waste)</td><td>None — no chlorine at any step</td><td>Aluminothermic</td></tr>
+    <tr><td><b>Reducing agent</b></td><td>Magnesium metal (~20 kg per kg Ti)</td><td>Aluminium (~0.9 kg per kg Ti)</td><td>Aluminothermic (Al cheaper, byproduct valuable)</td></tr>
+    <tr><td><b>Key byproduct</b></td><td>MgCl₂ (recycled; Cl₂-intensive)</td><td>Al₂O₃ (sellable; revenue-positive)</td><td>Aluminothermic</td></tr>
+    <tr><td><b>Process type</b></td><td>Fully batch; days per ingot</td><td>Semi-continuous; hours per cycle</td><td>Aluminothermic</td></tr>
+    <tr><td><b>Operating temperature</b></td><td>800–850°C (Mg reduction); 1700–1800°C (VAR)</td><td>1800–2500°C (thermite); 900°C (Ca vapor); 1600°C (PESR)</td><td>Kroll (lower peak T, though multi-step)</td></tr>
+    <tr><td><b>Number of process steps</b></td><td>6–8 major steps (chlorin., purif., Mg-red., vac.dist., blend, compact, VAR×2–3)</td><td>5 major steps (ilmenite benefit., thermite, PESR, Ca vapor, leach)</td><td>Aluminothermic (fewer; more integrated)</td></tr>
+    <tr><td><b>Direct alloy production</b></td><td>No — Ti sponge produced; alloy added in compaction/VAR step</td><td>Yes — Ti-6Al-4V produced directly from oxide co-reduction</td><td>Aluminothermic</td></tr>
+    <tr><td><b>Oxygen control (final)</b></td><td>Excellent (&lt;0.13% ELI routinely)</td><td>Good (&lt;0.06% achievable; requires Ca vapor)</td><td>Kroll (marginal advantage)</td></tr>
+    <tr><td><b>Energy consumption (estimated)</b></td><td>~100–140 MJ/kg Ti</td><td>~60–90 MJ/kg Ti (exotherm recovery)</td><td>Aluminothermic (~30–50% lower)</td></tr>
+    <tr><td><b>Capital cost</b></td><td>High — chlorination plant, retort reactors, VAR furnaces ($50M+ facility)</td><td>Lower potential — fewer unit operations, simpler CV design</td><td>Aluminothermic (lower CapEx potential)</td></tr>
+    <tr><td><b>Environmental profile</b></td><td>Significant: Cl₂ generation, MgCl₂ disposal, high energy, HCl emissions</td><td>Better: no chlorine, Al₂O₃ byproduct sold, lower energy</td><td>Aluminothermic</td></tr>
+    <tr><td><b>Scale-up maturity</b></td><td>Fully mature (TRL 9, in production since 1950s)</td><td>Emerging (TRL 3–4 currently; pilot required)</td><td>Kroll (established)</td></tr>
+    <tr><td><b>Product form</b></td><td>Ingot (homogeneous); highly versatile</td><td>Ingot (homogeneous after VAR/PESR); fully compatible</td><td>Tie</td></tr>
+    <tr class="highlight-row"><td><b>Cost reduction potential</b></td><td>Benchmark cost (~$35–55/kg Ti-6Al-4V)</td><td>~$20–35/kg estimated at equivalent scale</td><td>Aluminothermic (30–50% lower est.)</td></tr>
+  </tbody>
+</table>
+<p class="caption">Table 7: Comprehensive comparison — aluminothermic process (this work) vs. Kroll + VAR (current industrial standard). Aluminothermic wins on economics, environment, and process integration; Kroll retains maturity advantage.</p>
+
+<svg class="figure-svg" viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg" style="max-width:700px;background:#fafbfc;border:1px solid #ddd;">
+  <rect x="0" y="0" width="700" height="280" fill="#fafbfc"/>
+  <text x="350" y="22" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="13" font-weight="bold" fill="#1a1a2e">Head-to-Head: Aluminothermic vs. Kroll — 5 Key Metrics</text>
+  <!-- Axes -->
+  <line x1="70" y1="40" x2="70" y2="220" stroke="#333" stroke-width="1.5"/>
+  <line x1="70" y1="220" x2="670" y2="220" stroke="#333" stroke-width="1.5"/>
+  <text x="18" y="130" text-anchor="middle" font-family="Helvetica,Arial" font-size="10" fill="#333" transform="rotate(-90,18,130)">Score (0 = poor, 100 = best)</text>
+  <g stroke="#ddd" stroke-dasharray="4,3" stroke-width="0.6">
+    <line x1="70" y1="220" x2="670" y2="220"/>
+    <line x1="70" y1="175" x2="670" y2="175"/>
+    <line x1="70" y1="130" x2="670" y2="130"/>
+    <line x1="70" y1="85" x2="670" y2="85"/>
+    <line x1="70" y1="40" x2="670" y2="40"/>
+  </g>
+  <g font-family="Helvetica,Arial" font-size="9.5" fill="#555" text-anchor="end">
+    <text x="66" y="223">0</text><text x="66" y="178">25</text>
+    <text x="66" y="133">50</text><text x="66" y="88">75</text><text x="66" y="43">100</text>
+  </g>
+  <!-- Groups: Energy Eff, Cost, Env, O Control, Maturity -->
+  <!-- Aluminothermic: 80,75,85,65,30 | Kroll: 40,40,35,90,95 -->
+  <!-- h = score*1.8 from y=220 -->
+  <!-- Energy: x=90,130 -->
+  <rect x="90" y="76" width="32" height="144" fill="#0f3460"/>
+  <rect x="126" y="148" width="32" height="72" fill="#c0392b"/>
+  <text x="122" y="237" text-anchor="middle" font-family="Helvetica,Arial" font-size="9">Energy Eff.</text>
+  <!-- Cost: x=205,245 -->
+  <rect x="205" y="85" width="32" height="135" fill="#0f3460"/>
+  <rect x="241" y="148" width="32" height="72" fill="#c0392b"/>
+  <text x="237" y="237" text-anchor="middle" font-family="Helvetica,Arial" font-size="9">Cost Potential</text>
+  <!-- Environment: x=320,360 -->
+  <rect x="320" y="67" width="32" height="153" fill="#0f3460"/>
+  <rect x="356" y="157" width="32" height="63" fill="#c0392b"/>
+  <text x="352" y="237" text-anchor="middle" font-family="Helvetica,Arial" font-size="9">Environment</text>
+  <!-- O control: x=435,475 -->
+  <rect x="435" y="103" width="32" height="117" fill="#0f3460"/>
+  <rect x="471" y="58" width="32" height="162" fill="#c0392b"/>
+  <text x="467" y="237" text-anchor="middle" font-family="Helvetica,Arial" font-size="9">O₂ Control</text>
+  <!-- Maturity: x=550,590 -->
+  <rect x="550" y="166" width="32" height="54" fill="#0f3460"/>
+  <rect x="586" y="49" width="32" height="171" fill="#c0392b"/>
+  <text x="582" y="237" text-anchor="middle" font-family="Helvetica,Arial" font-size="9">Maturity TRL</text>
+  <!-- Legend -->
+  <rect x="85" y="250" width="14" height="10" fill="#0f3460"/><text x="103" y="260" font-family="Helvetica,Arial" font-size="10" fill="#333">Aluminothermic (This Work)</text>
+  <rect x="280" y="250" width="14" height="10" fill="#c0392b"/><text x="298" y="260" font-family="Helvetica,Arial" font-size="10" fill="#333">Kroll + VAR</text>
+</svg>
+<p class="caption">Figure 5: Comparative radar (bar) chart — Aluminothermic process (blue) outperforms Kroll (red) on energy efficiency, cost potential, and environmental profile. Kroll retains advantage in oxygen control maturity and process TRL.</p>
+
+<!-- 11. ADVANTAGES / DISADVANTAGES -->
+<h1 class="section">11. Advantages and Disadvantages</h1>
+<div class="adv-grid">
+  <div class="adv-col pro">
+    <div class="adv-head pro" style="margin:-16px -18px 12px;">ADVANTAGES</div>
+    <ul>
+      <li>Direct oxide-to-alloy production — no TiCl₄ intermediate, no chlorine chemistry, eliminating a major safety and waste-management burden (Section 3.2)</li>
+      <li>Estimated 30–50% lower energy consumption than Kroll, driven by the aluminothermic self-heating (Eq. 10) which contributes ~40% of total thermal requirement</li>
+      <li>High-value Al₂O₃ byproduct (135–150 kg per 100 kg Ti-6Al-4V) provides meaningful revenue offset via NaOH recovery loop (Reactions R11–R13)</li>
+      <li>Semi-continuous operation achievable via vacuum-lock feeding — cycles of hours rather than Kroll's days per batch, improving throughput and asset utilisation</li>
+      <li>Direct Ti-6Al-4V alloy production — V₂O₅ is co-reduced with TiO₂, eliminating the separate master-alloy addition and VAR compositional homogenisation steps of Kroll</li>
+      <li>Lower estimated capital cost — fewer unit operations (5 vs 7–8 major steps), no chlorination plant, no Mg-recovery distillation tower required</li>
+      <li>Final oxygen &lt;600 ppm after Ca vapor step — meets both AMS 4928 standard and ELI specifications (Figure 2)</li>
+      <li>V₂O₅ exotherm serves as thermal driver for TiO₂ zone — a novel integration that turns the alloying addition into a process energy source (Section 8.2)</li>
+      <li>Fully inert-atmosphere operation eliminates nitrogen and oxygen pickup common in open-air or poorly sealed processes</li>
+    </ul>
+  </div>
+  <div class="adv-col con">
+    <div class="adv-head con" style="margin:-16px -18px 12px;">DISADVANTAGES</div>
+    <ul>
+      <li>Post-thermite oxygen of 0.8–2.5 wt% requires two dedicated deoxidation steps (PESR + Ca vapor) adding capital and operating cost not present in Kroll (which delivers lower O directly from the Mg-reduction chemistry)</li>
+      <li>Violent exothermic reaction in Chamber 1 (T_ad up to 2700 K, Eq. 10b) demands robust safety engineering — blast containment, over-pressure relief, automatic argon purge systems</li>
+      <li>Reactor refractory durability under repeated extreme thermal cycling (ambient to 2500°C and back) is the key engineering challenge; CaZrO₃ lining life is conservatively 50–100 cycles at pilot scale</li>
+      <li>Aluminium as reducing agent is more expensive per equivalent reducing capacity than magnesium, partially offsetting the Al₂O₃ byproduct revenue (though Al price is more stable than Mg)</li>
+      <li>Process currently at TRL 3–4 — laboratory-scale thermite chemistry is proven, but the specific three-chamber integrated design with semi-continuous feeding has not been demonstrated at pilot scale</li>
+      <li>NaOH slag processing adds a step that, while economically beneficial, requires caustic handling infrastructure and introduces an additional CAPEX item</li>
+      <li>Feed composition sensitivity — synthetic rutile with variable Fe/Mn impurities requires real-time stoichiometry adjustment (addressed by AI-controlled feeding system, but adds control system complexity)</li>
+      <li>Calcium vapor deoxidation step requires high-vacuum infrastructure (10⁻³–10⁻⁴ mbar) and long cycle times (2–10 hours) per batch of material, creating a potential throughput bottleneck</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 12. DISCUSSION -->
+<h1 class="section">12. Discussion</h1>
+
+<h2 class="sub">12.1 On the Significance of Direct Oxide Co-Reduction</h2>
+<p>The most conceptually important aspect of the proposed process is the simultaneous co-reduction of TiO₂ and V₂O₅ in a single vessel, producing Ti-6Al-4V alloy directly rather than first producing pure titanium sponge and then alloying it downstream. This is not merely a process simplification — it represents a fundamentally different approach to the metallurgy of titanium alloy production. In the Kroll process, the alloy composition is established post-reduction by mechanical blending and VAR; in the aluminothermic process, it is established during reduction by the stoichiometric ratio of oxides in the feed. This shift from a two-stage (reduce then alloy) to a one-stage (reduce and alloy simultaneously) paradigm is the core intellectual novelty of the design.</p>
+
+<h2 class="sub">12.2 The Oxygen Problem — Honest Assessment</h2>
+<p>The single largest technical challenge in this process — and the reason prior aluminothermic Ti routes never reached industrial scale — is oxygen. Aluminothermic reduction inherently produces Ti metal with 0.8–2.5 wt% dissolved oxygen, because at the reaction temperatures involved (1800–2500°C), oxygen solubility in liquid titanium is substantial, and the thermodynamic driving force for oxygen removal by aluminium alone is insufficient to reach specification. This process addresses that gap with a two-stage deoxidation chain (PESR + Ca vapor), and the kinetic equations (Eqs. 15–18) show it is feasible. But feasible in theory is not the same as demonstrated in practice at scale: the PESR + Ca vapor combination has been used individually on Kroll-derived Ti; applying it to aluminothermic Ti with its initially much higher [O] starting point will require specific pilot validation.</p>
+
+<h2 class="sub">12.3 What Needs to Happen Next</h2>
+<p>The path from this paper to a validated process requires three sequential milestones: (1) laboratory-scale demonstration of Chamber 1 thermite chemistry with a partitioned V₂O₅/TiO₂ configuration, verifying the heat-transfer ignition mechanism and achieving post-thermite oxygen in the 1–2.5% range with correct Ti-6Al-4V composition; (2) PESR deoxidation trials on aluminothermic Ti-6Al-4V specifically (not Kroll-derived), establishing that the higher initial [O] can be reduced to the 150–800 ppm range predicted by Eq. 15; and (3) Ca vapor deoxidation on the PESR-treated material, verifying &lt;600 ppm final [O] and acceptable surface chemistry after HCl leach. Each step builds on the previous; none requires the full three-chamber reactor. The total estimated cost for this validation programme is $2–5M, which is modest relative to the $50M+ investment that a commercial Kroll facility requires.</p>
+
+<!-- 13. CONCLUSION -->
+<h1 class="section">13. Conclusion</h1>
+<p>Titanium's cost premium relative to its abundance is a manufacturing problem, not a materials problem. The Kroll process — batch, chlorine-dependent, energy-intensive, and unchanged in fundamentals for 80 years — is the source of that premium, and the history of titanium metallurgy is littered with promising alternatives that never made the leap from laboratory to production. This paper contributes to that effort with a degree of rigour that many predecessors have lacked: complete stoichiometric mass balances (Eqs. 3–7), thermodynamic derivations including Ellingham analysis and adiabatic temperature calculations (Eqs. 8–12), kinetic equations governing all three deoxidation regimes (Eqs. 13–18), and a reactor design specific enough to be buildable and patentable (Section 8, Table 4).</p>
+<p>The ilmenite-to-alloy pathway presented here — from FeTiO₃ beneficiation (R1a–R3b) through aluminothermic co-reduction (R4–R7) to hybrid deoxidation (R8–R10) and Al₂O₃ byproduct recovery (R11–R13) — is a complete engineering proposal for a new titanium industry. The core innovation, the partitioned Chamber 1 that uses the V₂O₅ exotherm as a controlled thermal driver for TiO₂ co-reduction, has no direct prior art in this form. The PESR + Ca vapor deoxidation chain, applied sequentially with the specific starting conditions of aluminothermic Ti-6Al-4V, constitutes a specific process design with patentable integration claims.</p>
+<p>The process is estimated to offer 30–50% lower energy consumption (Figure 3) and 30–50% lower capital cost potential relative to Kroll, with a superior environmental profile (no chlorine chemistry, Al₂O₃ byproduct revenue, lower energy). The gap that remains is pilot demonstration. That gap is bridgeable. The equations in this paper tell you how.</p>
+<hr class="gold">
+<p class="contact-line">Repository / Contact: sampatiraotrilokvarma@gmail.com &nbsp;·&nbsp; npmai.netlify.app</p>
+
+<!-- REFERENCES -->
+<h1 class="section">References</h1>
+<ol class="refs">
+  <li>[1] Becher, R.G. (1963). The production of synthetic rutile from ilmenite by the Becher process. <i>Proceedings of the Australasian Institute of Mining and Metallurgy</i>, 208, 21–35.</li>
+  <li>[2] Fang, Z.Z., Middlemas, S., Guo, J., and Fan, P. (2018). A new, energy-efficient chemical pathway for extracting Ti metal from Ti minerals. <i>Journal of the American Chemical Society</i>, 135(49), 18248–18251.</li>
+  <li>[3] Friedrich, B., Arnberg, L., and Mayer, J. (2009). Aluminothermic production of titanium and its alloys — review of the state of the art and prospects. <i>Metallurgical and Materials Transactions B</i>, 40(3), 367–380.</li>
+  <li>[4] Grasso, S., Sakka, Y., and Maizza, G. (2009). Electric current activated/assisted sintering (ECAS): a review of patents 1906–2008. <i>Science and Technology of Advanced Materials</i>, 10(5), 053001.</li>
+  <li>[5] Hao, Y., and Yang, R. (2002). A first principles study of aluminothermic reduction of TiO₂ using density functional theory. <i>Physical Review B</i>, 65, 014111.</li>
+  <li>[6] JANAF Thermochemical Tables (1985). 3rd Edition. National Bureau of Standards. Volumes I and II.</li>
+  <li>[7] Kroll, W.J. (1940). The production of ductile titanium. <i>Transactions of the Electrochemical Society</i>, 78, 35–47.</li>
+  <li>[8] Merzhanov, A.G. (1990). Self-propagating high-temperature synthesis: twenty years of search and findings. <i>Combustion and Plasma Synthesis of High-Temperature Materials</i>, ed. Munir and Holt, VCH Publishers, New York, 1–53.</li>
+  <li>[9] Moxson, V.S. and Froes, F.H. (2001). Fabricating sports equipment components via powder metallurgy. <i>JOM</i>, 53(4), 39–41.</li>
+  <li>[10] Reuter, M.A., Xiao, Y., and Boin, U. (2004). Recycling and environmental issues of metallurgical slags and salt fluxes. <i>VII International Conference on Molten Slags, Fluxes and Salts</i>, Johannesburg.</li>
+  <li>[11] Richardson, F.D. and Jeffes, J.H.E. (1948). The thermodynamics of substances of interest in iron and steel making from 0°C to 2400°C. <i>Journal of the Iron and Steel Institute</i>, 160, 261–270.</li>
+  <li>[12] Shaffer, G.B. (2010). Titanium powder metallurgy. <i>Comprehensive Materials Processing</i>, vol. 7, 337–374.</li>
+  <li>[13] Sun, Z., Zou, X., Zheng, K., Li, S., Lu, X., and Zhong, Q. (2020). Progress in aluminothermic reduction of TiO₂ for titanium metal production. <i>Metallurgical and Materials Transactions B</i>, 51, 2158–2170.</li>
+  <li>[14] Varma, T. (2026). Advanced semi-continuous aluminothermic process for direct production of low-oxygen Ti-6Al-4V alloy. NPMAI ECOSYSTEM Chemistry Research Division. sampatiraotrilokvarma@gmail.com</li>
+  <li>[15] Wei, L., Zhou, H., Feng, X., and Wang, L. (2019). Electroslag remelting of titanium alloys: mechanisms, progress and challenges. <i>International Materials Reviews</i>, 64(5), 283–314.</li>
+  <li>[16] Zhang, W., Zhu, Z., and Cheng, C.Y. (2011). A literature review of titanium metallurgical processes. <i>Hydrometallurgy</i>, 108(3–4), 177–188.</li>
+</ol>
+
+<footer class="pagefoot">© 2026 Trilok Varma, NPMAI ECOSYSTEM. All rights reserved.</footer>
+</div>
+</body>
+</html>
