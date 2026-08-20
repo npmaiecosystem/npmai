@@ -63,6 +63,35 @@ import fitz
 import time
 import cv2
 import os
+import re
+
+SAFE_BASE = os.path.abspath("uploads")
+
+def safe_filename(filename: str) -> str:
+    name = os.path.basename(filename)
+    if not name or name in ('.', '..'):
+        return "unnamed"
+    name = re.sub(r'[^\w.\-]', '_', name)
+    return name
+
+def safe_db_path(db_path: str) -> str:
+    safe = os.path.basename(os.path.normpath(db_path))
+    if not safe:
+        raise ValueError("Invalid DB_PATH")
+    safe = re.sub(r'[^\w\-]', '_', safe)
+    result = os.path.abspath(os.path.join(SAFE_BASE, safe))
+    if not result.startswith(SAFE_BASE):
+        raise ValueError("DB_PATH escaped safe directory")
+    return result
+
+def safe_resolve_path(user_path: str) -> str:
+    full = os.path.abspath(os.path.normpath(user_path))
+    if full.startswith(os.path.abspath(SAFE_BASE)):
+        return full
+    full = os.path.abspath(os.path.normpath(os.path.join(SAFE_BASE, user_path)))
+    if not full.startswith(os.path.abspath(SAFE_BASE)):
+        raise ValueError("path escapes safe directory")
+    return full
 
 app=FastAPI()
 
@@ -102,6 +131,7 @@ def pdf_has_text(path):
 
 @app.post("/pdfetext")
 def extractable_text(path):
+    path = safe_resolve_path(path)
     print("Extracting")
     doc=fitz.open(path)
     full=[]
@@ -122,6 +152,7 @@ def preprocess_for_ocr(path):
 
 @app.post("/pdfstext")
 def pdf_scanned_to_text(pdf_path,dpi=300, tesseract_lang='eng'):
+    pdf_path = safe_resolve_path(pdf_path)
     print("scanning")
     pages = convert_from_path(pdf_path, dpi=dpi)
     print("pages")
@@ -135,6 +166,7 @@ def pdf_scanned_to_text(pdf_path,dpi=300, tesseract_lang='eng'):
 
 @app.post("/ocr")
 def ocr(path,lang="eng"):
+    path = safe_resolve_path(path)
     proc = preprocess_for_ocr(path)
     pil = Image.fromarray(proc)
     full = pytesseract.image_to_string(pil, lang=lang, config='--psm 6')
@@ -173,6 +205,7 @@ def get_transcript(link,output_path):
 
 @app.post("/video")
 def local_video_processing(video_path):
+    video_path = safe_resolve_path(video_path)
     clip=VideoFileClip(video_path)
 
     audio=clip.audio
@@ -185,6 +218,7 @@ def local_video_processing(video_path):
 
 @app.post("/text")
 def text_processes(path):
+    path = safe_resolve_path(path)
     with open(path,"r") as f:
         text=f.read()
         return text
@@ -213,18 +247,28 @@ async def ingest_file(
     result = None
     extracted_texts=[]
 
+    # Sanitize DB_PATH at entry
+    safe_db = None
+    if DB_PATH:
+        try:
+            safe_db = safe_db_path(DB_PATH)
+        except ValueError:
+            return JSONResponse({"response": "Invalid DB_PATH"})
+
     # ---------- FILE MODE ----------
     if file:
         length=len(file)
         for i in range(length):
             contents = await file[i].read()
-            file_path = f"uploads/{file[i].filename}"
-            print("file_path")
+            raw_name = file[i].filename or f"file_{i}"
+            safe_name = safe_filename(raw_name)
+            file_path = os.path.join(SAFE_BASE, safe_name)
+            print("file_path", file_path)
             
             with open(file_path, "wb") as f:
                 f.write(contents)
                 
-            ext = file[i].filename.lower().split(".")[-1]
+            ext = safe_name.lower().split(".")[-1] if "." in safe_name else ""
             
             if ext == "pdf":
                 print("pdf")
@@ -254,7 +298,7 @@ async def ingest_file(
     else:
         return JSONResponse({"response": "No input provided"})
 
-    results= extractable_router(extracted_texts=extracted_texts, DB_PATH=DB_PATH, query=query, temperature=temperature, model=model, secret_key=secret_key, Upload=Upload, public=public)
+    results= extractable_router(extracted_texts=extracted_texts, DB_PATH=safe_db, query=query, temperature=temperature, model=model, secret_key=secret_key, Upload=Upload, public=public)
     
     return JSONResponse({"response": results})
         
@@ -285,29 +329,40 @@ async def get_retrieval(
 ):
     if DB_PATH is None and query is "":
         return JSONResponse({"response":"Sorry but please pass DB_PATH name and Query name in string data type."})
+
+    try:
+        safe_db = safe_db_path(DB_PATH)
+    except ValueError:
+        return JSONResponse({"response": "Invalid DB_PATH"})
         
-    if os.path.exists(DB_PATH):
-        normal_retriever= retrieval(temperature=0.5,model="llama3.2",DB_PATH=DB_PATH,query=query)
+    if os.path.exists(safe_db):
+        normal_retriever= retrieval(temperature=0.5,model="llama3.2",DB_PATH=safe_db,query=query)
         return JSONResponse({"response":normal_retriever})
         
     else:
+        safe_key = re.sub(r'[^\w\-]', '_', secret_key) if secret_key else None
+        safe_db_name = os.path.basename(safe_db)
+
+        if not safe_db_name:
+            safe_db_name = "unnamed"
+
         if public:
             download_index_faiss = (
                 supabase.storage
                 .from_("NPMRagWebVectorDB")
-                .download(f"public/{DB_PATH}/index.faiss")
+                .download(f"public/{safe_db_name}/index.faiss")
             )
             
             download_index_pkl = (
                 supabase.storage
                 .from_("NPMRagWebVectorDB")
-                .download(f"public/{DB_PATH}/index.pkl")
+                .download(f"public/{safe_db_name}/index.pkl")
             )
 
-            os.makedirs(DB_PATH, exist_ok=True)
+            os.makedirs(safe_db, exist_ok=True)
 
-            full_path_faiss = os.path.join(DB_PATH, "index.faiss")
-            full_path_pkl = os.path.join(DB_PATH, "index.pkl")
+            full_path_faiss = os.path.join(safe_db, "index.faiss")
+            full_path_pkl = os.path.join(safe_db, "index.pkl")
 
             with open(full_path_faiss,"wb+") as faiss_save:
                 faiss_save.write(download_index_faiss)
@@ -315,26 +370,26 @@ async def get_retrieval(
             with open(full_path_pkl,"wb+") as pkl_save:
                 pkl_save.write(download_index_pkl)
 
-            result= retrieval(DB_PATH=DB_PATH,query=query,temperature=0.5,model="llama3.2")
+            result= retrieval(DB_PATH=safe_db,query=query,temperature=0.5,model="llama3.2")
             return JSONResponse({"response":result})
 
-        elif secret_key:
+        elif secret_key and safe_key:
             download_index_faiss = (
                 supabase.storage
                 .from_("NPMRagWebVectorDB")
-                .download(f"{secret_key}/{DB_PATH}/index.faiss")
+                .download(f"{safe_key}/{safe_db_name}/index.faiss")
             )
             
             download_index_pkl = (
                 supabase.storage
                 .from_("NPMRagWebVectorDB")
-                .download(f"{secret_key}/{DB_PATH}/index.pkl")
+                .download(f"{safe_key}/{safe_db_name}/index.pkl")
             )
 
-            os.makedirs(DB_PATH, exist_ok=True)
+            os.makedirs(safe_db, exist_ok=True)
 
-            full_path_faiss = os.path.join(DB_PATH, "index.faiss")
-            full_path_pkl = os.path.join(DB_PATH, "index.pkl")
+            full_path_faiss = os.path.join(safe_db, "index.faiss")
+            full_path_pkl = os.path.join(safe_db, "index.pkl")
 
             with open(full_path_faiss,"wb+") as faiss_save:
                 faiss_save.write(download_index_faiss)
@@ -342,7 +397,7 @@ async def get_retrieval(
             with open(full_path_pkl,"wb+") as pkl_save:
                 pkl_save.write(download_index_pkl)
 
-            result_sec= retrieval(DB_PATH=DB_PATH,query=query,temperature=0.5,model="llama3.2")
+            result_sec= retrieval(DB_PATH=safe_db,query=query,temperature=0.5,model="llama3.2")
             return JSONResponse({"response":result_sec})
 
         else:
@@ -354,6 +409,7 @@ async def get_retrieval(
 #RETRIEVAL
 def retrieval(DB_PATH,emb=HuggingFaceBgeEmbeddings(model_name="BAAI/bge-small-en-v1.5",model_kwargs={"device":"cpu"},encode_kwargs = {"normalize_embeddings": True},query_instruction="Represent this sentence for searching relevant passages: "), texts=None, query=None, temperature=None, model=None, secret_key=None, Upload=None, public=None):
     if DB_PATH:
+      db_short_name = os.path.basename(DB_PATH)
       if os.path.exists(DB_PATH):
           vector_db=FAISS.load_local(
               DB_PATH,
@@ -377,8 +433,8 @@ def retrieval(DB_PATH,emb=HuggingFaceBgeEmbeddings(model_name="BAAI/bge-small-en
           vector_db.save_local(DB_PATH)
 
           if Upload:
-              index_file_faiss_var= open(f"{DB_PATH}/index.faiss","rb")
-              index_file_pkl_var= open(f"{DB_PATH}/index.pkl","rb")
+              index_file_faiss_var= open(os.path.join(DB_PATH, "index.faiss"), "rb")
+              index_file_pkl_var= open(os.path.join(DB_PATH, "index.pkl"), "rb")
               
               if secret_key:
                   try:
@@ -387,7 +443,7 @@ def retrieval(DB_PATH,emb=HuggingFaceBgeEmbeddings(model_name="BAAI/bge-small-en
                           .from_("NPMRagWebVectorDB")
                           .upload(
                               file=index_file_faiss_var,
-                              path=f"{secret_key}/{DB_PATH}/index.faiss",
+                              path=f"{secret_key}/{db_short_name}/index.faiss",
                               file_options={"upsert": "false"}
                           )
                       )
@@ -401,7 +457,7 @@ def retrieval(DB_PATH,emb=HuggingFaceBgeEmbeddings(model_name="BAAI/bge-small-en
                           .from_("NPMRagWebVectorDB")
                           .upload(
                               file=index_file_pkl_var,
-                              path=f"{secret_key}/{DB_PATH}/index.pkl",
+                              path=f"{secret_key}/{db_short_name}/index.pkl",
                               file_options={"upsert": "false"}
                           )
                       )
@@ -410,7 +466,7 @@ def retrieval(DB_PATH,emb=HuggingFaceBgeEmbeddings(model_name="BAAI/bge-small-en
                       file_first_faiss_removal = (
                           supabase.storage
                           .from_("NPMRagWebVectorDB")
-                          .remove([f"{secret_key}/{DB_PATH}/index.faiss"])
+                          .remove([f"{secret_key}/{db_short_name}/index.faiss"])
                       )
                       print(file_first_faiss_removal)
                       
@@ -423,7 +479,7 @@ def retrieval(DB_PATH,emb=HuggingFaceBgeEmbeddings(model_name="BAAI/bge-small-en
                           .from_("NPMRagWebVectorDB")
                           .upload(
                               file=index_file_faiss_var,
-                              path=f"public/{DB_PATH}/index.faiss",
+                              path=f"public/{db_short_name}/index.faiss",
                               file_options={"upsert": "false"}
                           )
                       )
@@ -437,7 +493,7 @@ def retrieval(DB_PATH,emb=HuggingFaceBgeEmbeddings(model_name="BAAI/bge-small-en
                           .from_("NPMRagWebVectorDB")
                           .upload(
                               file=index_file_pkl_var,
-                              path=f"public/{DB_PATH}/index.pkl",
+                              path=f"public/{db_short_name}/index.pkl",
                               file_options={"upsert": "false"}
                           )
                       )
@@ -446,7 +502,7 @@ def retrieval(DB_PATH,emb=HuggingFaceBgeEmbeddings(model_name="BAAI/bge-small-en
                       file_first_faiss_removal = (
                           supabase.storage
                           .from_("NPMRagWebVectorDB")
-                          .remove([f"public/{DB_PATH}/index.faiss"])
+                          .remove([f"public/{db_short_name}/index.faiss"])
                       )
                       print(file_first_faiss_removal)
                       return "Sory some problem in uploading your Documents in Database, reupload the documents"
