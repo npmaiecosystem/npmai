@@ -17,5 +17,8 @@
     "type": "git",
     "url": "git+https://github.com/npmaiecosystem/npmai.git"
   },
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  },
   "homepage": "https://npmai.netlify.app"
 }
