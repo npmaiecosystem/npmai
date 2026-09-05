@@ -5,6 +5,7 @@
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/sonuramashishnpm/npmai)
 [![PyPI Downloads](https://static.pepy.tech/personalized-badge/npmai?period=total&units=INTERNATIONAL_SYSTEM&left_color=ORANGE&right_color=BRIGHTGREEN&left_text=downloads)](https://pepy.tech/projects/npmai)
 
+# Note:- We are changing something very big in this npmai project so i would like to request all of you to be carefull for changes that is going to happen because that can stop some features.
 
 `npmai` is a lightweight Python package designed to bridge the gap between users and open-source LLMs. 
 
