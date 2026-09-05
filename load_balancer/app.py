@@ -171,7 +171,7 @@ async def llm_router(inputs: Input):
         raise HTTPException(status_code=400, detail="Model name and Prompt are required.")
 
     if inputs.model not in Model_links:
-        raise HTTPException(status_code=444, detail="Model not found.")
+        raise HTTPException(status_code=404, detail="Model not found.")
 
     model_link = Model_links[inputs.model]
     fall_links = []
@@ -179,14 +179,16 @@ async def llm_router(inputs: Input):
     fall_models = inputs.Models
     if inputs.change and fall_models:
         for m in fall_models:
-            model_name = f"{m}_fall"
-            if model_name in Model_links.keys():
-                link = Model_links[model_name]
-                fall_links.append(link)
+            model_name_fall = f"{m}_fall"
+            if model_name_fall in Model_links:
+                fall_links.append(Model_links[model_name_fall])
+            elif m in Model_links:
+                fall_links.append(Model_links[m])
             else:
-                raise HTTPException(status_code=402, detail="Fallback models are not found in Models Dictionary")
+                raise HTTPException(status_code=400, detail=f"Fallback model '{m}' not found in Models Dictionary.")
 
     model_cond = await check_cond(model_link=model_link, fall_model=fall_links)
+
     
     if model_cond and model_cond.get("link") and model_cond.get("statusno") is not None:
         return await router(

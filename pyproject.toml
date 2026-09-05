@@ -16,7 +16,12 @@ license = { text = "MIT" }
 dependencies = [
   "requests"
   ]
-  
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["npmai*"]
+
 [project.urls]
 Homepage = "https://npmai.netlify.com"
 Source = "https://github.com/sonuramashishnpm/npmai"
+

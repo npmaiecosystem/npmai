@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+ENV/
+.pytest_cache/
+
+# JS / Node
+node_modules/
+npm-debug.log*
+
+# Memory files generated during tests/runtime
+memory_*.json
+uploads/

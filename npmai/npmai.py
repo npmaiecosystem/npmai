@@ -183,40 +183,47 @@ class Rag:
         self.Upload=Upload
 
     def send(self):
-        files=self.files
-        files_to_send=self.files_to_send
-        DB_PATH=self.db_path
-        link=self.link
-        query=self.query
-        model=self.model
-        temperature=self.temperature
-        public=self.public
-        Upload=self.Upload
-        secret_key=self.secret_key
-        output_path=self.output_path
+        files = self.files or []
+        files_to_send = []
+        opened_files = []
+        DB_PATH = self.db_path
+        link = self.link
+        query = self.query
+        model = self.model
+        temperature = self.temperature
+        public = self.public
+        Upload = self.Upload
+        secret_key = self.secret_key
+        output_path = self.output_path
 
-        data={
-            "query":query,
-            "DB_PATH":DB_PATH,
-            "link":link,
-            "temperature":temperature,
-            "model":model,
-            "output_path":output_path,
-            "public":public,
-            "secret_key":secret_key,
-            "Upload":Upload
+        data = {
+            "query": query,
+            "DB_PATH": DB_PATH,
+            "link": link,
+            "temperature": temperature,
+            "model": model,
+            "output_path": output_path,
+            "public": public,
+            "secret_key": secret_key,
+            "Upload": Upload
         }
-        for path in files:
-          files_to_send.append(('file', open(path, 'rb')))
-
-        HF_API="https://sonuramashish22028704-npmeduai.hf.space/ingestion"
-
-        res=requests.post(HF_API,data=data,files=files_to_send,timeout=900)
-        response=str(res)
         try:
-          return {"response":res.json().get("response")}
-        except:
-          return res
+            for path in files:
+                f = open(path, 'rb')
+                opened_files.append(f)
+                files_to_send.append(('file', f))
+
+            HF_API = "https://sonuramashish22028704-npmeduai.hf.space/ingestion"
+
+            res = requests.post(HF_API, data=data, files=files_to_send if files_to_send else None, timeout=900)
+            try:
+                return {"response": res.json().get("response")}
+            except Exception:
+                return res
+        finally:
+            for f in opened_files:
+                f.close()
+
 
     def vector_db_use(self):
       DB_PATH=self.db_path

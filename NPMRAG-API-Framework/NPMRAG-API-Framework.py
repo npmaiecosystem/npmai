@@ -266,7 +266,7 @@ async def ingest_file(
 
 
 def extractable_router(extracted_texts, DB_PATH=None, query=None, temperature=None, model=None, secret_key=None, Upload=None, public=None):
-    if query is not "" and DB_PATH is not None:
+    if query != "" and DB_PATH is not None:
         stringed_extracted_texts= "\n\n----------\n\n".join(extracted_texts)
         return retrieval(DB_PATH=DB_PATH,query=query,texts=stringed_extracted_texts,temperature=temperature,model=model)
     elif Upload:
@@ -283,7 +283,8 @@ async def get_retrieval(
     secret_key: str = Form(None),
     public: bool = Form(None),
 ):
-    if DB_PATH is None and query is "":
+    if DB_PATH is None and query == "":
+
         return JSONResponse({"response":"Sorry but please pass DB_PATH name and Query name in string data type."})
         
     if os.path.exists(DB_PATH):
