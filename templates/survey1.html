@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Living Under the Line : A Field Survey of Hindu Minority Communities Across South Asia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+  --paper:#EFEAE0;
+  --paper-2:#E4DECD;
+  --ink:#201E1A;
+  --ink-soft:#5B564C;
+  --navy:#1F3A5F;
+  --navy-soft:#3F5A7D;
+  --amber:#B8862B;
+  --amber-soft:#DCB877;
+  --teal:#43605C;
+  --teal-soft:#7B9B96;
+  --rule:#C9C2B0;
+  --danger:#9B4430;
+  --good:#3E6E5C;
+  --card:#F7F4EC;
+  --shadow: 0 10px 30px rgba(32,30,26,0.08);
+}
+
+*{box-sizing:border-box;}
+
+html{scroll-behavior:smooth;}
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'IBM Plex Sans', sans-serif;
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+
+h1,h2,h3,h4{
+  font-family:'Newsreader', serif;
+  font-weight:600;
+  color:var(--ink);
+  margin:0 0 0.5em 0;
+  letter-spacing:-0.01em;
+}
+
+.mono{
+  font-family:'IBM Plex Mono', monospace;
+}
+
+.tag{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  padding:4px 10px;
+  border:1px solid var(--rule);
+  border-radius:2px;
+  color:var(--ink-soft);
+  background:var(--card);
+}
+.tag.pk{border-color:var(--danger); color:var(--danger);}
+.tag.in{border-color:var(--teal); color:var(--teal);}
+.tag.np{border-color:var(--good); color:var(--good);}
+.tag.amber{border-color:var(--amber); color:var(--amber);}
+
+a{color:var(--navy);}
+
+::selection{background:var(--amber-soft); color:var(--ink);}
+
+/* layout shell */
+.shell{
+  display:grid;
+  grid-template-columns:280px 1fr;
+  max-width:1400px;
+  margin:0 auto;
+}
+
+.sidebar{
+  position:sticky;
+  top:0;
+  height:100vh;
+  padding:36px 22px 36px 36px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  border-right:1px solid var(--rule);
+}
+
+.sidebar-top .brand{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+  margin-bottom:4px;
+}
+.sidebar-top .brand strong{color:var(--navy);}
+
+.sidebar-top .doc-title{
+  font-family:'Newsreader', serif;
+  font-size:19px;
+  line-height:1.3;
+  margin:10px 0 26px 0;
+  color:var(--ink);
+}
+
+.toc{list-style:none; padding:0; margin:0;}
+.toc li{margin-bottom:2px;}
+.toc a{
+  display:block;
+  padding:7px 10px;
+  font-size:13px;
+  color:var(--ink-soft);
+  text-decoration:none;
+  border-left:2px solid transparent;
+  transition:all .2s ease;
+}
+.toc a:hover{color:var(--navy); border-left-color:var(--rule);}
+.toc a.active{color:var(--navy); border-left-color:var(--navy); background:rgba(31,58,95,0.06); font-weight:600;}
+
+.sidebar-bottom{font-size:11px; color:var(--ink-soft); font-family:'IBM Plex Mono', monospace;}
+.sidebar-bottom .n{color:var(--navy); font-weight:600;}
+
+.main{padding:0 0 120px 0;}
+
+section{
+  padding:90px 64px;
+  max-width:920px;
+  border-bottom:1px solid var(--rule);
+}
+section.wide{max-width:none;}
+
+.reveal{opacity:1; transform:none;}
+.reveal.pre{opacity:0; transform:translateY(22px); transition:opacity .7s ease, transform .7s ease;}
+.reveal.pre.visible{opacity:1; transform:translateY(0);}
+.reveal.d1{transition-delay:.08s;}
+.reveal.d2{transition-delay:.16s;}
+.reveal.d3{transition-delay:.24s;}
+.reveal.d4{transition-delay:.32s;}
+
+/* ---------- HERO ---------- */
+#hero{
+  padding:80px 64px 60px 64px;
+  border-bottom:1px solid var(--rule);
+  position:relative;
+  overflow:hidden;
+}
+.hero-eyebrow{
+  display:flex; gap:8px; flex-wrap:wrap;
+  margin-bottom:28px;
+}
+.hero-eyebrow .tag{font-size:10px;}
+
+#hero h1{
+  font-size:52px;
+  line-height:1.08;
+  max-width:820px;
+}
+#hero h1 em{font-style:italic; color:var(--navy);}
+#hero .subhead{
+  font-size:18px;
+  color:var(--ink-soft);
+  max-width:640px;
+  margin-top:18px;
+}
+
+.field-cloud{
+  position:absolute;
+  right:-40px;
+  top:40px;
+  width:380px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-content:flex-start;
+  opacity:0.9;
+}
+.field-cloud .code{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  padding:5px 9px;
+  border:1px solid var(--rule);
+  border-radius:2px;
+  color:var(--ink-soft);
+  background:var(--paper-2);
+  opacity:0;
+  animation:codeIn .6s ease forwards;
+}
+@keyframes codeIn{ to{opacity:1;} }
+
+.stat-row{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1px;
+  background:var(--rule);
+  margin-top:56px;
+  border:1px solid var(--rule);
+}
+.stat-cell{
+  background:var(--paper);
+  padding:24px 20px;
+}
+.stat-cell .num{
+  font-family:'Newsreader', serif;
+  font-size:38px;
+  font-weight:600;
+  color:var(--navy);
+  line-height:1;
+}
+.stat-cell .lbl{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+  color:var(--ink-soft);
+  margin-top:8px;
+}
+
+/* section furniture */
+.section-num{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:13px;
+  color:var(--amber);
+  letter-spacing:0.08em;
+  margin-bottom:10px;
+  display:block;
+}
+.kicker{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  color:var(--ink-soft);
+  margin-bottom:14px;
+}
+section h2{font-size:34px; max-width:680px;}
+section .lede{font-size:17px; color:var(--ink-soft); max-width:680px; margin-bottom:36px;}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--rule);
+  padding:26px 28px;
+  border-radius:2px;
+}
+
+.grid-2{display:grid; grid-template-columns:1fr 1fr; gap:22px;}
+.grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+@media(max-width:900px){.grid-2,.grid-3{grid-template-columns:1fr;}}
+
+.finding-card{
+  border-left:3px solid var(--navy);
+  padding:18px 22px;
+  background:var(--card);
+  margin-bottom:14px;
+}
+.finding-card .fnum{font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--amber); text-transform:uppercase;}
+.finding-card h4{font-size:19px; margin:6px 0 6px 0;}
+.finding-card p{margin:0; color:var(--ink-soft); font-size:14.5px;}
+
+/* chart wrap */
+.chart-wrap{
+  background:var(--card);
+  border:1px solid var(--rule);
+  padding:24px 26px 14px 26px;
+  margin:26px 0;
+}
+.chart-wrap .chart-title{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+  color:var(--ink-soft);
+  margin-bottom:16px;
+}
+.chart-canvas-box{position:relative; height:auto;}
+.chart-canvas-box.tall{height:auto;}
+
+/* vanilla bar chart */
+.vbar-legend{display:flex; gap:18px; margin-bottom:18px; flex-wrap:wrap;}
+.vbar-legend .li{display:flex; align-items:center; gap:6px; font-size:12px; font-family:'IBM Plex Mono', monospace; color:var(--ink-soft);}
+.vbar-legend .sw{width:11px; height:11px; border-radius:2px; display:inline-block;}
+.vbar-row{margin-bottom:16px;}
+.vbar-row .vlabel{font-size:13px; color:var(--ink); margin-bottom:6px; font-family:'IBM Plex Sans', sans-serif;}
+.vbar-track{display:flex; flex-direction:column; gap:4px;}
+.vbar-line{display:flex; align-items:center; gap:10px;}
+.vbar-line .vbar-outer{flex:1; background:var(--paper-2); height:16px; border:1px solid var(--rule); position:relative; overflow:hidden;}
+.vbar-line .vbar-fill{height:100%; width:0%; transition:width 1.1s cubic-bezier(.2,.8,.2,1);}
+.vbar-line .vbar-val{font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--ink-soft); width:52px; text-align:right; flex-shrink:0;}
+
+/* vanilla donut */
+.donut-wrap{display:flex; flex-direction:column; align-items:center; gap:14px;}
+.donut-ring{width:130px; height:130px; border-radius:50%; background:conic-gradient(var(--paper-2) 0 100%); transition:background 1s ease;}
+.donut-legend{display:flex; flex-direction:column; gap:5px; width:100%;}
+.donut-legend .dl-item{display:flex; align-items:center; gap:7px; font-size:11.5px; font-family:'IBM Plex Mono', monospace; color:var(--ink-soft);}
+.donut-legend .sw{width:9px; height:9px; border-radius:2px; flex-shrink:0;}
+
+/* vanilla gauge */
+.gauge-ring{width:130px; height:130px; border-radius:50%; margin:0 auto; display:flex; align-items:center; justify-content:center; background:conic-gradient(var(--paper-2) 0 100%); transition:background 1.2s ease;}
+.gauge-ring .gauge-inner{width:92px; height:92px; border-radius:50%; background:var(--card); display:flex; align-items:center; justify-content:center;}
+
+.legend-row{display:flex; gap:18px; margin-top:14px; flex-wrap:wrap;}
+.legend-row .li{display:flex; align-items:center; gap:6px; font-size:12px; font-family:'IBM Plex Mono', monospace; color:var(--ink-soft);}
+.legend-row .sw{width:10px; height:10px; border-radius:2px;}
+
+/* funnel */
+.funnel{margin:30px 0;}
+.funnel-row{
+  display:grid;
+  grid-template-columns:200px 1fr 90px;
+  align-items:center;
+  gap:16px;
+  margin-bottom:10px;
+}
+.funnel-row .flabel{font-size:13px; color:var(--ink-soft); font-family:'IBM Plex Mono', monospace;}
+.funnel-bar-track{background:var(--paper-2); height:26px; position:relative; border:1px solid var(--rule);}
+.funnel-bar-fill{
+  height:100%;
+  background:linear-gradient(90deg, var(--navy), var(--navy-soft));
+  width:0%;
+  transition:width 1.4s cubic-bezier(.2,.8,.2,1);
+}
+.funnel-row .fpct{font-size:13px; font-family:'IBM Plex Mono', monospace; color:var(--ink); text-align:right;}
+
+/* sankey-ish flow */
+.flow-svg{width:100%; height:auto; display:block;}
+.flow-path{
+  stroke-dasharray:1000;
+  stroke-dashoffset:1000;
+  transition:stroke-dashoffset 1.6s ease;
+}
+.flow-path.visible{stroke-dashoffset:0;}
+
+/* toggle */
+.bloc-toggle{
+  display:inline-flex;
+  border:1px solid var(--rule);
+  border-radius:3px;
+  overflow:hidden;
+  margin-bottom:22px;
+}
+.bloc-toggle button{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px;
+  padding:8px 16px;
+  border:none;
+  background:var(--card);
+  color:var(--ink-soft);
+  cursor:pointer;
+  letter-spacing:0.03em;
+}
+.bloc-toggle button.active{background:var(--navy); color:#fff;}
+.bloc-toggle button:not(:last-child){border-right:1px solid var(--rule);}
+
+/* timeline */
+.timeline{position:relative; margin:40px 0 20px 0; padding-left:26px; border-left:2px solid var(--rule);}
+.tl-item{position:relative; padding-bottom:32px;}
+.tl-item::before{
+  content:'';
+  position:absolute; left:-33px; top:4px;
+  width:12px; height:12px; border-radius:50%;
+  background:var(--paper); border:2px solid var(--amber);
+}
+.tl-item .tdate{font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--amber); font-weight:600;}
+.tl-item h4{font-size:17px; margin:4px 0 6px 0;}
+.tl-item p{color:var(--ink-soft); font-size:14.5px; margin:0;}
+.tl-item .src{font-size:11.5px; color:var(--ink-soft); font-family:'IBM Plex Mono', monospace; margin-top:6px; display:block;}
+
+/* triangulation table */
+.tri-table{width:100%; border-collapse:collapse; margin:24px 0; font-size:14px;}
+.tri-table th{
+  text-align:left; font-family:'IBM Plex Mono', monospace; font-size:11px; text-transform:uppercase;
+  letter-spacing:0.04em; color:var(--ink-soft); border-bottom:2px solid var(--ink); padding:10px 12px;
+}
+.tri-table td{padding:12px; border-bottom:1px solid var(--rule); vertical-align:top;}
+.tri-table tr:hover td{background:var(--card);}
+.tri-table .src-tag{font-size:11px; font-family:'IBM Plex Mono', monospace; color:var(--navy);}
+
+/* gauges */
+.gauge-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin:30px 0;}
+.gauge-card{background:var(--card); border:1px solid var(--rule); padding:22px; text-align:center;}
+.gauge-card .gtitle{font-family:'IBM Plex Mono', monospace; font-size:12px; text-transform:uppercase; color:var(--ink-soft); margin-bottom:14px;}
+.gauge-box{position:relative; height:160px;}
+.gauge-score{position:absolute; top:50%; left:50%; transform:translate(-50%,-40%); font-family:'Newsreader',serif; font-size:32px; font-weight:700;}
+.gauge-note{font-size:12px; color:var(--ink-soft); margin-top:10px;}
+
+/* org section */
+.org-split{display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:28px;}
+.org-card{border:1px solid var(--rule); background:var(--card); padding:26px;}
+.org-card .otag{font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--amber); text-transform:uppercase;}
+.org-card h3{font-size:21px; margin:8px 0 10px 0;}
+.org-card p{color:var(--ink-soft); font-size:14.5px;}
+
+/* people */
+.people-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:18px; margin-top:26px;}
+.person-card{border:1px solid var(--rule); background:var(--card); padding:22px; display:flex; gap:16px;}
+.person-avatar{
+  width:52px; height:52px; border-radius:50%; flex-shrink:0;
+  background:var(--navy); color:#fff; display:flex; align-items:center; justify-content:center;
+  font-family:'Newsreader',serif; font-weight:700; font-size:18px;
+}
+.person-card h4{font-size:16px; margin:0 0 3px 0;}
+.person-card .role{font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--navy); margin-bottom:8px; display:block;}
+.person-card p{font-size:13.5px; color:var(--ink-soft); margin:0;}
+
+.note-box{
+  border:1px solid var(--amber-soft);
+  background:#F7EFDD;
+  padding:18px 22px;
+  font-size:14px;
+  color:var(--ink);
+  margin:24px 0;
+}
+.note-box strong{color:var(--amber);}
+
+/* limitations */
+.limit-list{list-style:none; padding:0; margin:22px 0;}
+.limit-list li{
+  padding:14px 0 14px 30px;
+  border-bottom:1px solid var(--rule);
+  position:relative;
+  font-size:14.5px;
+  color:var(--ink);
+}
+.limit-list li::before{
+  content:'!';
+  position:absolute; left:0; top:14px;
+  font-family:'IBM Plex Mono', monospace;
+  color:var(--danger);
+  font-weight:700;
+  border:1px solid var(--danger);
+  width:18px; height:18px;
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px;
+}
+
+/* download */
+.download-box{
+  border:2px dashed var(--navy);
+  background:var(--card);
+  padding:32px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  margin-top:20px;
+}
+.download-box h4{font-size:19px; margin:0 0 6px 0;}
+.download-box p{margin:0; color:var(--ink-soft); font-size:13.5px;}
+.dl-btn{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:13px;
+  padding:12px 22px;
+  background:var(--navy);
+  color:#fff;
+  border:none;
+  border-radius:2px;
+  cursor:pointer;
+  white-space:nowrap;
+  text-decoration:none;
+  display:inline-block;
+}
+.dl-btn:hover{background:var(--navy-soft);}
+
+/* appendix instrument */
+.instrument{margin-top:20px;}
+.instrument details{
+  border:1px solid var(--rule);
+  border-radius:2px;
+  margin-bottom:8px;
+  background:var(--card);
+}
+.instrument summary{
+  padding:14px 18px;
+  cursor:pointer;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:13px;
+  color:var(--ink);
+  list-style:none;
+}
+
+.round-image {
+  width: 70px;          /* Set a fixed width */
+  height: 70px;         /* Set the same height to make it a square */
+  border-radius: 50%;    /* Turns the square into a perfect circle */
+  object-fit: cover;     /* Crops the image to fit without stretching */
+}
+
+.instrument summary::-webkit-details-marker{display:none;}
+.instrument summary::before{content:'+ '; color:var(--amber); font-weight:700;}
+.instrument details[open] summary::before{content:'- ';}
+.instrument .q-body{padding:0 18px 16px 18px; font-size:14px; color:var(--ink-soft);}
+.instrument .q-body ul{padding-left:20px; margin:6px 0;}
+
+footer{
+  padding:60px 64px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px;
+  color:var(--ink-soft);
+}
+
+.counter{font-variant-numeric:tabular-nums;}
+
+@media(max-width:1000px){
+  .shell{grid-template-columns:1fr;}
+  .sidebar{position:relative; height:auto; border-right:none; border-bottom:1px solid var(--rule);}
+  section{padding:60px 26px;}
+  #hero{padding:50px 26px;}
+  #hero h1{font-size:36px;}
+  .field-cloud{display:none;}
+  .stat-row{grid-template-columns:repeat(2,1fr);}
+  .grid-2, .org-split, .people-grid, .gauge-grid{grid-template-columns:1fr;}
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+}
+
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <div class="brand"><strong>NPMAI</strong> SOCIAL FOUNDATION</div>
+      <div class="doc-title">Living Under the Line</div>
+      <ul class="toc" id="toc">
+        <li><a href="#hero" data-target="hero">Cover</a></li>
+        <li><a href="#summary" data-target="summary">Executive Summary</a></li>
+        <li><a href="#intro" data-target="intro">01 Introduction</a></li>
+        <li><a href="#method" data-target="method">02 Methodology</a></li>
+        <li><a href="#sample" data-target="sample">03 Sample Profile</a></li>
+        <li><a href="#findings" data-target="findings">04 Findings</a></li>
+        <li><a href="#synthesis" data-target="synthesis">05 Comparative Synthesis</a></li>
+        <li><a href="#triangulation" data-target="triangulation">06 External Triangulation</a></li>
+        <li><a href="#structural" data-target="structural">07 Structural Discussion</a></li>
+        <li><a href="#policy" data-target="policy">08 Recommendations</a></li>
+        <li><a href="#limitations" data-target="limitations">09 Limitations</a></li>
+        <li><a href="#conclusion" data-target="conclusion">10 Conclusion</a></li>
+        <li><a href="#org" data-target="org">About NPMAI ECOSYSTEM</a></li>
+        <li><a href="#team" data-target="team">Research Leadership</a></li>
+        <li><a href="#appendix" data-target="appendix">Appendix</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-bottom">
+      N = <span class="n">15,340</span> respondents<br>
+      4 countries . 12 regions<br>
+      Fieldwork: <span class="n">1.7</span> months
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <section id="hero">
+      <div class="hero-eyebrow reveal visible">
+        <span class="tag amber">Field Survey Report</span>
+        <span class="tag">NPMAI Social Foundation</span>
+        <span class="tag">Research Political Science Department</span>
+        <span class="tag">2026</span>
+      </div>
+
+      <h1 class="reveal visible">Living Under the Line<br><em>A comparative field survey of Hindu minority communities across South Asia</em></h1>
+      <p class="subhead reveal visible d1">Fifteen thousand three hundred and forty household interviews, gathered street by street across twelve regions in Pakistan, Bangladesh, India and Nepal, on what it feels like to hold a minority faith where you live. This report reads that testimony against what independent monitors have already documented, and asks what holds the difference between the four countries in place.</p>
+
+      <div class="field-cloud" id="fieldCloud"></div>
+
+      <div class="stat-row reveal visible d2">
+        <div class="stat-cell"><div class="num counter" data-target="15340">0</div><div class="lbl">Respondents</div></div>
+        <div class="stat-cell"><div class="num counter" data-target="12">0</div><div class="lbl">Regions Surveyed</div></div>
+        <div class="stat-cell"><div class="num counter" data-target="4">0</div><div class="lbl">Countries</div></div>
+        <div class="stat-cell"><div class="num counter" data-target="7">0</div><div class="lbl">Weeks In The Field</div></div>
+      </div>
+    </section>
+
+    <section id="summary">
+      <span class="kicker reveal">Executive Summary</span>
+      <h2 class="reveal">Four countries, one instrument, four very different answers</h2>
+      <p class="lede reveal d1">Every respondent answered the same twenty five questions. What separates the four national profiles below is not the survey design, it is what each state and society does with a minority in its midst.</p>
+
+      <div class="finding-card reveal">
+        <span class="fnum">Finding 01</span>
+        <h4>Security is bimodal, not a spectrum</h4>
+        <p>94.7% of respondents in Pakistan and Bangladesh describe themselves as "not secure" or "extremely insecure," against 96.9% of Nepali respondents who say the opposite, "fully secure." There is almost no shared middle ground between the two poles.</p>
+      </div>
+      <div class="finding-card reveal d1">
+        <span class="fnum">Finding 02</span>
+        <h4>The state is where the pattern breaks</h4>
+        <p>Only 4.9% of complaints filed in Pakistan and Bangladesh led to any action, against 40.3% in India and 81.2% in Nepal. The gap in outcomes is larger than the gap in what people report experiencing.</p>
+      </div>
+      <div class="finding-card reveal d2">
+        <span class="fnum">Finding 03</span>
+        <h4>Conversion pressure is concentrated, not general</h4>
+        <p>44.6% of Pakistani and Bangladeshi respondents report direct pressure or threat to convert; India and Nepal report none of that category at all. This is the sharpest single divide in the entire dataset.</p>
+      </div>
+      <div class="finding-card reveal d3">
+        <span class="fnum">Finding 04</span>
+        <h4>Perceived trajectory tracks institutional trust, not just incidents</h4>
+        <p>75.2% of respondents in Pakistan and Bangladesh believe their situation has worsened over the last five to ten years, closely tracking how little faith they hold in police and administration, more than it tracks any single category of incident.</p>
+      </div>
+    </section>
+
+    <section id="intro">
+      <span class="section-num">01</span>
+      <h2 class="reveal">Introduction</h2>
+      <p class="lede reveal d1">Most of what the world knows about the treatment of Hindu minorities in South Asia comes from incident counts: a temple vandalised, a girl abducted, a family displaced, tallied by human rights commissions and press monitors into annual reports. That documentation is essential, and this report leans on it throughout. But an incident count cannot tell you what it is like to wake up every day inside that statistic, whether the fear is constant or occasional, whether people still send their daughters to school, whether anyone still bothers calling the police.</p>
+      <p class="reveal d2">This report tries to close that gap. Between the two documentation layers, incident-level reporting from established monitors, and household-level lived experience from the communities themselves, sits a more complete picture than either layer offers alone. NPMAI Social Foundation's Research Political Science department coordinated a twenty five question household survey across identified Hindu-population localities in Pakistan, Bangladesh, India and Nepal, run through the Foundation's regional volunteer network over roughly seven weeks.</p>
+      <p class="reveal d3">The three questions this report tries to answer are simple to state and harder to answer honestly: what do households in these communities report about their own safety, treatment, and prospects; how consistent is that report across a Muslim-majority-state bloc versus India and Nepal; and where the report lines up with, or fills a gap in, what independent monitors have already found.</p>
+    </section>
+
+    <section id="method">
+      <span class="section-num">02</span>
+      <h2 class="reveal">Methodology</h2>
+      <p class="lede reveal d1">This was a targeted, volunteer-administered field survey, not a probability sample, and every figure in this report should be read as describing the localities surveyed, not the national population of any country.</p>
+
+      <div class="grid-2 reveal d2">
+        <div class="card">
+          <h4 style="font-size:16px;">Design</h4>
+          <p style="font-size:14px; color:var(--ink-soft);">Paper-form, street-intercept survey administered by NPMAI Social Foundation's regional volunteer network in identified Hindu-population localities. Respondents ticked their own answers on a printed form; volunteers did not read questions aloud or prompt responses.</p>
+        </div>
+        <div class="card">
+          <h4 style="font-size:16px;">Window</h4>
+          <p style="font-size:14px; color:var(--ink-soft);">Fieldwork ran approximately 1.7 months, coordinated in stages: preliminary desk review of existing news and human rights reporting, a planning session with the regional technical team, then simultaneous field collection across all twelve regions.</p>
+        </div>
+      </div>
+
+      <div class="chart-wrap reveal d3">
+        <div class="chart-title">Sample by Region</div>
+        <div class="chart-canvas-box tall" id="regionChart"></div>
+      </div>
+
+      <h3 style="font-size:20px; margin-top:44px;">Data cleaning and exclusions</h3>
+      <p class="reveal">The compiled dataset presented in this report reflects a cleaned analytic sample. The research team excluded, prior to analysis: forms left substantially incomplete (respondents who answered some sections and abandoned others, for example giving a location but skipping occupation and education questions), and forms flagged by regional coordinators as filled by respondents who did not meet the Hindu-respondent criterion the survey was targeting. This exclusion step was applied by the coordinating team rather than through an automated, independently audited process, which is a limitation this report treats explicitly in Section 09, not as a footnote.</p>
+
+      <div class="note-box reveal">
+        <strong>On scope of claims.</strong> Pakistan and Bangladesh responses are statistically close to one another across nearly every question in this instrument. Rather than overstate a country-by-country contrast the underlying numbers do not clearly support, this report treats Pakistan and Bangladesh as a single comparative bloc, and reserves country-specific claims for places where independently reported, named incidents support them directly.
+      </div>
+
+      <h3 style="font-size:20px; margin-top:36px;">Instrument</h3>
+      <p>Twenty five questions across eleven thematic blocks, ranging from demographic context through sense of security, documented incidents, education and health access, government relations, majority-community relations, food security, fear typology, conversion pressure, and perceived trajectory. The full instrument is reproduced in the Appendix.</p>
+    </section>
+
+    <section id="sample">
+      <span class="section-num">03</span>
+      <h2 class="reveal">Sample Profile</h2>
+      <p class="lede reveal d1">Demographic composition of the final analytic sample. These splits are presented as sample description; the survey did not find meaningful variation in outcome responses across age, gender or occupation within a given country, so this report does not draw analytical conclusions from those subgroups (see Section 09).</p>
+
+      <div class="grid-3 reveal d2">
+        <div class="chart-wrap" style="margin:0;">
+          <div class="chart-title">Age Group</div>
+          <div class="chart-canvas-box" id="ageChart"></div>
+        </div>
+        <div class="chart-wrap" style="margin:0;">
+          <div class="chart-title">Gender</div>
+          <div class="chart-canvas-box" id="genderChart"></div>
+        </div>
+        <div class="chart-wrap" style="margin:0;">
+          <div class="chart-title">Occupation</div>
+          <div class="chart-canvas-box" id="occChart"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="findings" class="wide" style="max-width:1040px;">
+      <span class="section-num">04</span>
+      <h2 class="reveal">Findings</h2>
+      <p class="lede reveal d1">Each theme below compares the Pakistan and Bangladesh bloc against India and Nepal on the same question, drawn directly from the cleaned dataset.</p>
+
+      <div class="bloc-toggle reveal" id="blocToggleTop">
+        <button data-bloc="all" class="active">All Blocs</button>
+        <button data-bloc="pkbd">Pakistan + Bangladesh</button>
+        <button data-bloc="india">India</button>
+        <button data-bloc="nepal">Nepal</button>
+      </div>
+
+      <h3 style="font-size:22px; margin-top:10px;">4.1 Sense of Security</h3>
+      <div class="chart-wrap reveal">
+        <div class="chart-title">Q6 . How secure do you and your family currently feel</div>
+        <div class="chart-canvas-box tall" id="chartQ6"></div>
+      </div>
+
+      <h3 style="font-size:22px; margin-top:50px;">4.2 Incidents Faced In The Last Five Years</h3>
+      <div class="chart-wrap reveal">
+        <div class="chart-title">Q8 . Incidents personally faced or faced by a family member</div>
+        <div class="chart-canvas-box tall" id="chartQ8"></div>
+      </div>
+
+      <h3 style="font-size:22px; margin-top:50px;">4.3 Justice System and State Relations</h3>
+      <p class="reveal" style="max-width:680px; color:var(--ink-soft);">Where a complaint was filed, this is what happened to it. Read left to right.</p>
+      <div class="chart-wrap reveal">
+        <div class="chart-title">Q10 . Complaint outcome flow</div>
+        <svg class="flow-svg" viewBox="0 0 900 300" id="flowSvg"></svg>
+      </div>
+      <div class="chart-wrap reveal">
+        <div class="chart-title">Q15 . Attitude of local government, police and administration</div>
+        <div class="chart-canvas-box tall" id="chartQ15"></div>
+      </div>
+
+      <h3 style="font-size:22px; margin-top:50px;">4.4 Relations With The Majority Community</h3>
+      <div class="chart-wrap reveal">
+        <div class="chart-title">Q17 . Day to day relations . Q18 . Social boycott frequency</div>
+        <div class="grid-2">
+          <div class="chart-canvas-box" id="chartQ17"></div>
+          <div class="chart-canvas-box" id="chartQ18"></div>
+        </div>
+      </div>
+
+      <h3 style="font-size:22px; margin-top:50px;">4.5 Economic Standing and Food Security</h3>
+      <div class="chart-wrap reveal">
+        <div class="chart-title">Q19 . Does your family face regular difficulty getting enough food</div>
+        <div class="chart-canvas-box tall" id="chartQ19"></div>
+      </div>
+
+      <h3 style="font-size:22px; margin-top:50px;">4.6 Education and Healthcare Access</h3>
+      <div class="chart-wrap reveal">
+        <div class="chart-title">Q11 . Education access . Q13 . Healthcare access</div>
+        <div class="grid-2">
+          <div class="chart-canvas-box" id="chartQ11"></div>
+          <div class="chart-canvas-box" id="chartQ13"></div>
+        </div>
+      </div>
+
+      <h3 style="font-size:22px; margin-top:50px;">4.7 Pressure To Convert</h3>
+      <p class="reveal" style="max-width:680px; color:var(--ink-soft);">This is the sharpest divide in the dataset. Read the width of each band as share of respondents.</p>
+      <div class="chart-wrap reveal">
+        <div class="chart-title">Q22 . Pressure, inducement or force to convert</div>
+        <div class="chart-canvas-box tall" id="chartQ22"></div>
+      </div>
+
+      <h3 style="font-size:22px; margin-top:50px;">4.8 Trajectory</h3>
+      <div class="chart-wrap reveal">
+        <div class="chart-title">Q25 . Over the last five to ten years, has the situation</div>
+        <div class="chart-canvas-box tall" id="chartQ25"></div>
+      </div>
+    </section>
+
+    <section id="synthesis">
+      <span class="section-num">05</span>
+      <h2 class="reveal">Comparative Synthesis</h2>
+      <p class="lede reveal d1">To compare the three blocs on one scale, this report builds a simple composite score from three of the clearest indicators: reported security (Q6), trust that a complaint leads to action (Q10), and freedom from social boycott (Q18). The formula is shown openly below so the score can be checked or challenged.</p>
+
+      <div class="card reveal">
+        <p class="mono" style="font-size:13px; margin:0;">Vulnerability Index = 100 minus the average of: (percent reporting "not secure" or "extremely insecure") , (percent whose complaint led to no action or was never filed out of fear or distrust) , (percent reporting boycott "frequently" or "occasionally")</p>
+      </div>
+
+      <div class="gauge-grid reveal d2">
+        <div class="gauge-card">
+          <div class="gtitle">Pakistan + Bangladesh</div>
+          <div class="gauge-box" id="gaugePkBd"></div>
+          <div class="gauge-note">Low security score, driven by state non-response and high boycott frequency</div>
+        </div>
+        <div class="gauge-card">
+          <div class="gtitle">India (surveyed districts)</div>
+          <div class="gauge-box" id="gaugeIndia"></div>
+          <div class="gauge-note">Mid-range, institutional responsiveness offsets moderate social friction</div>
+        </div>
+        <div class="gauge-card">
+          <div class="gtitle">Nepal</div>
+          <div class="gauge-box" id="gaugeNepal"></div>
+          <div class="gauge-note">Majority-Hindu state, used here as an upper-bound reference point</div>
+        </div>
+      </div>
+
+      <p class="reveal">Read this index as descriptive, not diagnostic. It compresses eleven survey themes into three; the fuller picture sits in Section 04. What it makes visible at a glance is that the gap between blocs is driven less by the frequency of any single bad event, and more by whether an institution exists that a household believes will respond to one.</p>
+    </section>
+
+    <section id="triangulation" class="wide" style="max-width:1040px;">
+      <span class="section-num">06</span>
+      <h2 class="reveal">External Triangulation</h2>
+      <p class="lede reveal d1">This survey does not stand alone. The themes it surfaces at household level align closely with what independent human rights monitors, UN experts, and national rights commissions have already documented at incident level over the same period.</p>
+
+      <table class="tri-table reveal">
+        <tr><th style="width:22%;">Survey Theme</th><th style="width:34%;">This Survey</th><th>Independent Documentation</th></tr>
+        <tr>
+          <td>Forced conversion pressure (Q22 to Q24)</td>
+          <td>44.6% of Pakistan and Bangladesh respondents report direct pressure or threat to convert; 30.3% report awareness of many local cases</td>
+          <td><span class="src-tag">UN OHCHR, 2026</span> found roughly 75% of women and girls affected by forced conversion through marriage in Pakistan in 2025 were Hindu, with almost 80% of cases in Sindh province. <span class="src-tag">Centre for Social Justice, 2024</span> documented 34 reported abduction cases and 102 alleged forced conversions in 2023 alone.</td>
+        </tr>
+        <tr>
+          <td>Attacks on places of worship (Q8)</td>
+          <td>Land and property seizure reported by 23.8% of respondents; social boycott by 20.0%</td>
+          <td><span class="src-tag">BHBCOP, 2024</span> recorded over 2,000 incidents against minorities in Bangladesh in the sixteen days following August 2024, including roughly 150 damaged temples. <span class="src-tag">USCIRF, 2025</span> logged a further 92 incidents including 25 temple attacks in the first quarter of 2025 alone.</td>
+        </tr>
+        <tr>
+          <td>State and police response (Q10, Q15, Q16)</td>
+          <td>Only 4.9% of complaints in the bloc led to action; 45.3% describe government attitude as discriminatory</td>
+          <td><span class="src-tag">HRCP, 2024/25</span> reported a rise in violence against religious minorities in Pakistan alongside a documented pattern of police failing to register First Information Reports in conversion cases.</td>
+        </tr>
+        <tr>
+          <td>Demographic trajectory (Q25)</td>
+          <td>75.2% of the bloc believe their situation has worsened over five to ten years</td>
+          <td>Bangladesh's Hindu population share fell from over 22% in the 1951 census to 7.95% by the 2022 census, the structural backdrop against which this survey's household-level pessimism sits.</td>
+        </tr>
+      </table>
+
+      <p class="reveal">The alignment across these four rows is the core evidentiary claim of this report: household-level testimony, gathered independently of any single news cycle, points in the same direction as incident-level monitoring built from FIRs, press reports and commission fieldwork. Neither source proves the other, but together they are considerably harder to dismiss than either alone.</p>
+
+      <h3 style="font-size:20px; margin-top:40px;">Timeline: documented escalation against this survey's fieldwork window</h3>
+      <div class="timeline reveal">
+        <div class="tl-item">
+          <span class="tdate">August 2024</span>
+          <h4>Mass attacks on Hindu households and temples in Bangladesh</h4>
+          <p>Following the change of government in Dhaka, BHBCOP recorded over 2,000 incidents including nearly 70 temples in a sixteen day span.</p>
+          <span class="src">Source: Bangladesh Hindu Buddhist Christian Unity Council</span>
+        </div>
+        <div class="tl-item">
+          <span class="tdate">2024 to 2025</span>
+          <h4>Pakistan Human Rights Commission flags rising minority violence</h4>
+          <p>HRCP's Streets of Fear report documents targeted killings, forced conversions and underage marriages of Hindu and Christian girls concentrated in Punjab and Sindh.</p>
+          <span class="src">Source: Human Rights Commission of Pakistan</span>
+        </div>
+        <div class="tl-item">
+          <span class="tdate">First half of 2025</span>
+          <h4>258 further incidents recorded in Bangladesh</h4>
+          <p>Including 20 cases of rape and 59 attacks on places of worship, according to the same monitoring body, as USCIRF concludes religious freedom conditions in the country have declined.</p>
+          <span class="src">Source: USCIRF 2025 Bangladesh Factsheet</span>
+        </div>
+        <div class="tl-item">
+          <span class="tdate">2025 to 2026</span>
+          <h4>This survey's fieldwork window</h4>
+          <p>NPMAI Social Foundation's household survey was administered across the same general period, capturing lived testimony contemporaneous with the incidents above rather than after the fact.</p>
+          <span class="src">Source: NPMAI ECOSYSTEM field data</span>
+        </div>
+        <div class="tl-item">
+          <span class="tdate">April 2026</span>
+          <h4>UN experts raise alarm on forced conversion in Pakistan</h4>
+          <p>UN human rights experts describe continued and widespread patterns of abduction and forced conversion through marriage, naming impunity as the mechanism sustaining the practice.</p>
+          <span class="src">Source: OHCHR press release, April 2026</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="structural">
+      <span class="section-num">07</span>
+      <h2 class="reveal">Structural Discussion</h2>
+      <p class="lede reveal d1">The explanatory question this report asks is not who believes what, but which structures allow belief to convert into consequence. Three mechanisms recur across both this survey and the independent documentation cited above, and none of them require characterising an entire religious population to explain.</p>
+
+      <div class="grid-2 reveal d2">
+        <div class="card">
+          <h4 style="font-size:16px;">Institutional non-response</h4>
+          <p style="font-size:14px; color:var(--ink-soft);">The single clearest divide in this dataset is not what happens to people, it is what happens after. A complaint filed in Nepal resolves 81.2% of the time; the same act in the Pakistan and Bangladesh bloc resolves 4.9% of the time. That gap is a policing and judicial outcome, not a demographic one.</p>
+        </div>
+        <div class="card">
+          <h4 style="font-size:16px;">Legal instruments open to misuse</h4>
+          <p style="font-size:14px; color:var(--ink-soft);">Blasphemy law provisions in Pakistan and property statutes such as Bangladesh's Vested Property Act are named repeatedly in HRCP and USCIRF reporting as mechanisms through which land and false-case pressure are applied to minority households. These are specific, identifiable legal instruments, not a claim about belief.</p>
+        </div>
+        <div class="card">
+          <h4 style="font-size:16px;">Named organised actors</h4>
+          <p style="font-size:14px; color:var(--ink-soft);">Where independent monitors attribute specific incidents to organised political or religious groups, this report follows that attribution rather than generalising. Accountability sits with identifiable actors and the state responses that fail to check them.</p>
+        </div>
+        <div class="card">
+          <h4 style="font-size:16px;">Majoritarian nationalism as a comparative frame</h4>
+          <p style="font-size:14px; color:var(--ink-soft);">Political science literature on states that tie national identity to a single religious majority offers a structural explanation for why minority protections erode under majoritarian pressure, a pattern documented across many countries and religious majorities, not unique to any one of them.</p>
+        </div>
+      </div>
+
+      <p class="reveal">Read together, the argument this report supports is that where state institutions decline to enforce equal protection, whether through inaction, permissive legal instruments, or tolerance of organised non-state actors, minority communities absorb the cost regardless of their own conduct. That is a claim about governance, and it is the claim this survey's own numbers actually sustain.</p>
+    </section>
+
+    <section id="policy">
+      <span class="section-num">08</span>
+      <h2 class="reveal">Recommendations</h2>
+
+      <div class="grid-3 reveal d1">
+        <div class="card">
+          <span class="tag pk" style="margin-bottom:10px;">National Governments</span>
+          <p style="font-size:14px; color:var(--ink-soft); margin-top:12px;">Mandatory FIR registration timelines for minority-linked complaints, independent audit of blasphemy and vested-property law application, and published quarterly minority-incident data from police services.</p>
+        </div>
+        <div class="card">
+          <span class="tag in" style="margin-bottom:10px;">International Bodies</span>
+          <p style="font-size:14px; color:var(--ink-soft); margin-top:12px;">Continued OHCHR and USCIRF monitoring cadence, and conditioning of relevant development or trade engagement on measurable improvement in complaint-resolution rates, not incident counts alone.</p>
+        </div>
+        <div class="card">
+          <span class="tag np" style="margin-bottom:10px;">NPMAI Social Foundation</span>
+          <p style="font-size:14px; color:var(--ink-soft); margin-top:12px;">We Commit ourselves that in future we will increase sample size and also ensure better quality data and digitalise the survey process.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="limitations">
+      <span class="section-num">09</span>
+      <h2 class="reveal">Limitations</h2>
+      <p class="lede reveal d1">This section is written to be read, not skipped. A report on a subject this serious earns credibility by stating plainly what it cannot show.</p>
+
+      <ul class="limit-list reveal">
+        <li><strong>Non-probability sample.</strong> Respondents were reached through targeted street-intercept collection in identified Hindu-majority localities, not random selection. Findings describe those localities, not national populations.</li>
+        <li><strong>Pakistan and Bangladesh are not independently distinguishable in this data.</strong> Response distributions across the two countries are close enough that this report treats them as one comparative bloc rather than asserting country-specific differences the data cannot support.</li>
+        <li><strong>No independent verification of individual incidents.</strong> Every incident figure in this report is self-reported prevalence, not a verified case count. It should be read as "share of respondents who report experiencing," not as a confirmed tally of events.</li>
+        <li><strong>Manual exclusion process.</strong> Incomplete and flagged-as-non-target responses were removed by the coordinating research team rather than through an independently audited automated process. Future waves should formalise this step with a documented, reviewable protocol.</li>
+        <li><strong>Flat subgroup variation.</strong> Age, gender and occupation subgroups show little internal variation on outcome questions within a country in this dataset. This report does not draw gender- or age-specific conclusions from the survey; that evidence would need to come from targeted qualitative follow-up, not this instrument.</li>
+        <li><strong>Small Nepal sample relative to the other three countries.</strong> Nepal's 800 respondents, reached through a comparatively thin volunteer network, should be read as an indicative reference point rather than a fully powered national estimate.</li>
+        <li><strong>Recall and framing bias.</strong> Self-reported feelings of security and recollection of incidents over a five year window are subject to ordinary recall bias and the psychological effect of having recently relocated to a safer area, which this report discusses directly in Section 04.1.</li>
+      </ul>
+    </section>
+
+    <section id="conclusion">
+      <span class="section-num">10</span>
+      <h2 class="reveal">Conclusion</h2>
+      <p class="reveal d1">Fifteen thousand three hundred and forty conversations, conducted on the ground rather than compiled from a wire report, describe two very different regions occupying the same subcontinent. In Pakistan and Bangladesh, a household's safety, its access to schooling and healthcare, and its standing before the law all move together, and they move in the same direction as the incident counts that international monitors have separately documented over the same period. In India's surveyed districts and in Nepal, the same questions produce a materially different answer, not because the underlying communities differ, but because the institutions around them do.</p>
+      <p class="reveal d2">That is the finding this report is prepared to defend: not a claim about a people, but a measurable claim about what happens, and does not happen, when a state declines to protect a minority inside it. NPMAI Social Foundation intends to repeat this survey on a fixed interval, publish the underlying data for independent scrutiny, and track whether that gap closes or widens.</p>
+    </section>
+
+    <section id="org">
+      <span class="kicker reveal">About the publisher</span>
+      <h2 class="reveal">NPMAI ECOSYSTEM</h2>
+      <p class="lede reveal d1">NPMAI ECOSYSTEM is a research and development organisation working across artificial intelligence, chemistry, mathematics, physics and political science. It operates through two branches, one a registered company, one a registered foundation.</p>
+
+      <div class="org-split reveal d2">
+        <div class="org-card">
+          <span class="otag">Branch . Private Limited Company</span>
+          <h3>NPMAI Engineering Solutions Pvt Ltd</h3>
+          <p>Carries out technical research and product development across software, artificial intelligence, physics and energy systems, chemistry and reactor design, and bio-engineering. Where research proves industry-feasible, this branch develops, assembles and brings the resulting product to market.</p>
+        </div>
+        <div class="org-card">
+          <span class="otag">Branch . Organisation</span>
+          <h3>NPMAI Social Foundation</h3>
+          <p>Foundation functioning as a think tank for political science and legal affairs, and running public awareness programmes beyond publication alone. This report was produced under the Foundation's Research Political Science department.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="team">
+      <span class="kicker reveal">Research leadership</span>
+      <h2 class="reveal">Who leads this work</h2>
+      <p class="lede reveal d1">NPMAI ECOSYSTEM was founded by Sonu Kumar, who also led and coordinated this survey while serving as Head of the Research Political Science Department at the time fieldwork began. Departmental leadership has since changed; the current department head is named below alongside the founder.</p>
+
+      <div class="people-grid reveal d2">
+        <div class="person-card">
+          <div class="person-avatar">
+            <img src="https://i.ibb.co/rGJ6bGHc/Sonu2.jpg" class="round-image"></img>
+          </div>
+          <div>
+            <h4>Sonu Kumar</h4>
+            <span class="role">Founder, NPMAI ECOSYSTEM . Survey Lead</span>
+            <p>Founder of NPMAI ECOSYSTEM and lead of this survey from initial design through fieldwork coordination and data compilation. Currently HOD, Research Tech (CS, AI). Publicly known as Bihar Viral Boy, TEDx speaker.</p>
+          </div>
+        </div>
+        <div class="person-card">
+          <div class="person-avatar"><img src="taylor.jpg" class="round-image"></img></div>
+          <div>
+            <h4>Dr. Taylor Fravel</h4>
+            <span class="role">HOD, Research Political Science (current)</span>
+            <p>Arthur and Ruth Sloan Professor of Political Science and Director of the Security Studies Program at MIT. Joined NPMAI ECOSYSTEM's Research Political Science Department following Sonu Kumar's transition to full time leadership of the Research Tech department.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="appendix" class="wide" style="max-width:1040px;">
+      <span class="kicker reveal">Appendix</span>
+      <h2 class="reveal">Full instrument and dataset</h2>
+      <p class="lede reveal d1">The complete twenty five question instrument used across all four countries, and the raw and cleaned dataset behind every chart in this report.</p>
+
+      <div class="download-box reveal d2">
+        <div>
+          <h4>Download the survey dataset</h4>
+          <p>Region-coded, cleaned response file, 15,340 rows across 12 regions. Provided for independent review and replication.</p>
+        </div>
+        <a class="dl-btn" href="data.xlsx" download="NPMAI_Hindu_Minority_Survey_Data.xlsx">Download the dataset →</a>
+      </div>
+
+      <div class="instrument reveal">
+        <details>
+          <summary>1. Demographic and Context (Q1 to Q5)</summary>
+          <div class="q-body">
+            <p><strong>Q1</strong> Age group: Under 18 / 18-30 / 31-45 / 46-60 / Above 60</p>
+            <p><strong>Q2</strong> Gender: Male / Female / Other</p>
+            <p><strong>Q3</strong> Location, recorded as coded region only, for example PK-Punjab, PK-Sindh, BD-North, BD-Central, IN-WB, IN-Bihar, NP-Terai</p>
+            <p><strong>Q4</strong> Approximate family size, number of Hindu members in household</p>
+            <p><strong>Q5</strong> Main occupation: Farmer / Daily wage labour / Small trader / Private job / Government job / Student / Homemaker / Other</p>
+          </div>
+        </details>
+        <details>
+          <summary>2. Sense of Security (Q6 to Q7)</summary>
+          <div class="q-body">
+            <p><strong>Q6</strong> Do you and your family currently feel secure in your area? Fully secure / Somewhat secure / Not secure / Extremely insecure</p>
+            <p><strong>Q7</strong> If not fully secure, why: fear of physical violence, abduction, forced conversion, land or property grabbing, blasphemy accusations, festival-time violence, majority community, police or administration, political groups, other</p>
+          </div>
+        </details>
+        <details>
+          <summary>3. Atrocities and Incidents (Q8 to Q10)</summary>
+          <div class="q-body">
+            <p><strong>Q8</strong> Incidents faced in last five years, select all that apply: physical assault, sexual violence, abduction, forced conversion, temple attack or desecration, land or property seizure, false criminal cases, social boycott, threats, murder of a family member, forced marriage, none, other</p>
+            <p><strong>Q9</strong> Timing: last 1 year / 1-3 years / 3-5 years / more than 5 years</p>
+            <p><strong>Q10</strong> Complaint filed: yes and action taken / yes but no action / no, fear / no, lack of trust / not applicable</p>
+          </div>
+        </details>
+        <details>
+          <summary>4 to 5. Education and Health (Q11 to Q14)</summary>
+          <div class="q-body">
+            <p><strong>Q11</strong> Education access rating: Good / Average / Poor / Very poor</p>
+            <p><strong>Q12</strong> Main education problems: teacher or student discrimination, conversion pressure in schools, lack of Hindu teachers, safety concerns, economic inability, distorted curriculum, other</p>
+            <p><strong>Q13</strong> Healthcare access rating: Good / Average / Poor / Very poor</p>
+            <p><strong>Q14</strong> Main healthcare difficulties: hospital discrimination, fear of public facilities, lack of nearby facilities, high private cost, other</p>
+          </div>
+        </details>
+        <details>
+          <summary>6 to 7. Government and Majority Relations (Q15 to Q18)</summary>
+          <div class="q-body">
+            <p><strong>Q15</strong> Government and police attitude: supportive / neutral / discriminatory / hostile / varies</p>
+            <p><strong>Q16</strong> Received government help when needed: yes / no / never approached out of fear</p>
+            <p><strong>Q17</strong> Day to day relations with majority community: peaceful / mixed / mostly tense / openly hostile</p>
+            <p><strong>Q18</strong> Social boycott incidents: frequently / occasionally / rarely / never</p>
+          </div>
+        </details>
+        <details>
+          <summary>8 to 10. Economic Situation, Fears, Conversion Pressure (Q19 to Q24)</summary>
+          <div class="q-body">
+            <p><strong>Q19</strong> Food security: no difficulty / occasional / frequent / severe</p>
+            <p><strong>Q20</strong> Economic hardship reasons: land loss, job or business discrimination, restricted market access, extortion, other</p>
+            <p><strong>Q21</strong> Biggest fears, up to four: physical attack, abduction of women, forced conversion, losing home, false legal cases, children's future, restricted worship, community disappearance, other</p>
+            <p><strong>Q22</strong> Pressure to relocate</p>
+            <p><strong>Q23</strong> Source of pressure: religious leaders, neighbours, political groups, marriage, online, other</p>
+            <p><strong>Q24</strong> Awareness of abduction and conversion cases locally: many / some / a few / not aware</p>
+          </div>
+        </details>
+        <details>
+          <summary>11. Overall Trajectory (Q25)</summary>
+          <div class="q-body">
+            <p><strong>Q25</strong> Over the last five to ten years, has the situation for Hindus in your area: improved / stayed the same / worsened / worsened significantly</p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  NPMAI SOCIAL FOUNDATION . Research Political Science Department . Published under the NPMAI ECOSYSTEM research programme, 2026<br>
+  This report is a field survey and comparative analysis. It should be read alongside the independent monitoring sources cited in Section 06, not in place of them.
+</footer>
+
+<script>
+/* ---------- DATA ---------- */
+const DATA = {
+  Q6: {
+    labels: ["Fully secure","Somewhat secure","Not secure","Extremely insecure"],
+    pkbd:  [2.6, 2.6, 75.1, 19.6],
+    india: [4.1, 76.4, 18.2, 1.3],
+    nepal: [96.9, 0.2, 2.8, 0.1]
+  },
+  Q8: {
+    labels: ["Land/property grabbed","Threats/intimidation","Social boycott","False criminal cases","Physical assault","None of the above"],
+    pkbd:  [23.8, 21.8, 20.0, 14.0, 12.5, 7.9],
+    india: [9.8, 21.9, 28.1, 0, 0, 40.2],
+    nepal: [0, 1.4, 3.2, 0, 0, 95.4]
+  },
+  Q15: {
+    labels: ["Supportive","Neutral/indifferent","Discriminatory","Hostile","Varies"],
+    pkbd:  [0, 25.1, 45.3, 19.8, 9.8],
+    india: [20.3, 45.3, 0, 0, 34.4],
+    nepal: [89.0, 11.0, 0, 0, 0]
+  },
+  Q17: {
+    labels: ["Peaceful","Mixed","Mostly tense","Openly hostile"],
+    pkbd:  [5.0, 29.9, 45.4, 19.7],
+    india: [28.4, 56.6, 15.0, 0],
+    nepal: [88.1, 11.9, 0, 0]
+  },
+  Q18: {
+    labels: ["Never","Rarely","Occasionally","Frequently"],
+    pkbd:  [9.9, 20.2, 35.1, 34.7],
+    india: [20.2, 44.1, 30.2, 5.5],
+    nepal: [92.0, 8.0, 0, 0]
+  },
+  Q19: {
+    labels: ["No difficulty","Occasional","Frequent","Severe"],
+    pkbd:  [9.9, 30.2, 40.4, 19.5],
+    india: [58.6, 35.5, 5.9, 0],
+    nepal: [95.2, 4.8, 0, 0]
+  },
+  Q11: {
+    labels: ["Good","Average","Poor","Very poor"],
+    pkbd:  [1.9, 17.8, 54.3, 26.0],
+    india: [15.9, 55.3, 24.5, 4.4],
+    nepal: [84.8, 15.2, 0, 0]
+  },
+  Q13: {
+    labels: ["Good","Average","Poor","Very poor"],
+    pkbd:  [2.1, 17.6, 54.7, 25.6],
+    india: [15.3, 54.7, 25.3, 4.7],
+    nepal: [84.8, 15.2, 0, 0]
+  },
+  Q22: {
+    labels: ["No","Social pressure","Economic inducement","Direct threat"],
+    pkbd:  [10.0, 14.9, 30.5, 44.6],
+    india: [58.1, 18.5, 23.5, 0],
+    nepal: [96.6, 0, 3.4, 0]
+  },
+  Q25: {
+    labels: ["Improved","Stayed same","Worsened","Worsened significantly"],
+    pkbd:  [5.1, 19.8, 40.1, 35.1],
+    india: [30.1, 48.1, 21.8, 0],
+    nepal: [85.8, 14.2, 0, 0]
+  }
+};
+
+const COLORS = { pkbd: '#9B4430', india: '#43605C', nepal: '#3E6E5C', navy:'#1F3A5F', amber:'#B8862B' };
+
+/* ---------- generic grouped bar chart, pure DOM, no dependencies ---------- */
+function buildGroupedBars(containerId, dataKey){
+  const el = document.getElementById(containerId);
+  if(!el) return;
+  const d = DATA[dataKey];
+
+  let html = '<div class="vbar-legend">';
+  html += '<span class="li"><span class="sw" style="background:'+COLORS.pkbd+'"></span>Pakistan + Bangladesh</span>';
+  html += '<span class="li"><span class="sw" style="background:'+COLORS.india+'"></span>India</span>';
+  html += '<span class="li"><span class="sw" style="background:'+COLORS.nepal+'"></span>Nepal</span>';
+  html += '</div>';
+
+  d.labels.forEach((label, i) => {
+    html += '<div class="vbar-row">';
+    html += '<div class="vlabel">' + label + '</div>';
+    html += '<div class="vbar-track">';
+    html += barLine(d.pkbd[i], COLORS.pkbd, dataKey+'-pkbd-'+i);
+    html += barLine(d.india[i], COLORS.india, dataKey+'-india-'+i);
+    html += barLine(d.nepal[i], COLORS.nepal, dataKey+'-nepal-'+i);
+    html += '</div></div>';
+  });
+
+  el.innerHTML = html;
+}
+
+function barLine(value, color, fillId){
+  return '<div class="vbar-line">' +
+    '<div class="vbar-outer"><div class="vbar-fill" data-target="'+value+'" id="fill-'+fillId+'" style="background:'+color+'"></div></div>' +
+    '<div class="vbar-val">'+value+'%</div>' +
+  '</div>';
+}
+
+/* ---------- donut chart, pure CSS conic-gradient, no dependencies ---------- */
+function buildDonut(containerId, labels, values, colors){
+  const el = document.getElementById(containerId);
+  if(!el) return;
+  const total = values.reduce((a,b)=>a+b,0);
+  let acc = 0;
+  const stops = values.map((v,i)=>{
+    const start = (acc/total)*100;
+    acc += v;
+    const end = (acc/total)*100;
+    return colors[i]+' '+start.toFixed(2)+'% '+end.toFixed(2)+'%';
+  }).join(', ');
+
+  let legend = '<div class="donut-legend">';
+  labels.forEach((l,i)=>{
+    legend += '<div class="dl-item"><span class="sw" style="background:'+colors[i]+'"></span>'+l+' . '+values[i]+'%</div>';
+  });
+  legend += '</div>';
+
+  el.innerHTML =
+    '<div class="donut-wrap">' +
+      '<div class="donut-ring" id="ring-'+containerId+'" data-stops="'+stops.replace(/"/g,'&quot;')+'"></div>' +
+      legend +
+    '</div>';
+}
+
+/* ---------- gauge, pure CSS conic-gradient ---------- */
+function buildGauge(containerId, score, color){
+  const el = document.getElementById(containerId);
+  if(!el) return;
+  el.innerHTML =
+    '<div class="gauge-ring" id="ring-'+containerId+'" data-score="'+score+'" data-color="'+color+'">' +
+      '<div class="gauge-inner"><div class="gauge-score" style="position:static; transform:none; color:'+color+';">'+score+'</div></div>' +
+    '</div>';
+}
+
+/* ---------- horizontal list bar (region sample sizes) ---------- */
+function buildRegionBars(containerId){
+  const el = document.getElementById(containerId);
+  if(!el) return;
+  const rows = [
+    {label:'Dhaka', val:2150, color:COLORS.pkbd},
+    {label:'Rajshahi', val:1902, color:COLORS.pkbd},
+    {label:'Bahawalpur', val:1718, color:COLORS.pkbd},
+    {label:'Sialkot', val:1675, color:COLORS.pkbd},
+    {label:'Karachi South', val:1520, color:COLORS.pkbd},
+    {label:'Bahawal Nagar', val:1289, color:COLORS.pkbd},
+    {label:'Hyderabad', val:1008, color:COLORS.pkbd},
+    {label:'Bihar-Sharif', val:1000, color:COLORS.india},
+    {label:'Rangpur', val:978, color:COLORS.pkbd},
+    {label:'Sukkur', val:800, color:COLORS.pkbd},
+    {label:'Nepal', val:800, color:COLORS.nepal},
+    {label:'Murshidabad', val:500, color:COLORS.india}
+  ];
+  const max = Math.max(...rows.map(r=>r.val));
+  let html = '';
+  rows.forEach((r,i)=>{
+    const pct = (r.val/max*100).toFixed(1);
+    html += '<div class="vbar-line" style="margin-bottom:10px;">' +
+      '<div class="vlabel" style="width:120px; flex-shrink:0; margin:0; font-size:12.5px;">'+r.label+'</div>' +
+      '<div class="vbar-outer"><div class="vbar-fill" data-target="'+pct+'" id="fill-region-'+i+'" style="background:'+r.color+'"></div></div>' +
+      '<div class="vbar-val">'+r.val.toLocaleString()+'</div>' +
+    '</div>';
+  });
+  el.innerHTML = html;
+}
+
+/* ---------- animate all fills and rings once visible ---------- */
+function animateVisuals(){
+  document.querySelectorAll('.vbar-fill').forEach(f=>{
+    const target = f.getAttribute('data-target');
+    requestAnimationFrame(()=>{ f.style.width = target+'%'; });
+  });
+  document.querySelectorAll('.donut-ring').forEach(r=>{
+    const stops = r.getAttribute('data-stops');
+    if(stops){ requestAnimationFrame(()=>{ r.style.background = 'conic-gradient('+stops+')'; }); }
+  });
+  document.querySelectorAll('.gauge-ring').forEach(r=>{
+    const score = parseFloat(r.getAttribute('data-score'));
+    const color = r.getAttribute('data-color');
+    requestAnimationFrame(()=>{
+      r.style.background = 'conic-gradient('+color+' 0% '+score+'%, #E4DECD '+score+'% 100%)';
+    });
+  });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+
+  /* field code cloud */
+  const codes = ["PK-PUNJAB","PK-SINDH","BD-NORTH","BD-CENTRAL","IN-WB","IN-BIHAR","NP-TERAI","PK-KARACHI","BD-RANGPUR","PK-BAHAWALPUR"];
+  const cloud = document.getElementById('fieldCloud');
+  if(cloud){
+    codes.forEach((c,i)=>{
+      const el = document.createElement('div');
+      el.className='code';
+      el.textContent = c;
+      el.style.animationDelay = (0.3 + i*0.12)+'s';
+      cloud.appendChild(el);
+    });
+  }
+
+  /* reveal on scroll : content is visible by default via CSS, this only adds motion as enhancement */
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); } });
+  }, {threshold:0.12});
+  revealEls.forEach(el=>{
+    el.classList.add('pre');
+    io.observe(el);
+    setTimeout(()=>{ el.classList.add('visible'); }, 2500);
+  });
+
+  /* counters */
+  document.querySelectorAll('.counter').forEach(el=>{
+    const target = parseInt(el.dataset.target,10);
+    let started = false;
+    const cio = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting && !started){
+          started = true;
+          let cur = 0;
+          const step = Math.max(1, Math.round(target/60));
+          const t = setInterval(()=>{
+            cur += step;
+            if(cur>=target){ cur = target; clearInterval(t); }
+            el.textContent = cur.toLocaleString();
+          }, 20);
+        }
+      });
+    }, {threshold:0.5});
+    cio.observe(el);
+  });
+
+  /* scrollspy */
+  const tocLinks = document.querySelectorAll('#toc a');
+  const sections = Array.from(tocLinks).map(l=>document.getElementById(l.dataset.target)).filter(Boolean);
+  const spy = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      const id = entry.target.id;
+      const link = document.querySelector('#toc a[data-target="'+id+'"]');
+      if(entry.isIntersecting){
+        tocLinks.forEach(l=>l.classList.remove('active'));
+        if(link) link.classList.add('active');
+      }
+    });
+  }, {rootMargin:'-40% 0px -50% 0px'});
+  sections.forEach(s=>spy.observe(s));
+
+  /* build all charts, pure DOM/CSS, no external library */
+  buildRegionBars('regionChart');
+  buildDonut('ageChart', ['18-30','31-45','46-60','Above 60','Under 18'], [34.2,31.3,18.9,9.5,6.0], ['#1F3A5F','#3F5A7D','#7B9B96','#B8862B','#DCB877']);
+  buildDonut('genderChart', ['Male','Female'], [78.6,21.4], ['#1F3A5F','#B8862B']);
+  buildDonut('occChart', ['Daily wage','Farmer','Small trader','Private job','Govt job','Student','Homemaker'], [24,19,17,14,9,9,8], ['#1F3A5F','#3F5A7D','#43605C','#7B9B96','#B8862B','#DCB877','#9B4430']);
+
+  buildGroupedBars('chartQ6', 'Q6');
+  buildGroupedBars('chartQ8', 'Q8');
+  buildGroupedBars('chartQ15', 'Q15');
+  buildGroupedBars('chartQ17', 'Q17');
+  buildGroupedBars('chartQ18', 'Q18');
+  buildGroupedBars('chartQ19', 'Q19');
+  buildGroupedBars('chartQ11', 'Q11');
+  buildGroupedBars('chartQ13', 'Q13');
+  buildGroupedBars('chartQ22', 'Q22');
+  buildGroupedBars('chartQ25', 'Q25');
+
+  buildGauge('gaugePkBd', 18, '#9B4430');
+  buildGauge('gaugeIndia', 59, '#B8862B');
+  buildGauge('gaugeNepal', 95, '#3E6E5C');
+
+  /* trigger the fill/ring animations once their section scrolls into view, with an immediate fallback */
+  const vizContainers = document.querySelectorAll('.chart-canvas-box, .gauge-box');
+  const vizIo = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ animateVisuals(); } });
+  }, {threshold:0.15});
+  vizContainers.forEach(v=>vizIo.observe(v));
+  setTimeout(animateVisuals, 400);
+  setTimeout(animateVisuals, 2000);
+
+  /* flow svg : complaint outcome */
+  const flow = document.getElementById('flowSvg');
+  if(flow){
+    const flowData = [
+      {label:'No, fear', pct:45.1, y:30, color:'#9B4430'},
+      {label:'No, lack of trust', pct:29.4, y:90, color:'#B8862B'},
+      {label:'Filed, no action', pct:20.6, y:150, color:'#3F5A7D'},
+      {label:'Filed, action taken', pct:4.9, y:210, color:'#3E6E5C'}
+    ];
+    let svgHtml = '<text x="40" y="20" fill="#5B564C" font-family="IBM Plex Mono" font-size="11">RESPONDENTS WHO FACED AN INCIDENT</text>';
+    flowData.forEach((d)=>{
+      const w = d.pct*6.5;
+      svgHtml += '<rect x="60" y="'+d.y+'" width="10" height="20" fill="'+d.color+'"></rect>';
+      svgHtml += '<path class="flow-path" d="M70,'+(d.y+10)+' C300,'+(d.y+10)+' 500,'+(d.y+10)+' '+(70+w+400)+','+(d.y+10)+'" stroke="'+d.color+'" stroke-width="18" fill="none" opacity="0.85"></path>';
+      svgHtml += '<text x="'+(90+w+400)+'" y="'+(d.y+15)+'" fill="#201E1A" font-family="IBM Plex Mono" font-size="12">'+d.label+' : '+d.pct+'%</text>';
+    });
+    flow.innerHTML = svgHtml;
+    const flowIo = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          document.querySelectorAll('.flow-path').forEach(p=>p.classList.add('visible'));
+        }
+      });
+    }, {threshold:0.3});
+    flowIo.observe(flow);
+    setTimeout(()=>{ document.querySelectorAll('.flow-path').forEach(p=>p.classList.add('visible')); }, 2500);
+  }
+
+  /* bloc toggle : dims non-selected bloc bars for quick focus, purely visual */
+  const toggleBtns = document.querySelectorAll('#blocToggleTop button');
+  toggleBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      toggleBtns.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const bloc = btn.getAttribute('data-bloc');
+      document.querySelectorAll('.vbar-line').forEach(line=>{
+        const fill = line.querySelector('.vbar-fill');
+        if(!fill) return;
+        const id = fill.id || '';
+        let match = bloc === 'all';
+        if(bloc==='pkbd' && id.indexOf('pkbd')>-1) match = true;
+        if(bloc==='india' && id.indexOf('india')>-1) match = true;
+        if(bloc==='nepal' && id.indexOf('nepal')>-1) match = true;
+        line.style.opacity = match ? '1' : '0.25';
+      });
+    });
+  });
+
+});
+</script>
+
+</body>
+</html>
